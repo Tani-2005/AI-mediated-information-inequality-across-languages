@@ -1,0 +1,57 @@
+{
+  "task_id": "PMEGP",
+  "name": "Prime Minister Employment Generation Programme",
+  "domain": "Micro-Manufacturing Enterprise Entitlement",
+  "persona": {
+    "name": "Sunita Devi",
+    "age": 38,
+    "gender": "Female",
+    "social_category": "Special Category (SC/ST/OBC/Women/Minority)",
+    "location": "Rural Village, District Gorakhpur, Uttar Pradesh",
+    "proposed_project": "Ready-Made Garment Manufacturing Unit",
+    "proposed_project_cost_inr": 3500000,
+    "background_summary": "Sunita wants to establish a small garment manufacturing unit in her rural village employing 6 local women. She seeks information on the maximum loan available under PMEGP for manufacturing, the subsidy rate she qualifies for, and mandatory required documents."
+  },
+  "ground_truth_rubric": {
+    "max_total_points": 10.0,
+    "fields": [
+      {
+        "field_key": "is_eligible",
+        "description": "Is the applicant eligible for PMEGP?",
+        "field_type": "boolean",
+        "points": 2.0,
+        "correct_answer": true
+      },
+      {
+        "field_key": "max_project_cost_lakhs",
+        "description": "Maximum project cost allowed for manufacturing unit (in Lakhs INR)",
+        "field_type": "number",
+        "points": 2.0,
+        "correct_answer": 50.0,
+        "accepted_range": [50.0, 50.0]
+      },
+      {
+        "field_key": "subsidy_percentage",
+        "description": "Subsidy / Margin Money rate for Special Category in Rural area (%)",
+        "field_type": "number",
+        "points": 3.0,
+        "correct_answer": 35.0,
+        "accepted_range": [35.0, 35.0]
+      },
+      {
+        "field_key": "mandatory_documents",
+        "description": "Mandatory documents required for PMEGP application",
+        "field_type": "multi_select",
+        "points": 3.0,
+        "correct_items": ["aadhaar_card", "edp_certificate", "detailed_project_report", "rural_caste_certificate"],
+        "scoring_rule": "0.75 pts per correct item, -0.25 for invalid selections, min 0.0"
+      }
+    ]
+  },
+  "official_sources": [
+    {
+      "title": "PMEGP Official Guidelines - KVIC",
+      "url": "https://www.kviconline.gov.in/pmegpeportal/pmegphome/index.jsp"
+    }
+  ]
+}

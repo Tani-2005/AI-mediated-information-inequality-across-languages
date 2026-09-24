@@ -1,0 +1,36 @@
+# Environment and Credentials
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+env/
+ENV/
+build/
+dist/
+*.egg-info/
+.pytest_cache/
+
+# Node / Frontend
+node_modules/
+.vite/
+dist/
+dist-ssr/
+
+# Databases
+*.db
+*.sqlite
+*.sqlite3
+experiment.db
+backend/experiment.db
+
+# OS
+.DS_Store
+Thumbs.db

@@ -1,0 +1,55 @@
+{
+  "task_id": "PM_SVANIDHI",
+  "name": "PM Street Vendor's AtmaNirbhar Nidhi",
+  "domain": "Street Vendor Micro-Credit Entitlement",
+  "persona": {
+    "name": "Rajesh Varma",
+    "age": 31,
+    "gender": "Male",
+    "vending_activity": "Urban Street Fruit & Vegetable Vendor",
+    "location": "Urban Market, District Kanpur, Uttar Pradesh",
+    "background_summary": "Rajesh is a street vendor who suffered working capital loss. He seeks working capital under PM SVANidhi. He needs to know the 1st tranche loan limit, the annual interest subsidy percentage, and the maximum annual digital transaction cashback limit."
+  },
+  "ground_truth_rubric": {
+    "max_total_points": 10.0,
+    "fields": [
+      {
+        "field_key": "is_eligible",
+        "description": "Is the street vendor eligible for PM SVANidhi?",
+        "field_type": "boolean",
+        "points": 2.0,
+        "correct_answer": true
+      },
+      {
+        "field_key": "first_tranche_loan_inr",
+        "description": "First tranche working capital micro-credit loan limit (INR)",
+        "field_type": "number",
+        "points": 2.0,
+        "correct_answer": 10000.0,
+        "accepted_range": [10000.0, 10000.0]
+      },
+      {
+        "field_key": "interest_subsidy_percentage",
+        "description": "Annual interest subsidy rate credited quarterly (%)",
+        "field_type": "number",
+        "points": 3.0,
+        "correct_answer": 7.0,
+        "accepted_range": [7.0, 7.0]
+      },
+      {
+        "field_key": "max_annual_cashback_inr",
+        "description": "Maximum annual digital transaction cashback incentive (INR)",
+        "field_type": "number",
+        "points": 3.0,
+        "correct_answer": 1200.0,
+        "accepted_range": [1200.0, 1200.0]
+      }
+    ]
+  },
+  "official_sources": [
+    {
+      "title": "PM SVANidhi Portal - MoHUA",
+      "url": "https://pmsvanidhi.mohua.gov.in/"
+    }
+  ]
+}

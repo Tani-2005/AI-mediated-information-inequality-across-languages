@@ -1,0 +1,85 @@
+{
+  "study_metadata": {
+    "study_id": "ENGLISH_HINDI_AI_INFO_INEQUALITY_2026",
+    "title": "Linguistic Inequality in AI-Mediated Information Seeking: An English-Hindi Randomized Controlled Trial",
+    "protocol_version": "1.0.0-frozen",
+    "status": "FROZEN_SCAFFOLDING",
+    "target_population": "English-Hindi bilingual Indian adults aged 18-65 residing in India"
+  },
+  "sample_design": {
+    "analyzable_sample_size_N": 144,
+    "participants_per_arm": 48,
+    "recruitment_target_N": 171,
+    "attrition_allowance_pct": 15.0,
+    "number_of_arms": 3,
+    "experimental_arms": [
+      "ENGLISH_ONLY",
+      "HINDI_ONLY",
+      "CODE_SWITCHING"
+    ]
+  },
+  "randomization": {
+    "stratification_factor": "AI_LITERACY_SCALE",
+    "strata_cutoffs": {
+      "scale": "AILS_12_ITEM",
+      "score_range": [12, 60],
+      "median_split_threshold": 36,
+      "labels": ["LOW", "HIGH"]
+    },
+    "block_sizes": [3, 6],
+    "allocation_ratio": "1:1:1",
+    "concealment": "SERVER_SIDE_ONLY"
+  },
+  "experimental_tasks": {
+    "number_of_scenarios": 3,
+    "scenarios": [
+      {
+        "task_id": "PMEGP",
+        "name": "Prime Minister Employment Generation Programme",
+        "domain": "Micro-Manufacturing Enterprise Entitlement"
+      },
+      {
+        "task_id": "PM_VISHWAKARMA",
+        "name": "PM Vishwakarma Scheme",
+        "domain": "Artisan Credit & Skill Grant Entitlement"
+      },
+      {
+        "task_id": "PM_SVANIDHI",
+        "name": "PM Street Vendor's AtmaNirbhar Nidhi",
+        "domain": "Street Vendor Micro-Credit Entitlement"
+      }
+    ],
+    "order_counterbalancing": "LATIN_SQUARE_3x3"
+  },
+  "primary_outcome": {
+    "variable_name": "Decision Quality Score",
+    "range": [0.0, 10.0],
+    "type": "Continuous",
+    "scoring_method": "DETERMINISTIC_GROUND_TRUTH_RUBRIC",
+    "llm_as_judge": false
+  },
+  "statistical_analysis": {
+    "primary_contrast": "English vs Hindi (C1: mu_English - mu_Hindi != 0)",
+    "planned_model": "DecisionQuality ~ Language + Scenario + Position + (1|Participant)",
+    "family": "Linear Mixed Effects Model (LMM)",
+    "planning_effect_size_d": 0.40,
+    "planning_icc_p": 0.20,
+    "alpha": 0.05
+  },
+  "production_llm_config": {
+    "provider": "OpenAI",
+    "model_snapshot": "gpt-4o-2024-08-06",
+    "temperature": 0.2,
+    "top_p": 1.0,
+    "max_tokens": 1000,
+    "timeout_ms": 15000,
+    "max_retries": 1,
+    "retry_condition": "HTTP_5XX_OR_TIMEOUT_ONLY"
+  },
+  "development_config": {
+    "app_env": "development",
+    "use_mock_llm": true,
+    "is_pilot_mode": false,
+    "local_model_fallback": "ollama/llama3.3:70b"
+  }
+}

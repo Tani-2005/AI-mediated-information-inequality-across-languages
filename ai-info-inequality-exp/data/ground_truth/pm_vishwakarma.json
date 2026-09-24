@@ -1,0 +1,56 @@
+{
+  "task_id": "PM_VISHWAKARMA",
+  "name": "PM Vishwakarma Scheme",
+  "domain": "Artisan Credit & Skill Grant Entitlement",
+  "persona": {
+    "name": "Ramesh Kumar",
+    "age": 42,
+    "gender": "Male",
+    "trade": "Traditional Carpenter (Suthar)",
+    "location": "Rural Varanasi, Uttar Pradesh",
+    "family_background": "Family engaged in traditional woodwork craft for generations. Needs modern electric tools and concessional working capital loan.",
+    "background_summary": "Ramesh wants to enroll in PM Vishwakarma for traditional artisans. He needs to know the maximum loan limit for First Tranche, the daily skill training stipend rate, and the toolkit grant voucher amount."
+  },
+  "ground_truth_rubric": {
+    "max_total_points": 10.0,
+    "fields": [
+      {
+        "field_key": "is_eligible",
+        "description": "Is the artisan eligible for PM Vishwakarma?",
+        "field_type": "boolean",
+        "points": 2.0,
+        "correct_answer": true
+      },
+      {
+        "field_key": "first_tranche_loan_inr",
+        "description": "Maximum collateral-free concessional loan limit for First Tranche (INR)",
+        "field_type": "number",
+        "points": 2.0,
+        "correct_answer": 100000.0,
+        "accepted_range": [100000.0, 100000.0]
+      },
+      {
+        "field_key": "skill_stipend_per_day_inr",
+        "description": "Daily stipend rate during basic skill training (INR/day)",
+        "field_type": "number",
+        "points": 3.0,
+        "correct_answer": 500.0,
+        "accepted_range": [500.0, 500.0]
+      },
+      {
+        "field_key": "toolkit_incentive_grant_inr",
+        "description": "Modern toolkit incentive voucher grant amount (INR)",
+        "field_type": "number",
+        "points": 3.0,
+        "correct_answer": 15000.0,
+        "accepted_range": [15000.0, 15000.0]
+      }
+    ]
+  },
+  "official_sources": [
+    {
+      "title": "PM Vishwakarma Official Portal - MSME",
+      "url": "https://pmvishwakarma.gov.in/"
+    }
+  ]
+}
