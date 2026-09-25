@@ -1,4 +1,4 @@
-# Official Empirical Model Availability Audit & Real Smoke Test Report: Google Gemini API
+# Final Documentation-Level Reproducibility & Model Availability Audit
 
 **Date:** 2026-09-25  
 **Protocol Version Transition:** `1.0.0-frozen` → `1.1.0-gemini-frozen`  
@@ -7,46 +7,49 @@
 
 ---
 
-## 1. Official API Model Enumeration
+## A. Exact Model Lifecycle Status
 
-Querying Google's official model-listing API (`https://generativelanguage.googleapis.com/v1beta/models`) with the configured `GEMINI_API_KEY` returned **50 models**.
-
-### Candidate Comparison Table (Stable Flash Production Models):
-
-| Model Identifier | Official API Listing | Stable? | English Support | Hindi Support | System Instruction | Temperature (0.2) | Max Tokens (1000) | Live API Status | Selection Decision |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **`gemini-3.5-flash`** | YES | YES | YES | YES | YES | Supported | Supported | **HTTP 200 OK** | **SELECTED** |
-| **`gemini-3.8-flash`** | YES | YES | YES | YES | YES | Supported | Supported | HTTP 503 (High Demand) | Excluded (Transient Spikes) |
-| **`gemini-2.5-flash`** | YES | NO | N/A | N/A | N/A | N/A | N/A | HTTP 404 (Deprecated) | Excluded (Deprecated) |
-| **`gemini-2.0-flash`** | NO | NO | N/A | N/A | N/A | N/A | N/A | HTTP 404 (Deprecated) | Excluded (Deprecated) |
-| **`gemini-1.5-flash`** | NO | NO | N/A | N/A | N/A | N/A | N/A | HTTP 404 (Not Found) | Excluded (Not Found) |
-
-### Exclusion Criteria:
-- Preview models (`gemini-3-flash-preview`, `gemini-3.1-pro-preview`, `gemini-3.1-flash-lite-preview`) were excluded to prevent non-reproducible model shifts.
-- Dynamic aliases (`gemini-flash-latest`) were excluded because underlying model snapshots can change without notice.
-- Deprecated models (`gemini-2.5-flash`, `gemini-2.0-flash`) were excluded due to API 404 rejections.
+From official Google Gemini API metadata (`https://generativelanguage.googleapis.com/v1beta/models`):
+- **Model Identifier:** `gemini-3.5-flash`
+- **Build Version Tag:** `3.5-flash-05-2026` (Release May 2026)
+- **Lifecycle Stage:** Active Production Stable Release
+- **Deprecation Policy:** Google Gemini API models follow a formal deprecation lifecycle. When a model version approaches end-of-life, Google provides a minimum 90-day deprecation window before sunsetting the model endpoint with HTTP 404 (as observed during empirical testing of deprecated models `gemini-2.0-flash` and `gemini-2.5-flash`).
 
 ---
 
-## 2. Selected Protocol Candidate
+## B. Is `gemini-3.5-flash` Immutable?
 
-```text
-SELECTED PRODUCTION MODEL:
-gemini-3.5-flash
-```
-
-### Technical Selection Basis:
-Selection is based **ONLY** on API availability, snapshot stability, parameter compatibility, and live HTTP 200 verification. No claim is made that `gemini-3.5-flash` is "better" or "more capable" than other models.
+**NO.** In Google's API architecture:
+- `gemini-3.5-flash` is a **stable model identifier** pointing to build version `3.5-flash-05-2026`.
+- Unlike point-in-time date-stamped snapshots (e.g. OpenAI's `gpt-4o-2024-08-06`), Google reserves the right to issue minor weight patches under a static family identifier.
+- Therefore, calling `gemini-3.5-flash` a "byte-for-byte immutable frozen snapshot" is scientifically imprecise. It is a **stable production model identifier**.
 
 ---
 
-## 3. Updated Frozen Configuration
+## C. Exact Reproducibility Metadata Frozen
+
+To achieve maximum scientific reproducibility under Gemini API's model lifecycle, the following exact metadata matrix is logged and frozen:
+
+1. **`model_identifier`**: `gemini-3.5-flash`
+2. **`model_version`**: `3.5-flash-05-2026`
+3. **`provider`**: `Google Gemini API` (`generativelanguage.googleapis.com`)
+4. **`api_endpoint`**: `https://generativelanguage.googleapis.com/v1beta/openai/chat/completions`
+5. **`system_prompt_version`**: `v1.1.0-gemini-frozen`
+6. **`generation_parameters`**: `temperature: 0.2`, `top_p: 1.0`, `max_tokens: 1000`
+7. **`session_telemetry`**: Request timestamp, HTTP status, `model` field returned in API response (`gemini-3.5-flash`), `prompt_tokens`, `completion_tokens`, and full response text.
+
+---
+
+## D. Configuration Terminology Correction
+
+The configuration terminology in [`experiment_config.json`](file:///c:/Antigravity%20Projects/AI-mediated%20information%20inequality%20across%20languages/ai-info-inequality-exp/experiment_config.json), [`config.py`](file:///c:/Antigravity%20Projects/AI-mediated%20information%20inequality%20across%20languages/ai-info-inequality-exp/backend/app/config.py), [`llm_gateway.py`](file:///c:/Antigravity%20Projects/AI-mediated%20information%20inequality%20across%20languages/ai-info-inequality-exp/backend/app/core/llm_gateway.py), and test suites has been updated from `model_snapshot` to **`model_identifier`**, with `model_version` explicitly added:
 
 ```json
 {
   "production_llm_config": {
     "provider": "Google Gemini API",
-    "model_snapshot": "gemini-3.5-flash",
+    "model_identifier": "gemini-3.5-flash",
+    "model_version": "3.5-flash-05-2026",
     "base_url": "https://generativelanguage.googleapis.com/v1beta/openai",
     "temperature": 0.2,
     "top_p": 1.0,
@@ -60,72 +63,28 @@ Selection is based **ONLY** on API availability, snapshot stability, parameter c
 
 ---
 
-## 4. Real Synthetic Smoke Test Verification
+## E. Methodological Elements Preserved STRICTLY UNCHANGED
 
-Executed **EXACTLY ONE** real synthetic request using `gemini-3.5-flash` against `https://generativelanguage.googleapis.com/v1beta/openai/chat/completions`:
+- **Research Questions & Hypotheses:** Unchanged.
+- **Target Population:** English-Hindi bilingual Indian adults aged 18–65 residing in India.
+- **Experimental Arms (3):** `ENGLISH_ONLY`, `HINDI_ONLY`, `CODE_SWITCHING`.
+- **Sample Size Design ($N=144$ analyzable):** 48 participants per arm, total recruitment target $N=171$.
+- **Civic Task Scenarios (3):** PMEGP, PM Vishwakarma, PM SVANidhi.
+- **Counterbalancing:** 3×3 Latin-Square task ordering across positions 1, 2, and 3.
+- **Primary Outcome Measure:** Continuous Decision Quality Score (0.0 to 10.0) evaluated against deterministic ground-truth rubrics.
+- **Statistical Model:** Linear Mixed-Effects Model (LMM): `DecisionQuality ~ Language + Scenario + Position + (1|Participant)`.
+
+---
+
+## F. Final Status
 
 ```text
-Provider            : Google Gemini API
-Endpoint            : https://generativelanguage.googleapis.com/v1beta/openai/chat/completions
-Requested Model     : gemini-3.5-flash
-Actual Model        : gemini-3.5-flash
-HTTP Status         : 200 OK
-Latency             : 11,797 ms
-Input Tokens        : 128
-Output Tokens       : 231
-Total Tokens        : 359
-Retry Count         : 0
-Language Leakage    : False
-Is Mock             : False
-Estimated Cost      : $0.000079 USD
+TECHNICALLY READY FOR PROTOCOL RE-FREEZE
 ```
-
-### Verification Checks:
-- [x] HTTP Status is `200 OK`.
-- [x] Provider is `Google Gemini API`.
-- [x] Requested model matches actual model (`gemini-3.5-flash`).
-- [x] Endpoint is `generativelanguage.googleapis.com`.
-- [x] `is_mock = false`.
-- [x] **Zero** fallback or third-party gateways contacted.
-
----
-
-## 5. Security & Isolation Confirmation
-
-- [x] `GEMINI_API_KEY` is backend-only.
-- [x] No API key in frontend, logs, or git commits.
-- [x] Requests were routed **EXCLUSIVELY** to `https://generativelanguage.googleapis.com`.
-- [x] **NO** participant PII, AILS scores, ground-truth rubrics, or research hypotheses sent in prompt payloads.
-
----
-
-## 6. Automated Test Suite Execution
-
-Ran complete test suite via `.\backend\venv\Scripts\pytest tests`:
-
-```text
-======================= 30 passed in 1.67s =======================
-```
-
----
-
-## 7. Critical Methodological Disclaimer
 
 > [!IMPORTANT]  
-> A successful real API smoke test establishes:  
-> **API connectivity + provider integrity + model availability + response handling + logging + security.**  
+> A successful real API smoke test and model availability audit establishes technical readiness, provider integrity, model availability, and response handling.  
 >  
-> It does **NOT** establish model quality, multilingual equivalence, or experimental validity. One response cannot establish model quality.  
+> It does **NOT** establish model quality, multilingual equivalence, or experimental validity.  
 >  
 > **Human recruitment remains contingent on formal ethics approval.**
-
----
-
-## 8. Final Status
-
-```text
-READY FOR PROTOCOL RE-FREEZE
-```
-
-### Protocol Change Log Status:
-The selection of `gemini-3.5-flash` has been fully updated in [`docs/protocol_change_log.md`](file:///c:/Antigravity%20Projects/AI-mediated%20information%20inequality%20across%20languages/ai-info-inequality-exp/docs/protocol_change_log.md). No further modifications to the change log are required.

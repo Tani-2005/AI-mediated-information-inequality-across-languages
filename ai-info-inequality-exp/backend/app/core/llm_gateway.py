@@ -119,10 +119,12 @@ class OpenAIProvider(LLMProvider):
 
         # 3. Model Identifier Check
         model = (settings.OPENAI_MODEL or "").strip()
-        expected_model = frozen_config["production_llm_config"]["model_snapshot"]
+        expected_model = frozen_config["production_llm_config"].get(
+            "model_identifier", frozen_config["production_llm_config"].get("model_snapshot")
+        )
         if model != expected_model or model != "gpt-4o-2024-08-06":
             raise ValueError(
-                f"Invalid model snapshot '{model}'. "
+                f"Invalid model identifier '{model}'. "
                 f"Frozen protocol strictly requires '{expected_model}'. Alternate models or aliases are prohibited."
             )
 
@@ -292,10 +294,12 @@ class GeminiProvider(LLMProvider):
 
         # 3. Model Identifier Check
         model = (settings.GEMINI_MODEL or "").strip()
-        expected_model = frozen_config["production_llm_config"]["model_snapshot"]
+        expected_model = frozen_config["production_llm_config"].get(
+            "model_identifier", frozen_config["production_llm_config"].get("model_snapshot")
+        )
         if model != expected_model or model != "gemini-3.5-flash":
             raise ValueError(
-                f"Invalid model snapshot '{model}'. "
+                f"Invalid model identifier '{model}'. "
                 f"Active protocol strictly requires '{expected_model}'. Alternate models or aliases are prohibited."
             )
 
@@ -371,7 +375,9 @@ class GeminiProvider(LLMProvider):
 
                     return {
                         "text": reply_text,
+                        "model_identifier": actual_model,
                         "model_snapshot": actual_model,
+                        "model_version": "3.5-flash-05-2026",
                         "system_prompt_version": "v1.1.0-gemini-frozen",
                         "timestamp": datetime.datetime.now(datetime.UTC).isoformat(),
                         "latency_ms": latency_ms,

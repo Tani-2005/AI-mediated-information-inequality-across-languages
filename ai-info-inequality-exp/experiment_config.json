@@ -68,7 +68,8 @@
   },
   "production_llm_config": {
     "provider": "Google Gemini API",
-    "model_snapshot": "gemini-3.5-flash",
+    "model_identifier": "gemini-3.5-flash",
+    "model_version": "3.5-flash-05-2026",
     "base_url": "https://generativelanguage.googleapis.com/v1beta/openai",
     "temperature": 0.2,
     "top_p": 1.0,

@@ -30,7 +30,7 @@ def test_model_must_be_gpt4o_2024_08_06(monkeypatch):
     provider = OpenAIProvider()
     with pytest.raises(ValueError) as exc_info:
         provider.validate_provider_configuration()
-    assert "Invalid model snapshot" in str(exc_info.value)
+    assert "Invalid model identifier" in str(exc_info.value)
 
 def test_base_url_must_be_official_openai_endpoint(monkeypatch):
     monkeypatch.setattr(settings, "USE_MOCK_LLM", False)
@@ -62,7 +62,7 @@ def test_gemini_provider_selection_and_validation(monkeypatch):
     monkeypatch.setattr(settings, "GEMINI_BASE_URL", "https://generativelanguage.googleapis.com/v1beta/openai")
     monkeypatch.setattr(settings, "GEMINI_MODEL", "gemini-3.5-flash")
     monkeypatch.setattr(settings, "GEMINI_API_KEY", "AIzaSyTestGeminiKey12345")
-    monkeypatch.setitem(frozen_config["production_llm_config"], "model_snapshot", "gemini-3.5-flash")
+    monkeypatch.setitem(frozen_config["production_llm_config"], "model_identifier", "gemini-3.5-flash")
 
     provider = get_llm_provider()
     assert isinstance(provider, GeminiProvider)
@@ -75,7 +75,7 @@ def test_gemini_base_url_domain_whitelist(monkeypatch):
     monkeypatch.setattr(settings, "LLM_PROVIDER", "gemini")
     monkeypatch.setattr(settings, "GEMINI_MODEL", "gemini-3.5-flash")
     monkeypatch.setattr(settings, "GEMINI_API_KEY", "AIzaSyTestGeminiKey12345")
-    monkeypatch.setitem(frozen_config["production_llm_config"], "model_snapshot", "gemini-3.5-flash")
+    monkeypatch.setitem(frozen_config["production_llm_config"], "model_identifier", "gemini-3.5-flash")
 
     unauthorized_urls = [
         "https://api.groq.com/openai/v1",
@@ -98,12 +98,12 @@ def test_gemini_model_identity_lock(monkeypatch):
     monkeypatch.setattr(settings, "GEMINI_BASE_URL", "https://generativelanguage.googleapis.com/v1beta/openai")
     monkeypatch.setattr(settings, "GEMINI_MODEL", "gemini-1.5-flash-unapproved")
     monkeypatch.setattr(settings, "GEMINI_API_KEY", "AIzaSyTestGeminiKey12345")
-    monkeypatch.setitem(frozen_config["production_llm_config"], "model_snapshot", "gemini-3.5-flash")
+    monkeypatch.setitem(frozen_config["production_llm_config"], "model_identifier", "gemini-3.5-flash")
 
     provider = GeminiProvider()
     with pytest.raises(ValueError) as exc_info:
         provider.validate_provider_configuration()
-    assert "Invalid model snapshot" in str(exc_info.value)
+    assert "Invalid model identifier" in str(exc_info.value)
     assert "gemini-3.5-flash" in str(exc_info.value)
 
 def test_gemini_missing_api_key(monkeypatch):
