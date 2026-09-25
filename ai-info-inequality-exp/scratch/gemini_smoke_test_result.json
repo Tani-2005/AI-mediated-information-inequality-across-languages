@@ -1,0 +1,16 @@
+{
+  "Provider": "Google Gemini API",
+  "Endpoint": "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions",
+  "RequestedModel": "gemini-3.5-flash",
+  "ActualModel": "gemini-3.5-flash",
+  "HTTPStatus": 200,
+  "LatencyMs": 11797,
+  "InputTokens": 128,
+  "OutputTokens": 231,
+  "TotalTokens": 1093,
+  "RetryCount": 0,
+  "LanguageLeakageFlag": false,
+  "IsMock": false,
+  "EstimatedCostUSD": "$0.000079",
+  "ResponseSnippet": "Under the Prime Minister\u2019s Employment Generation Programme (PMEGP), the financial assistance details for special category applicants (including SC, ST..."
+}

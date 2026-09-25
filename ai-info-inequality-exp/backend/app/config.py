@@ -19,10 +19,17 @@ class Settings(BaseSettings):
     EXPERIMENT_CONFIG_PATH: str = str(CONFIG_PATH)
     
     # Provider Hardening
-    LLM_PROVIDER: str = "openai"
+    LLM_PROVIDER: str = "gemini"
+    
+    # OpenAI Configuration
     OPENAI_API_KEY: str = ""
     OPENAI_BASE_URL: str = "https://api.openai.com/v1"
     OPENAI_MODEL: str = "gpt-4o-2024-08-06"
+
+    # Gemini Configuration
+    GEMINI_API_KEY: str = ""
+    GEMINI_BASE_URL: str = "https://generativelanguage.googleapis.com/v1beta/openai"
+    GEMINI_MODEL: str = "gemini-3.5-flash"
 
     class Config:
         env_file = [".env", "backend/.env"]

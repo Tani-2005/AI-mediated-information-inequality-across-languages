@@ -67,8 +67,9 @@
     "alpha": 0.05
   },
   "production_llm_config": {
-    "provider": "OpenAI",
-    "model_snapshot": "gpt-4o-2024-08-06",
+    "provider": "Google Gemini API",
+    "model_snapshot": "gemini-3.5-flash",
+    "base_url": "https://generativelanguage.googleapis.com/v1beta/openai",
     "temperature": 0.2,
     "top_p": 1.0,
     "max_tokens": 1000,

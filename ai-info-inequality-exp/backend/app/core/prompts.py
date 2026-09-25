@@ -1,5 +1,5 @@
 """
-Frozen System Prompts (Version v1.0.0-frozen)
+Frozen System Prompts (Version v1.0.0-frozen and v1.1.0-gemini-frozen)
 ENGLISH_HINDI_AI_INFO_INEQUALITY_2026
 
 CRITICAL INTEGRITY RULES:
@@ -31,8 +31,16 @@ SYSTEM_PROMPT_V1_0_FROZEN = {
     }
 }
 
-def build_system_prompt(assigned_arm: str) -> str:
-    arm_constraint = SYSTEM_PROMPT_V1_0_FROZEN["arms"].get(
-        assigned_arm, SYSTEM_PROMPT_V1_0_FROZEN["arms"]["ENGLISH_ONLY"]
+# Prompt v1.1.0-gemini-frozen maintains 100% textual parity with v1.0.0-frozen while tagging Gemini compatibility
+SYSTEM_PROMPT_V1_1_GEMINI = {
+    "version": "v1.1.0-gemini-frozen",
+    "base_instruction": SYSTEM_PROMPT_V1_0_FROZEN["base_instruction"],
+    "arms": SYSTEM_PROMPT_V1_0_FROZEN["arms"]
+}
+
+def build_system_prompt(assigned_arm: str, prompt_version: str = "v1.1.0-gemini-frozen") -> str:
+    prompt_obj = SYSTEM_PROMPT_V1_1_GEMINI if prompt_version == "v1.1.0-gemini-frozen" else SYSTEM_PROMPT_V1_0_FROZEN
+    arm_constraint = prompt_obj["arms"].get(
+        assigned_arm, prompt_obj["arms"]["ENGLISH_ONLY"]
     )
-    return f"{SYSTEM_PROMPT_V1_0_FROZEN['base_instruction']}\n\n{arm_constraint}"
+    return f"{prompt_obj['base_instruction']}\n\n{arm_constraint}"

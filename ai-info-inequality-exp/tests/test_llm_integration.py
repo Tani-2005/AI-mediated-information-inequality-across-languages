@@ -1,21 +1,27 @@
 import pytest
 from app.config import settings
-from app.core.prompts import build_system_prompt, SYSTEM_PROMPT_V1_0_FROZEN
+from app.core.prompts import build_system_prompt, SYSTEM_PROMPT_V1_0_FROZEN, SYSTEM_PROMPT_V1_1_GEMINI
 from app.core.llm_gateway import (
     get_llm_provider,
     MockLLMProvider,
     OpenAIProvider,
+    GeminiProvider,
     detect_language_leakage
 )
 
-def test_provider_switching_mock_vs_openai(monkeypatch):
+def test_provider_factory_switching(monkeypatch):
+    # Mock mode -> MockLLMProvider
     monkeypatch.setattr(settings, "USE_MOCK_LLM", True)
-    provider_mock = get_llm_provider()
-    assert isinstance(provider_mock, MockLLMProvider)
+    assert isinstance(get_llm_provider(), MockLLMProvider)
 
+    # Production OpenAI -> OpenAIProvider
     monkeypatch.setattr(settings, "USE_MOCK_LLM", False)
-    provider_openai = get_llm_provider()
-    assert isinstance(provider_openai, OpenAIProvider)
+    monkeypatch.setattr(settings, "LLM_PROVIDER", "openai")
+    assert isinstance(get_llm_provider(), OpenAIProvider)
+
+    # Production Gemini -> GeminiProvider
+    monkeypatch.setattr(settings, "LLM_PROVIDER", "gemini")
+    assert isinstance(get_llm_provider(), GeminiProvider)
 
 def test_emergency_kill_switch(monkeypatch):
     monkeypatch.setattr(settings, "USE_MOCK_LLM", False)
@@ -35,10 +41,10 @@ def test_emergency_kill_switch(monkeypatch):
 def test_missing_api_key_handling(monkeypatch):
     monkeypatch.setattr(settings, "USE_MOCK_LLM", False)
     monkeypatch.setattr(settings, "LLM_ENABLED", True)
-    monkeypatch.setattr(settings, "LLM_PROVIDER", "openai")
-    monkeypatch.setattr(settings, "OPENAI_BASE_URL", "https://api.openai.com/v1")
-    monkeypatch.setattr(settings, "OPENAI_MODEL", "gpt-4o-2024-08-06")
-    monkeypatch.setattr(settings, "OPENAI_API_KEY", "")
+    monkeypatch.setattr(settings, "LLM_PROVIDER", "gemini")
+    monkeypatch.setattr(settings, "GEMINI_BASE_URL", "https://generativelanguage.googleapis.com/v1beta/openai")
+    monkeypatch.setattr(settings, "GEMINI_MODEL", "gemini-3.5-flash")
+    monkeypatch.setattr(settings, "GEMINI_API_KEY", "")
 
     provider = get_llm_provider()
     with pytest.raises(ValueError) as exc_info:
@@ -49,7 +55,7 @@ def test_missing_api_key_handling(monkeypatch):
             user_prompt="Hello",
             conversation_history=[]
         )
-    assert "OPENAI_API_KEY is not configured" in str(exc_info.value)
+    assert "GEMINI_API_KEY is not configured" in str(exc_info.value)
 
 def test_language_leakage_detector():
     # English arm with Devanagari script -> Leakage = True

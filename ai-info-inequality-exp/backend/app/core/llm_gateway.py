@@ -243,4 +243,163 @@ class OpenAIProvider(LLMProvider):
 def get_llm_provider() -> LLMProvider:
     if settings.USE_MOCK_LLM:
         return MockLLMProvider()
-    return OpenAIProvider()
+
+    provider_name = (settings.LLM_PROVIDER or "").strip().lower()
+    if provider_name == "gemini":
+        return GeminiProvider()
+    elif provider_name == "openai":
+        return OpenAIProvider()
+    else:
+        raise ValueError(
+            f"Unsupported LLM_PROVIDER '{settings.LLM_PROVIDER}'. "
+            "Supported production providers are 'gemini' and 'openai'."
+        )
+
+class GeminiProvider(LLMProvider):
+    ALLOWED_HOSTS = {"generativelanguage.googleapis.com"}
+
+    def validate_provider_configuration(self):
+        """
+        Enforce strict provider architecture for Google Gemini API.
+        Production protocol requires Google Gemini API with gemini-2.5-flash.
+        Zero fallback to Groq, OpenAI, third-party gateways, or alternate models.
+        """
+        # 1. Provider Check
+        provider = (settings.LLM_PROVIDER or "").strip().lower()
+        if provider != "gemini":
+            raise ValueError(
+                f"Invalid LLM_PROVIDER '{settings.LLM_PROVIDER}'. "
+                "Active protocol strictly requires LLM_PROVIDER='gemini'. Third-party providers are prohibited."
+            )
+
+        # 2. Base URL / Endpoint Destination Check
+        base_url = (settings.GEMINI_BASE_URL or "").strip()
+        from urllib.parse import urlparse
+        parsed_url = urlparse(base_url)
+        if not parsed_url.scheme or not parsed_url.netloc:
+            raise ValueError(f"Invalid GEMINI_BASE_URL format: '{base_url}'. Must be a valid absolute HTTPS URL.")
+
+        if parsed_url.scheme.lower() != "https":
+            raise ValueError(f"Insecure scheme in GEMINI_BASE_URL: '{base_url}'. Must use HTTPS.")
+
+        hostname = parsed_url.netloc.split(":")[0].lower()
+        if hostname not in self.ALLOWED_HOSTS:
+            raise ValueError(
+                f"Unauthorized LLM Base URL domain '{hostname}'. "
+                "Protocol strictly requires official Google Gemini API domain ('generativelanguage.googleapis.com'). "
+                "Third-party gateways (Groq, OpenRouter, Together, etc.) are strictly prohibited."
+            )
+
+        # 3. Model Identifier Check
+        model = (settings.GEMINI_MODEL or "").strip()
+        expected_model = frozen_config["production_llm_config"]["model_snapshot"]
+        if model != expected_model or model != "gemini-3.5-flash":
+            raise ValueError(
+                f"Invalid model snapshot '{model}'. "
+                f"Active protocol strictly requires '{expected_model}'. Alternate models or aliases are prohibited."
+            )
+
+        # 4. Credential Format Safety Check
+        key = (settings.GEMINI_API_KEY or "").strip()
+        if not key:
+            raise ValueError("GEMINI_API_KEY is not configured.")
+
+    def generate_response(
+        self,
+        task_id: str,
+        assigned_arm: str,
+        persona_summary: str,
+        user_prompt: str,
+        conversation_history: List[Dict[str, str]]
+    ) -> Dict[str, Any]:
+        if not settings.LLM_ENABLED:
+            raise RuntimeError("Emergency Kill Switch: LLM_ENABLED is set to False.")
+
+        self.validate_provider_configuration()
+
+        system_prompt = build_system_prompt(assigned_arm, prompt_version="v1.1.0-gemini-frozen")
+        model_name = settings.GEMINI_MODEL
+
+        temperature = frozen_config["production_llm_config"]["temperature"]
+        top_p = frozen_config["production_llm_config"]["top_p"]
+        max_tokens = frozen_config["production_llm_config"]["max_tokens"]
+        timeout_sec = frozen_config["production_llm_config"]["timeout_ms"] / 1000.0
+
+        messages_payload = [{"role": "system", "content": f"{system_prompt}\n\nPersona Context:\n{persona_summary}"}]
+        for turn in conversation_history:
+            messages_payload.append({"role": turn["role"], "content": turn["content"]})
+        messages_payload.append({"role": "user", "content": user_prompt})
+
+        headers = {
+            "Authorization": f"Bearer {settings.GEMINI_API_KEY.strip()}",
+            "Content-Type": "application/json"
+        }
+
+        request_body = {
+            "model": model_name,
+            "messages": messages_payload,
+            "temperature": temperature,
+            "top_p": top_p,
+            "max_tokens": max_tokens
+        }
+
+        endpoint_url = f"{settings.GEMINI_BASE_URL.rstrip('/')}/chat/completions"
+
+        start_time = time.time()
+        retries = 0
+        last_error = None
+
+        for attempt in range(2):
+            try:
+                with httpx.Client(timeout=timeout_sec) as client:
+                    response = client.post(
+                        endpoint_url,
+                        headers=headers,
+                        json=request_body
+                    )
+                
+                latency_ms = int((time.time() - start_time) * 1000)
+
+                if response.status_code == 200:
+                    data = response.json()
+                    choice = data["choices"][0]
+                    reply_text = choice["message"]["content"]
+                    usage = data.get("usage", {})
+                    actual_model = data.get("model", model_name)
+
+                    leakage_flag = detect_language_leakage(assigned_arm, reply_text)
+
+                    return {
+                        "text": reply_text,
+                        "model_snapshot": actual_model,
+                        "system_prompt_version": "v1.1.0-gemini-frozen",
+                        "timestamp": datetime.datetime.now(datetime.UTC).isoformat(),
+                        "latency_ms": latency_ms,
+                        "tokens_used": {
+                            "prompt_tokens": usage.get("prompt_tokens", 0),
+                            "completion_tokens": usage.get("completion_tokens", 0),
+                            "total_tokens": usage.get("total_tokens", 0)
+                        },
+                        "retry_count": retries,
+                        "error_status": None,
+                        "language_leakage_flag": leakage_flag,
+                        "is_mock": False
+                    }
+                
+                if response.status_code >= 500 and attempt == 0:
+                    retries += 1
+                    time.sleep(1.0)
+                    continue
+                else:
+                    raise RuntimeError(f"Google Gemini API error HTTP {response.status_code}: {response.text}")
+
+            except (httpx.TimeoutException, httpx.NetworkError) as net_err:
+                last_error = net_err
+                if attempt == 0:
+                    retries += 1
+                    time.sleep(1.0)
+                    continue
+                else:
+                    raise RuntimeError(f"Google Gemini API network timeout after retry: {str(net_err)}")
+
+        raise RuntimeError(f"Google Gemini API call failed: {str(last_error)}")
