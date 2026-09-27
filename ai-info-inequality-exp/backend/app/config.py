@@ -1,6 +1,7 @@
 import os
 import json
 from pathlib import Path
+from pydantic import ConfigDict
 from pydantic_settings import BaseSettings
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -31,9 +32,10 @@ class Settings(BaseSettings):
     GEMINI_BASE_URL: str = "https://generativelanguage.googleapis.com/v1beta/openai"
     GEMINI_MODEL: str = "gemini-3.5-flash"
 
-    class Config:
-        env_file = [".env", "backend/.env"]
-        extra = "ignore"
+    model_config = ConfigDict(
+        env_file=[".env", "backend/.env"],
+        extra="ignore"
+    )
 
 settings = Settings()
 

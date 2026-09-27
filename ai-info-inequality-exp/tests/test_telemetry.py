@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime, UTC
 import pytest
 from app.db.models import TelemetryEvent
 
@@ -6,7 +6,7 @@ def test_telemetry_event_logging(db, fully_eligible_participant):
     event = TelemetryEvent(
         participant_id=fully_eligible_participant.participant_id,
         task_id="PMEGP",
-        timestamp=datetime.datetime.utcnow(),
+        timestamp=datetime.now(UTC),
         event_type="TAB_FOCUS_CHANGED",
         event_data={"focused": False, "dwell_time_ms": 1240}
     )
