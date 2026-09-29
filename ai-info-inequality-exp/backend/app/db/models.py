@@ -117,6 +117,7 @@ class TaskSession(Base):
     participant = relationship("Participant", back_populates="task_sessions")
     messages = relationship("Message", back_populates="task_session")
     final_decision = relationship("FinalDecision", back_populates="task_session", uselist=False)
+    post_task_measure = relationship("PostTaskMeasure", back_populates="task_session", uselist=False)
 
 class Message(Base):
     __tablename__ = "messages"
@@ -159,7 +160,7 @@ class FinalDecision(Base):
     confidence_score = Column(Integer, nullable=False) # 1 to 7 Likert
     calculated_score = Column(Float, nullable=False) # 0.0 to 10.0
     score_breakdown = Column(JSON, nullable=False)
-    submitted_at = Column(DateTime, default=datetime.datetime.utcnow, nullable=False)
+    submitted_at = Column(DateTime, default=lambda: datetime.datetime.now(datetime.UTC), nullable=False)
 
     task_session = relationship("TaskSession", back_populates="final_decision")
 
@@ -167,11 +168,15 @@ class PostTaskMeasure(Base):
     __tablename__ = "post_task_measures"
 
     measure_id = Column(Integer, primary_key=True, autoincrement=True)
-    participant_id = Column(String(64), ForeignKey("participants.participant_id"), nullable=False, unique=True)
+    participant_id = Column(String(64), ForeignKey("participants.participant_id"), nullable=False)
+    task_session_id = Column(Integer, ForeignKey("task_sessions.session_id"), nullable=False, unique=True)
+    task_id = Column(String(32), nullable=False)
     nasa_tlx_raw = Column(JSON, nullable=False) # 6 items 1-20
     tlx_composite_score = Column(Float, nullable=False)
     feedback_comments = Column(Text, nullable=True)
-    submitted_at = Column(DateTime, default=datetime.datetime.utcnow, nullable=False)
+    submitted_at = Column(DateTime, default=lambda: datetime.datetime.now(datetime.UTC), nullable=False)
+
+    task_session = relationship("TaskSession", back_populates="post_task_measure")
 
 class TechnicalError(Base):
     __tablename__ = "technical_errors"
@@ -182,7 +187,7 @@ class TechnicalError(Base):
     error_type = Column(String(64), nullable=False)
     error_message = Column(Text, nullable=False)
     context_data = Column(JSON, nullable=True)
-    created_at = Column(DateTime, default=datetime.datetime.utcnow, nullable=False)
+    created_at = Column(DateTime, default=lambda: datetime.datetime.now(datetime.UTC), nullable=False)
 
 Index("idx_telemetry_participant", TelemetryEvent.participant_id)
 Index("idx_messages_session", Message.task_session_id)

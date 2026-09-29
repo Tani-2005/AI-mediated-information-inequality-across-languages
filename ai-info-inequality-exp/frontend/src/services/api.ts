@@ -116,12 +116,20 @@ export async function logTelemetryEvent(participantId: string, taskId: string | 
   }
 }
 
-export async function submitPostTaskMeasures(participantId: string, nasaTlxRaw: Record<string, number>, comments?: string) {
+export async function submitPostTaskMeasures(
+  participantId: string,
+  taskSessionId: number,
+  taskId: string,
+  nasaTlxRaw: Record<string, number>,
+  comments?: string
+) {
   const res = await fetch(`${API_BASE}/post-task/submit`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       participant_id: participantId,
+      task_session_id: taskSessionId,
+      task_id: taskId,
       nasa_tlx_raw: nasaTlxRaw,
       feedback_comments: comments,
     }),

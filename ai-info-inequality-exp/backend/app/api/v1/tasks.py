@@ -117,6 +117,7 @@ def submit_final_decision(req: DecisionSubmitRequest, db: Session = Depends(get_
     return {
         "participant_id": req.participant_id,
         "task_id": req.task_id,
+        "task_session_id": task_session.session_id,
         "score_calculated": True,
         "next_position": next_task.position if next_task else None,
         "all_tasks_completed": next_task is None

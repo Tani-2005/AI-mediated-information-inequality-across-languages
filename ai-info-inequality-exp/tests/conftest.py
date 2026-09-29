@@ -9,11 +9,17 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "backend"))
 from app.db.session import Base
 from app.db.models import Participant, ConsentLog, ScreeningLog, LanguageBackground, AILiteracy
 
+from sqlalchemy.pool import StaticPool
+
 TEST_DATABASE_URL = "sqlite:///:memory:"
 
 @pytest.fixture
 def db():
-    engine = create_engine(TEST_DATABASE_URL, connect_args={"check_same_thread": False})
+    engine = create_engine(
+        TEST_DATABASE_URL,
+        connect_args={"check_same_thread": False},
+        poolclass=StaticPool
+    )
     TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
     Base.metadata.create_all(bind=engine)
     session = TestingSessionLocal()

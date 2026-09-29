@@ -91,7 +91,8 @@ def send_chat_message(req: ChatMessageRequest, db: Session = Depends(get_db)):
             event_data={"error_type": "LLM_GENERATION_FAILED", "message": str(e)}
         ))
         db.commit()
-        raise HTTPException(status_code=502, detail=f"AI service unavailable: {str(e)}")
+        detail_msg = "AI service temporarily unavailable." if settings.APP_ENV == "production" else f"AI service unavailable: {str(e)}"
+        raise HTTPException(status_code=502, detail=detail_msg)
 
     reply_text = llm_out["text"]
     tokens_used = llm_out["tokens_used"].get("total_tokens", 0)
@@ -110,6 +111,7 @@ def send_chat_message(req: ChatMessageRequest, db: Session = Depends(get_db)):
         is_mock=llm_out["is_mock"]
     )
     db.add(ai_msg)
+    db.flush()
 
     if leakage_flag:
         db.add(TelemetryEvent(

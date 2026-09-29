@@ -2,8 +2,18 @@ import React, { useState } from 'react';
 
 interface Props {
   participantId: string;
+  taskSessionId: number;
+  taskId: string;
+  taskPosition: number;
+  isLastTask: boolean;
   onPostTaskComplete: () => void;
-  submitPostTaskFn: (pid: string, rawTlx: Record<string, number>, comments?: string) => Promise<any>;
+  submitPostTaskFn: (
+    pid: string,
+    tsid: number,
+    tid: string,
+    rawTlx: Record<string, number>,
+    comments?: string
+  ) => Promise<any>;
 }
 
 const TLX_ITEMS = [
@@ -15,7 +25,15 @@ const TLX_ITEMS = [
   { id: 'frustration', label: 'Frustration', desc: 'How insecure, discouraged, irritated, or annoyed did you feel?' },
 ];
 
-export const S9PostTask: React.FC<Props> = ({ participantId, onPostTaskComplete, submitPostTaskFn }) => {
+export const S9PostTask: React.FC<Props> = ({
+  participantId,
+  taskSessionId,
+  taskId,
+  taskPosition,
+  isLastTask,
+  onPostTaskComplete,
+  submitPostTaskFn,
+}) => {
   const [tlxScores, setTlxScores] = useState<Record<string, number>>({
     mental_demand: 10,
     physical_demand: 2,
@@ -34,7 +52,7 @@ export const S9PostTask: React.FC<Props> = ({ participantId, onPostTaskComplete,
     setError(null);
 
     try {
-      await submitPostTaskFn(participantId, tlxScores, comments);
+      await submitPostTaskFn(participantId, taskSessionId, taskId, tlxScores, comments);
       onPostTaskComplete();
     } catch (err: any) {
       setError(err.message || 'Failed to submit post-task measures.');
@@ -44,11 +62,17 @@ export const S9PostTask: React.FC<Props> = ({ participantId, onPostTaskComplete,
 
   return (
     <div className="max-w-3xl mx-auto p-6 bg-slate-800 rounded-xl shadow-2xl border border-slate-700 my-8 space-y-6">
-      <h2 className="text-2xl font-bold text-sky-400">
-        Post-Task Measures (Raw NASA-TLX)
-      </h2>
+      <div className="flex justify-between items-center border-b border-slate-700 pb-4">
+        <div>
+          <span className="text-xs font-mono uppercase text-sky-400">Task {taskPosition} of 3 Workload Assessment</span>
+          <h2 className="text-2xl font-bold text-slate-100">
+            Post-Task Workload (Raw NASA-TLX) — {taskId}
+          </h2>
+        </div>
+      </div>
+
       <p className="text-sm text-slate-300">
-        Please rate your overall workload across the 3 tasks on a scale from 1 (Very Low) to 20 (Very High).
+        Please rate your workload specifically for <strong>{taskId}</strong> on a scale from 1 (Very Low) to 20 (Very High).
       </p>
 
       {error && <div className="p-3 bg-rose-900/50 text-rose-300 rounded text-sm border border-rose-700">{error}</div>}
@@ -73,12 +97,12 @@ export const S9PostTask: React.FC<Props> = ({ participantId, onPostTaskComplete,
         ))}
 
         <div className="p-4 bg-slate-900 rounded-lg border border-slate-700 space-y-2">
-          <label className="block text-sm font-semibold text-slate-200">Optional Overall Feedback / Comments</label>
+          <label className="block text-sm font-semibold text-slate-200">Optional Task Feedback / Comments</label>
           <textarea
             rows={3}
             value={comments}
             onChange={(e) => setComments(e.target.value)}
-            placeholder="Share any comments about your experience using the AI assistant..."
+            placeholder={`Share any specific comments about completing task ${taskId}...`}
             className="w-full p-2 bg-slate-950 border border-slate-800 rounded text-xs text-white"
           />
         </div>
@@ -88,9 +112,11 @@ export const S9PostTask: React.FC<Props> = ({ participantId, onPostTaskComplete,
           disabled={loading}
           className="w-full py-3 px-6 bg-sky-600 hover:bg-sky-500 disabled:bg-slate-700 text-white font-semibold rounded-lg shadow-lg transition duration-200"
         >
-          {loading ? 'Submitting Workload Measures...' : 'Complete Study & View Debrief'}
+          {loading ? 'Submitting Workload Measures...' : isLastTask ? 'Submit & Proceed to Final Debrief' : 'Submit & Proceed to Next Task'}
         </button>
       </form>
     </div>
   );
 };
+
+export default S9PostTask;

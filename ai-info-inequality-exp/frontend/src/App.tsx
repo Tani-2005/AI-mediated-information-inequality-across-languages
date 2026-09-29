@@ -29,6 +29,8 @@ export const App: React.FC = () => {
   const [assignedArm, setAssignedArm] = useState<string>('ENGLISH_ONLY');
   const [taskOrder, setTaskOrder] = useState<string[]>(['PMEGP', 'PM_VISHWAKARMA', 'PM_SVANIDHI']);
   const [currentTaskIndex, setCurrentTaskIndex] = useState<number>(0);
+  const [activeTaskSessionId, setActiveTaskSessionId] = useState<number | null>(null);
+  const [isCurrentTaskLast, setIsCurrentTaskLast] = useState<boolean>(false);
 
   const currentTaskId = step === 'S678_TASKS' ? taskOrder[currentTaskIndex] : null;
 
@@ -73,23 +75,26 @@ export const App: React.FC = () => {
     setStep('S678_TASKS');
   };
 
-  const handleTaskCompleted = (allDone: boolean) => {
-    if (allDone || currentTaskIndex >= taskOrder.length - 1) {
-      setStep('S9_POST_TASK');
-    } else {
-      setCurrentTaskIndex((prev) => prev + 1);
-    }
+  const handleTaskCompleted = (result: { taskSessionId: number; taskId: string; position: number; isLastTask: boolean }) => {
+    setActiveTaskSessionId(result.taskSessionId);
+    setIsCurrentTaskLast(result.isLastTask);
+    setStep('S9_POST_TASK');
   };
 
   const handlePostTaskComplete = () => {
-    setStep('S10_DEBRIEF');
+    if (isCurrentTaskLast || currentTaskIndex >= taskOrder.length - 1) {
+      setStep('S10_DEBRIEF');
+    } else {
+      setCurrentTaskIndex((prev) => prev + 1);
+      setStep('S678_TASKS');
+    }
   };
 
   return (
     <div className="min-h-screen bg-slate-900 text-slate-100 font-sans flex flex-col">
       {/* HEADER BAR */}
       <header className="py-3 px-6 bg-slate-950 border-b border-slate-800 flex justify-between items-center text-xs">
-        <span className="font-bold text-sky-400">AI-Mediated Information Seeking RCT (Protocol v1.0.0-frozen)</span>
+        <span className="font-bold text-sky-400">AI-Mediated Information Seeking RCT (Protocol v1.1.0-gemini-frozen)</span>
         {participantId && (
           <span className="text-slate-400 font-mono">
             PID: {participantId.substring(0, 14)}... | Status: <strong className="text-emerald-400">{step}</strong>
@@ -145,9 +150,13 @@ export const App: React.FC = () => {
           />
         )}
 
-        {step === 'S9_POST_TASK' && participantId && (
+        {step === 'S9_POST_TASK' && participantId && activeTaskSessionId && (
           <S9PostTask
             participantId={participantId}
+            taskSessionId={activeTaskSessionId}
+            taskId={taskOrder[currentTaskIndex]}
+            taskPosition={currentTaskIndex + 1}
+            isLastTask={isCurrentTaskLast}
             onPostTaskComplete={handlePostTaskComplete}
             submitPostTaskFn={submitPostTaskMeasures}
           />

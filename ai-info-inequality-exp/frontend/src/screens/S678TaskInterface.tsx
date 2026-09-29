@@ -7,7 +7,7 @@ interface Props {
   taskId: string;
   position: number;
   assignedArm: string;
-  onTaskCompleted: (allDone: boolean) => void;
+  onTaskCompleted: (taskResult: { taskSessionId: number; taskId: string; position: number; isLastTask: boolean }) => void;
 }
 
 export const S678TaskInterface: React.FC<Props> = ({
@@ -108,7 +108,12 @@ export const S678TaskInterface: React.FC<Props> = ({
         confidence_score: confidenceScore,
       });
 
-      onTaskCompleted(res.all_tasks_completed);
+      onTaskCompleted({
+        taskSessionId: res.task_session_id,
+        taskId: taskId,
+        position: position,
+        isLastTask: res.all_tasks_completed
+      });
     } catch (err: any) {
       setError(err.message || 'Failed to submit task decision.');
       setSubmitting(false);

@@ -19,6 +19,11 @@ class Settings(BaseSettings):
     DATABASE_URL: str = f"sqlite:///{BASE_DIR}/backend/experiment.db"
     EXPERIMENT_CONFIG_PATH: str = str(CONFIG_PATH)
     
+    # Security & Rate Limiting
+    RATE_LIMIT_ENABLED: bool = True
+    RATE_LIMIT_PER_MINUTE: int = 10
+    ADMIN_API_KEY: str = ""
+
     # Provider Hardening
     LLM_PROVIDER: str = "gemini"
     
@@ -38,6 +43,30 @@ class Settings(BaseSettings):
     )
 
 settings = Settings()
+
+def validate_production_config():
+    """
+    Production security & configuration validation.
+    Strictly prevents starting production in insecure, mock, or unencrypted states.
+    """
+    if settings.APP_ENV == "production":
+        # 1. Reject mock mode in production
+        if settings.USE_MOCK_LLM:
+            raise ValueError("Production configuration error: USE_MOCK_LLM=True is prohibited in production.")
+
+        # 2. Reject missing Gemini API key when LLM is enabled
+        if settings.LLM_ENABLED and not settings.GEMINI_API_KEY:
+            raise ValueError("Production configuration error: GEMINI_API_KEY is not configured.")
+
+        # 3. Reject SQLite database in production
+        if "sqlite" in settings.DATABASE_URL.lower():
+            raise ValueError("Production configuration error: SQLite DATABASE_URL is prohibited in production.")
+
+        # 4. Reject wildcard or localhost CORS origins in production
+        origins = [o.strip().lower() for o in settings.CORS_ALLOWED_ORIGINS.split(",") if o.strip()]
+        for o in origins:
+            if o == "*" or "localhost" in o or "127.0.0.1" in o:
+                raise ValueError(f"Production configuration error: Insecure CORS origin '{o}' is prohibited in production.")
 
 def load_experiment_config():
     with open(settings.EXPERIMENT_CONFIG_PATH, "r", encoding="utf-8") as f:

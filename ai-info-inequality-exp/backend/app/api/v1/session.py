@@ -5,6 +5,8 @@ from pydantic import BaseModel
 from app.db.session import get_db
 from app.db.models import Participant, TaskSession
 
+from app.core.rate_limit import enforce_rate_limit
+
 router = APIRouter(prefix="/session", tags=["Session"])
 
 class SessionCreateRequest(BaseModel):
@@ -15,7 +17,7 @@ class SessionResponse(BaseModel):
     status: str
     is_pilot: bool
 
-@router.post("/create", response_model=SessionResponse)
+@router.post("/create", response_model=SessionResponse, dependencies=[Depends(enforce_rate_limit)])
 def create_session(req: SessionCreateRequest, request: Request, db: Session = Depends(get_db)):
     client_ip = request.client.host if request.client else "127.0.0.1"
     ip_hash = hashlib.sha256(f"{client_ip}_SALT_2026".encode()).hexdigest()
