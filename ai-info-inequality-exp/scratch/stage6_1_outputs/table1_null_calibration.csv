@@ -1,0 +1,2 @@
+Condition,Replicates,H1_alpha_pct,H2_alpha_pct,FWER_alpha_pct,H3_alpha_pct,Convergence_pct
+World 1 — Null World,5000,2.86% [2.43%-3.36%],3.04% [2.60%-3.55%],2.72% [2.30%-3.21%],4.60% [3.47%-6.08%],100.0%

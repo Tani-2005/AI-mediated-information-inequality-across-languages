@@ -1,0 +1,5 @@
+Attrition_Mechanism,Mean_Retained_Obs,Est_C1_CompleteCase,Bias,Replacement_Effect
+A1 — MCAR (Random 10%),388,1.418,-0.082,Sequential recruitment restores target N=144 analyzable sets; minor selection bias under combined attrition.
+A2 — Language-Dependent (Hindi +15%),388,1.415,-0.085,Sequential recruitment restores target N=144 analyzable sets; minor selection bias under combined attrition.
+A3 — AILS-Dependent (Low AILS +15%),379,1.41,-0.09,Sequential recruitment restores target N=144 analyzable sets; minor selection bias under combined attrition.
+A4 — Combined Differential Attrition,375,1.41,-0.09,Sequential recruitment restores target N=144 analyzable sets; minor selection bias under combined attrition.

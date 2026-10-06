@@ -34,8 +34,9 @@ def initialize_tasks(req: InitializeTasksRequest, db: Session = Depends(get_db))
     if existing_tasks:
         return {"status": "ALREADY_INITIALIZED", "count": len(existing_tasks)}
 
-    # Select Latin Square Order balanced across participant IDs
-    order_id = (hash(req.participant_id) % 3) + 1
+    import hashlib
+    # Select Latin Square Order deterministically balanced across participant IDs using MD5
+    order_id = (int(hashlib.md5(req.participant_id.encode("utf-8")).hexdigest(), 16) % 3) + 1
     scenario_order = LATIN_SQUARES[order_id]
 
     created_sessions = []

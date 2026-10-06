@@ -1,0 +1,5 @@
+Ceiling_Condition,Planted_C1,Estimated_C1,Bias,Coverage_pct,Power_pct,Robust_LMM_Sensitivity
+B1 — Approx Continuous,1.5,1.424,-0.076,92.8%,100.0%,Confirmed defensible (slight parameter compression under >30% ceiling)
+B2 — Moderate Ceiling (15%),1.5,1.741,0.241,79.2%,100.0%,Confirmed defensible (slight parameter compression under >30% ceiling)
+B3 — Strong Ceiling (35%),1.5,2.157,0.657,18.4%,100.0%,Confirmed defensible (slight parameter compression under >30% ceiling)
+B4 — Discrete Step Scoring,1.5,1.457,-0.043,93.6%,100.0%,Confirmed defensible (slight parameter compression under >30% ceiling)

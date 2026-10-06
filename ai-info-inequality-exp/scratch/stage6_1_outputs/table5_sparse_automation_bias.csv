@@ -1,0 +1,8 @@
+Target_Event_Rate,Mean_Total_Events,Separation_Rate_pct,Firth_Fallback_Required,OR_Stability_Status
+0.5%,2.3,85.2%,YES,UNSTABLE (<2% rate)
+1.0%,4.5,54.4%,YES,UNSTABLE (<2% rate)
+2.0%,8.8,17.4%,YES,MODERATE
+3.0%,12.9,3.8%,NO,MODERATE
+5.0%,21.9,0.4%,NO,STABLE
+10.0%,43.0,0.0%,NO,STABLE
+20.0%,85.8,0.0%,NO,STABLE

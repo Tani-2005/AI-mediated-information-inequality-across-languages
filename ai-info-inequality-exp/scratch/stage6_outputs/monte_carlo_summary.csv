@@ -1,0 +1,7 @@
+world,name,planted_c1,est_c1,bias_c1,rmse_c1,coverage_c1_pct,power_c1_pct,planted_c2,est_c2,power_c2_pct,planted_h3,est_h3,power_h3_pct,mean_dispersion_phi,nb_trigger_pct,separation_pct
+world1,World 1 — Null World (Type-I Error Test),0.0,0.047,0.047,0.263,100.0,0.0,0.0,0.003,0.0,0.0,0.0019,0.0,0.99,0.0,0.0
+world2,World 2 — H1/H2 Effect World (Planted Main Effects),1.5,1.517,0.017,0.259,100.0,100.0,1.2,1.189,100.0,0.0,0.0004,0.0,0.99,0.0,0.0
+world3,World 3 — H3 Moderation World (Planted Interaction),1.2,1.22,0.02,0.333,80.0,100.0,1.0,1.008,100.0,0.08,0.0762,80.0,0.99,0.0,0.0
+world4,World 4 — Bounded / Ceiling World (Boundary Robustness),1.5,1.739,0.239,0.261,80.0,100.0,1.2,1.551,100.0,0.0,-0.0195,20.0,1.01,0.0,0.0
+world5,World 5 — Sparse Automation-Bias World (GLMM Separation Check),1.0,0.998,-0.002,0.249,100.0,100.0,0.8,0.772,100.0,0.0,0.0008,0.0,0.99,0.0,0.0
+world6,"World 6 — Full Stress World (Overdispersion, Speeding & Leakage)",1.4,1.465,0.065,0.206,100.0,100.0,1.1,1.191,100.0,0.0,-0.0104,20.0,5.12,100.0,0.0
