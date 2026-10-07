@@ -193,7 +193,7 @@ def run_h3_rep(args):
         mod = smf.mixedlm("decision_quality ~ C(arm, Treatment('HINDI_ONLY')) * ails_centered + C(scenario) + C(position)", data=df, groups=df["participant_id"])
         res = mod.fit(reml=True, disp=False)
         b = res.params.get("C(arm, Treatment('HINDI_ONLY'))[T.ENGLISH_ONLY]:ails_centered", 0.0)
-        se = res.bse.get("C(arm, Treatment('HINDI_ONLY'))[T.ENGLISH_ONLY]", 0.0)
+        se = res.bse.get("C(arm, Treatment('HINDI_ONLY'))[T.ENGLISH_ONLY]:ails_centered", 0.0)
         p = res.pvalues.get("C(arm, Treatment('HINDI_ONLY'))[T.ENGLISH_ONLY]:ails_centered", 1.0)
         return {"b": b, "se": se, "p": p, "success": True}
     except Exception:
