@@ -73,9 +73,18 @@ class LanguageBackground(Base):
     ai_use_en = Column(Float, nullable=False)
     ai_use_hi = Column(Float, nullable=False)
     ai_use_mixed = Column(Float, nullable=False)
-    completed_at = Column(DateTime, default=lambda: datetime.datetime.now(datetime.UTC), nullable=False)
-
     participant = relationship("Participant", back_populates="language_bg")
+
+    @property
+    def language_dominance_index(self) -> float:
+        """
+        Frozen Stage 4 / Stage 7 measurement specification:
+        LanguageDominanceIndex = mean(English proficiency) - mean(Hindi proficiency)
+        Range: [-9.0, +9.0]
+        """
+        mean_en = (self.self_read_en + self.self_write_en + self.self_speak_en) / 3.0
+        mean_hi = (self.self_read_hi + self.self_write_hi + self.self_speak_hi) / 3.0
+        return round(float(mean_en - mean_hi), 4)
 
 class AILiteracy(Base):
     __tablename__ = "ai_literacy"
