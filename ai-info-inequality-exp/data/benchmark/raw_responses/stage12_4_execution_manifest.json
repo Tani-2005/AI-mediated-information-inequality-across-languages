@@ -1,0 +1,64 @@
+{
+  "manifest_version": "v1.0-dry-run",
+  "benchmark_version": "v1.0-frozen",
+  "execution_timestamp": "2026-10-08T04:30:14.756850+00:00",
+  "selected_task_ids": [
+    "HLT-001",
+    "HLT-002",
+    "EDU-001",
+    "EDU-002",
+    "PUB-001",
+    "PUB-002",
+    "PUB-003",
+    "FIN-001",
+    "FIN-002",
+    "FIN-003",
+    "GEN-001",
+    "GEN-002"
+  ],
+  "repetition_task_ids": [
+    "HLT-001",
+    "PUB-001",
+    "FIN-001"
+  ],
+  "language_conditions": [
+    "ENGLISH",
+    "HINDI",
+    "CODE_SWITCHING"
+  ],
+  "models": [
+    {
+      "model_key": "gemini-3.5-flash",
+      "provider": "Google",
+      "exact_model_identifier": "gemini-3.5-flash-202610",
+      "snapshot": "3.5-flash-05-2026"
+    },
+    {
+      "model_key": "gpt-4o",
+      "provider": "OpenAI",
+      "exact_model_identifier": "gpt-4o-2024-08-06",
+      "snapshot": "gpt-4o-2024-08-06"
+    },
+    {
+      "model_key": "claude-3.5-sonnet",
+      "provider": "Anthropic",
+      "exact_model_identifier": "claude-3-5-sonnet-20241022",
+      "snapshot": "claude-3-5-sonnet-20241022"
+    },
+    {
+      "model_key": "llama-3.1-70b",
+      "provider": "Meta",
+      "exact_model_identifier": "llama-3.1-70b-instruct-v1",
+      "snapshot": "llama-3.1-70b-instruct"
+    }
+  ],
+  "generation_parameters": {
+    "temperature": 0.2,
+    "top_p": 1.0,
+    "max_tokens": 1000
+  },
+  "primary_expected_responses": 144,
+  "repetition_test_expected_responses": 36,
+  "total_expected_responses": 180,
+  "execution_manifest_hash": "2f72ffd08ede46685f7559c304489c6e2d4d0737cd3ffdab9fdeda715d20ed54"
+}

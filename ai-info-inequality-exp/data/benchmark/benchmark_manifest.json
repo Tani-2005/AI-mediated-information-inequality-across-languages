@@ -1,0 +1,28 @@
+{
+  "benchmark_version": "v1.0-frozen",
+  "title": "LINGUA-AUDIT: Multilingual AI Information Inequality Benchmark",
+  "creation_date": "2026-10-07",
+  "source_cutoff_date": "2026-10-01",
+  "schema_version": "v1.1",
+  "task_count": 150,
+  "domain_count": 5,
+  "language_count": 3,
+  "language_conditions": ["ENGLISH", "HINDI", "CODE_SWITCHING"],
+  "domain_distribution": {
+    "Healthcare": 30,
+    "Education": 30,
+    "Public_Services": 30,
+    "Finance": 30,
+    "General_Knowledge": 30
+  },
+  "domain_taxonomies": {
+    "Healthcare": ["Prevention", "Symptoms_Info", "Treatment_Guidelines", "Medication_Safety", "Public_Health_Policy", "Healthcare_Access"],
+    "Education": ["Admissions", "Scholarships", "Eligibility", "Procedures", "Deadlines", "Education_Policy", "Documentation"],
+    "Public_Services": ["Entitlements", "Application_Procedures", "Required_Documentation", "Benefits", "Deadlines", "Government_Schemes", "Service_Access"],
+    "Finance": ["Consumer_Banking", "Regulated_Information", "Microfinance", "Taxes", "Government_Financial_Schemes", "Interest_Caps", "Consumer_Rights"],
+    "General_Knowledge": ["Science", "History", "Geography", "Technology", "Society_Culture", "Civic_Literacy"]
+  },
+  "semantic_review_status": "VERIFIED_FROZEN",
+  "ground_truth_status": "AUTHORITATIVE_FREEZE",
+  "deterministic_validation_status": "PASSED"
+}

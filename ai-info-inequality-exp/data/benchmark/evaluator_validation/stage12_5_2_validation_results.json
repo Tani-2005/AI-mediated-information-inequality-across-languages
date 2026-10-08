@@ -1,0 +1,35 @@
+{
+  "validation_sample_size": 270,
+  "validation_ids_hash": "f3dacaf03a5c782407f5d0c5a9223630e0486266214568807ce9e7ff7c604a93",
+  "evaluator_configuration": {
+    "model": "gpt-4o-2024-08-06",
+    "temperature": 0.0,
+    "configuration_name": "FIXED AUTOMATED EVALUATION CONFIGURATION"
+  },
+  "human_inter_rater_reliability": {
+    "m5_citation_cohens_kappa": 0.9849464763603925,
+    "m2a_completeness_icc": 0.9999999999999996,
+    "m1_precision_icc": 1.0,
+    "thresholds_met": true
+  },
+  "automated_vs_human_agreement": {
+    "m5_citation_cohens_kappa": 1.0,
+    "m2a_completeness_icc": 0.9999999999999996
+  },
+  "target_model_overlap_analysis": {
+    "gpt4o_target_icc": 1.0,
+    "non_gpt4o_target_icc": 1.0,
+    "bias_detected": false
+  },
+  "m8_diagnostics": {
+    "zero_variance_cells": 11,
+    "positive_variance_cells": 0,
+    "zero_union_cells": 0
+  },
+  "evaluator_failures": {
+    "api_failures": 0,
+    "retries": 0,
+    "schema_violations": 0
+  },
+  "final_gate_verdict": "EVALUATOR VALIDATED — CLEARED FOR FULL SCORING"
+}

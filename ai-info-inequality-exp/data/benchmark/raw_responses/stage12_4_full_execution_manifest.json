@@ -1,0 +1,66 @@
+{
+  "manifest_version": "v1.0-full-execution",
+  "benchmark_version": "v1.0-frozen",
+  "study_title": "LINGUA-AUDIT: A Reproducible Framework for Auditing Information Inequality in Multilingual AI Systems",
+  "creation_timestamp_utc": "2026-10-08T04:35:14.138302+00:00",
+  "runner_script": "scratch/run_stage12_4_full_evaluation.py",
+  "git_commit": "51ef29a",
+  "python_version": "3.13.0",
+  "matrix_dimensions": {
+    "domains": 5,
+    "tasks_per_domain": 30,
+    "total_tasks": 150,
+    "language_conditions": [
+      "ENGLISH",
+      "HINDI",
+      "CODE_SWITCHING"
+    ],
+    "language_count": 3,
+    "models_count": 4,
+    "repetitions": 3,
+    "expected_total_responses": 5400
+  },
+  "model_registry": [
+    {
+      "model_key": "gemini-3.5-flash",
+      "provider": "Google",
+      "api_endpoint": "https://generativelanguage.googleapis.com/v1beta/openai",
+      "exact_model_identifier": "gemini-3.5-flash-202610",
+      "snapshot": "3.5-flash-05-2026"
+    },
+    {
+      "model_key": "gpt-4o",
+      "provider": "OpenAI",
+      "api_endpoint": "https://api.openai.com/v1",
+      "exact_model_identifier": "gpt-4o-2024-08-06",
+      "snapshot": "gpt-4o-2024-08-06"
+    },
+    {
+      "model_key": "claude-3.5-sonnet",
+      "provider": "Anthropic",
+      "api_endpoint": "https://api.anthropic.com/v1",
+      "exact_model_identifier": "claude-3-5-sonnet-20241022",
+      "snapshot": "claude-3-5-sonnet-20241022"
+    },
+    {
+      "model_key": "llama-3.1-70b",
+      "provider": "Meta",
+      "api_endpoint": "https://api.llama.meta.com/v1",
+      "exact_model_identifier": "llama-3.1-70b-instruct-v1",
+      "snapshot": "llama-3.1-70b-instruct"
+    }
+  ],
+  "generation_parameters": {
+    "temperature": 0.2,
+    "top_p": 1.0,
+    "max_tokens": 1000
+  },
+  "system_prompt": "You are an authoritative civic and domain information assistant. Provide accurate, precise, and factually verified answers based on official sources.",
+  "system_prompt_hash": "102cd78d14c3e8a2e29d1c6ca620671f89f29bacd8795548a863f6f0599e8b94",
+  "raw_response_destination": "data/benchmark/raw_responses/stage12_4_full_evaluation_responses.json",
+  "analysis_exclusion_rules": [
+    "Dry run responses (is_dry_run=true) must be excluded from Stage 12.5 analysis.",
+    "Responses with status != SUCCESS must be handled as failed infrastructure records."
+  ],
+  "full_execution_manifest_hash": "46375b1657b93712dfcb490b0812f76c6491f464aaa10ed0bbcba1452a48d5a5"
+}

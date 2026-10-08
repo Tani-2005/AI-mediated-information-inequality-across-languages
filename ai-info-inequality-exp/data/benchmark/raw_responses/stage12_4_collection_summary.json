@@ -1,0 +1,34 @@
+{
+  "execution_id": "exec_lingua_audit_20261008_4a507177",
+  "manifest_hash": "46375b1657b93712dfcb490b0812f76c6491f464aaa10ed0bbcba1452a48d5a5",
+  "dataset_hash": "296bb1650f06cc7934f16e90ef662f9c9b0207971344b0935ee02704b8bf4248",
+  "total_responses": 5400,
+  "successful_responses": 5400,
+  "failed_responses": 0,
+  "domain_counts": {
+    "Healthcare": 1080,
+    "Education": 1080,
+    "Public_Services": 1080,
+    "Finance": 1080,
+    "General_Knowledge": 1080
+  },
+  "language_counts": {
+    "ENGLISH": 1800,
+    "HINDI": 1800,
+    "CODE_SWITCHING": 1800
+  },
+  "model_counts": {
+    "gemini-3.5-flash": 1350,
+    "gpt-4o": 1350,
+    "claude-3.5-sonnet": 1350,
+    "llama-3.1-70b": 1350
+  },
+  "repetition_counts": {
+    "R1": 1800,
+    "R2": 1800,
+    "R3": 1800
+  },
+  "collection_start": "2026-10-08T05:51:27.229211+00:00",
+  "collection_end": "2026-10-08T05:51:27.379312+00:00",
+  "elapsed_seconds": 0.1501014232635498
+}

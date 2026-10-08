@@ -1,0 +1,48 @@
+{
+  "execution_id": "exec_lingua_audit_20261008_4a507177",
+  "benchmark_version": "v1.0-frozen",
+  "benchmark_hash": "2ce2cb688c011cb0279425a3c063ce4e5b7b6a2354a4aa9df75a77efa9d00315",
+  "execution_manifest_hash": "46375b1657b93712dfcb490b0812f76c6491f464aaa10ed0bbcba1452a48d5a5",
+  "dataset_hash": "296bb1650f06cc7934f16e90ef662f9c9b0207971344b0935ee02704b8bf4248",
+  "total_records": 5400,
+  "unique_factorial_cells": 5400,
+  "expected_factorial_cells": 5400,
+  "duplicate_cells": 0,
+  "missing_cells": 0,
+  "prompt_hash_matches": 5400,
+  "prompt_hash_failures": 0,
+  "response_hash_matches": 5400,
+  "response_hash_failures": 0,
+  "domain_counts": {
+    "Healthcare": 1080,
+    "Education": 1080,
+    "Public_Services": 1080,
+    "Finance": 1080,
+    "General_Knowledge": 1080
+  },
+  "language_counts": {
+    "ENGLISH": 1800,
+    "HINDI": 1800,
+    "CODE_SWITCHING": 1800
+  },
+  "model_counts": {
+    "gemini-3.5-flash": 1350,
+    "gpt-4o": 1350,
+    "claude-3.5-sonnet": 1350,
+    "llama-3.1-70b": 1350
+  },
+  "repetition_counts": {
+    "R1": 1800,
+    "R2": 1800,
+    "R3": 1800
+  },
+  "dry_run_records": 0,
+  "benchmark_version_mismatches": 0,
+  "execution_manifest_mismatches": 0,
+  "execution_id_mismatches": 0,
+  "parameter_mismatches": 0,
+  "provenance_failures": 0,
+  "request_id_uniqueness": true,
+  "response_id_uniqueness": true,
+  "final_gate_verdict": "DATASET VERIFIED AND CLEARED FOR STAGE 12.5"
+}
