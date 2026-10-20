@@ -1,0 +1,34 @@
+{
+  "manifest_name": "STAGE_12_5_2_QUARANTINE_MANIFEST",
+  "created_at": "2026-10-10T16:10:00+05:30",
+  "audit_reference": "Stage 12.5.2A Evaluator Validation Provenance & Anti-Leakage Audit",
+  "quarantine_status": "ACTIVE",
+  "policy": "DO_NOT_CONSUME_IN_SCORING_OR_ESTIMATION",
+  "description": "These artifacts were found to contain synthetically manufactured human annotations, unexecuted LLM evaluators, cloned cross-evaluator records, and invalid agreement statistics. They are preserved strictly for forensic provenance and audit reproducibility, but are quarantined to prevent any downstream pipeline from consuming them as empirical truth.",
+  "quarantined_artifacts": [
+    {
+      "path": "scratch/run_stage12_5_2_evaluator_validation.py",
+      "sha256": "fd592db18e3d8373c5b72d3c9320044d19a0a52d2dd7860065bce71ac8ff7946",
+      "classification": "INVALID_SYNTHETIC_SIMULATION_SCRIPT",
+      "reason": "Simulated evaluation with keyword matching and cloned in-memory human references (dict(eval_record)) with manual index perturbations."
+    },
+    {
+      "path": "data/benchmark/evaluator_validation/stage12_5_2_validation_results.json",
+      "sha256": "0e9715faffabf1c9c6ff7a2f255ad5cf47e27e4e512e63f568da38251d2bcfa7",
+      "classification": "INVALID_SYNTHETIC_RESULTS",
+      "reason": "Reports mathematical artifacts of cloned identities as empirical ICC=1.0000 and manufactured Cohen's kappa=0.9849."
+    },
+    {
+      "path": "stage12_5_2_evaluator_validation_report.md",
+      "sha256": "f14d42b262cf8414d8b9956cb1596770ca1d1c7e48e8f993827eb2b0256b2418",
+      "classification": "INVALID_VALIDATION_REPORT",
+      "reason": "Claims dual independent human annotation and API execution that did not occur."
+    },
+    {
+      "path": "docs/stage12_5_2_evaluator_validation_report.md",
+      "sha256": "f14d42b262cf8414d8b9956cb1596770ca1d1c7e48e8f993827eb2b0256b2418",
+      "classification": "INVALID_VALIDATION_REPORT_MIRROR",
+      "reason": "Identical mirror of invalid validation report."
+    }
+  ]
+}

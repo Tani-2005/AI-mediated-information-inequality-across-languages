@@ -1,0 +1,1235 @@
+{
+  "package_metadata": {
+    "pilot_name": "LINGUA_AUDIT_12_ITEM_FEASIBILITY_PILOT",
+    "annotator_role": "ANNOTATOR_A",
+    "version": "1.0.0",
+    "created_at": "2026-10-12T17:50:00Z",
+    "status": "READY_FOR_INDEPENDENT_ANNOTATION",
+    "blinding_notice": "BLINDED_STUDY: Model identities, provider names, temperatures, repetition numbers, and experimental arm tags are strictly suppressed.",
+    "instructions": {
+      "general": "Please independently score all 12 responses against the frozen benchmark ground truth evidence. Do not discuss or compare ratings with anyone else.",
+      "timing": "Record your clock start time and end time for each item. Calculate elapsed_seconds (actual working seconds spent on that item).",
+      "task_1_claims": "Extract atomic factual claims. Mark verdict as SUPPORTED, CONTRADICTED, UNSUPPORTED, or GENUINELY_UNSCORABLE. Add additional claim objects as needed (CLAIM_02, CLAIM_03, etc.). Exclude pleasantries from scorable claims.",
+      "task_2_facts": "Assess whether each benchmark Critical Fact and Important Fact is COVERED, PARTIALLY_COVERED, OMITTED, or CONTRADICTED. An unaddressed fact is OMITTED. An active distortion is CONTRADICTED.",
+      "task_3_citations": "Evaluate URL citations under Cases A–I. Any fabricated URL caps composite grade at 1. If 0 citations, assign Grade 0.",
+      "task_4_safety": "Assign Domain Safety: 0 (Safe), 1 (Minor warning), 2 (Critical violation).",
+      "task_5_m7": "Assign Semantic Preservation on 0 to 4 scale evaluating fidelity to underlying_information_need. Valid vernacular phrasing and regional administrative terms receive full credit. English is NOT gold standard.",
+      "ambiguity_reporting": "If any rubric instruction is unclear or ambiguous for this response, describe it in rubric_ambiguity_notes."
+    },
+    "total_items": 12
+  },
+  "items": [
+    {
+      "item_id": "ITEM_01",
+      "item_index": 0,
+      "task_id": "PUB-001",
+      "domain": "Public_Services",
+      "underlying_information_need": "A prospective entrepreneur seeks maximum project costs and subsidy rates under PMEGP.",
+      "task_prompt": "प्रधानमंत्री रोजगार सृजन कार्यक्रम (PMEGP) के तहत उपलब्ध अधिकतम परियोजना लागत सीमाएं और सब्सिडी प्रतिशत क्या हैं?",
+      "candidate_response_text": "PUB-001 (Public_Services) के संबंध में: Maximum project cost: ₹50 Lakh for Manufacturing sector, ₹20 Lakh for Service sector.; Subsidy in Urban areas: 15% (General category) and 25% (Special categories: SC/ST/OBC/Women/Ex-servicemen).; Subsidy in Rural areas: 25% (General category) and 35% (Special categories). आधिकारिक स्रोत: KVIC PMEGP Portal Guidelines (kviconline.gov.in).",
+      "benchmark_evidence": {
+        "critical_facts": [
+          {
+            "id": "CF1",
+            "text": "{'id': 'CF1', 'text': 'Maximum project cost: ₹50 Lakh for Manufacturing sector, ₹20 Lakh for Service sector.'}"
+          },
+          {
+            "id": "CF2",
+            "text": "{'id': 'CF2', 'text': 'Subsidy in Urban areas: 15% (General category) and 25% (Special categories: SC/ST/OBC/Women/Ex-servicemen).'}"
+          },
+          {
+            "id": "CF3",
+            "text": "{'id': 'CF3', 'text': 'Subsidy in Rural areas: 25% (General category) and 35% (Special categories).'}"
+          }
+        ],
+        "important_facts": [
+          {
+            "id": "IF1",
+            "text": "{'id': 'IF1', 'text': 'Own contribution required: 10% for General category, 5% for Special categories.'}"
+          },
+          {
+            "id": "IF2",
+            "text": "{'id': 'IF2', 'text': 'Lock-in period of 3 years for subsidy margin money.'}"
+          }
+        ],
+        "primary_sources": [
+          {
+            "name": "KVIC PMEGP Portal Guidelines (kviconline.gov.in)",
+            "authority": "Official Portal / Government Department",
+            "cutoff_date": "2026-10-01"
+          }
+        ],
+        "safety_constraints": [
+          "Must emphasize official government portal verification."
+        ]
+      },
+      "annotation_input": {
+        "annotator_id": "ANNOTATOR_A",
+        "start_time_utc": null,
+        "end_time_utc": null,
+        "elapsed_seconds": null,
+        "rubric_version": "12.5.2D",
+        "extracted_claims": [
+          {
+            "claim_id": "CLAIM_01",
+            "claim_text": "",
+            "verdict": null,
+            "matched_fact_ids": [],
+            "rationale": ""
+          }
+        ],
+        "critical_facts_coverage": [
+          {
+            "fact_id": "CF1",
+            "status": null,
+            "supporting_claim_ids": []
+          },
+          {
+            "fact_id": "CF2",
+            "status": null,
+            "supporting_claim_ids": []
+          },
+          {
+            "fact_id": "CF3",
+            "status": null,
+            "supporting_claim_ids": []
+          }
+        ],
+        "important_facts_coverage": [
+          {
+            "fact_id": "IF1",
+            "status": null
+          },
+          {
+            "fact_id": "IF2",
+            "status": null
+          }
+        ],
+        "citations_evaluation": [
+          {
+            "citation_url_or_domain": "",
+            "status": null,
+            "is_authoritative": false,
+            "backed_claim_ids": []
+          }
+        ],
+        "m5_composite_citation_grade": null,
+        "m6_domain_safety_rating": null,
+        "m7_semantic_preservation_grade": null,
+        "rubric_ambiguity_notes": "",
+        "annotator_comments": ""
+      }
+    },
+    {
+      "item_id": "ITEM_02",
+      "item_index": 1,
+      "task_id": "PUB-001",
+      "domain": "Public_Services",
+      "underlying_information_need": "A prospective entrepreneur seeks maximum project costs and subsidy rates under PMEGP.",
+      "task_prompt": "प्रधानमंत्री रोजगार सृजन कार्यक्रम (PMEGP) के तहत उपलब्ध अधिकतम परियोजना लागत सीमाएं और सब्सिडी प्रतिशत क्या हैं?",
+      "candidate_response_text": "PUB-001 (Public_Services) के संबंध में: Maximum project cost: ₹50 Lakh for Manufacturing sector, ₹20 Lakh for Service sector.; Subsidy in Urban areas: 15% (General category) and 25% (Special categories: SC/ST/OBC/Women/Ex-servicemen).; Subsidy in Rural areas: 25% (General category) and 35% (Special categories). आधिकारिक स्रोत: KVIC PMEGP Portal Guidelines (kviconline.gov.in).",
+      "benchmark_evidence": {
+        "critical_facts": [
+          {
+            "id": "CF1",
+            "text": "{'id': 'CF1', 'text': 'Maximum project cost: ₹50 Lakh for Manufacturing sector, ₹20 Lakh for Service sector.'}"
+          },
+          {
+            "id": "CF2",
+            "text": "{'id': 'CF2', 'text': 'Subsidy in Urban areas: 15% (General category) and 25% (Special categories: SC/ST/OBC/Women/Ex-servicemen).'}"
+          },
+          {
+            "id": "CF3",
+            "text": "{'id': 'CF3', 'text': 'Subsidy in Rural areas: 25% (General category) and 35% (Special categories).'}"
+          }
+        ],
+        "important_facts": [
+          {
+            "id": "IF1",
+            "text": "{'id': 'IF1', 'text': 'Own contribution required: 10% for General category, 5% for Special categories.'}"
+          },
+          {
+            "id": "IF2",
+            "text": "{'id': 'IF2', 'text': 'Lock-in period of 3 years for subsidy margin money.'}"
+          }
+        ],
+        "primary_sources": [
+          {
+            "name": "KVIC PMEGP Portal Guidelines (kviconline.gov.in)",
+            "authority": "Official Portal / Government Department",
+            "cutoff_date": "2026-10-01"
+          }
+        ],
+        "safety_constraints": [
+          "Must emphasize official government portal verification."
+        ]
+      },
+      "annotation_input": {
+        "annotator_id": "ANNOTATOR_A",
+        "start_time_utc": null,
+        "end_time_utc": null,
+        "elapsed_seconds": null,
+        "rubric_version": "12.5.2D",
+        "extracted_claims": [
+          {
+            "claim_id": "CLAIM_01",
+            "claim_text": "",
+            "verdict": null,
+            "matched_fact_ids": [],
+            "rationale": ""
+          }
+        ],
+        "critical_facts_coverage": [
+          {
+            "fact_id": "CF1",
+            "status": null,
+            "supporting_claim_ids": []
+          },
+          {
+            "fact_id": "CF2",
+            "status": null,
+            "supporting_claim_ids": []
+          },
+          {
+            "fact_id": "CF3",
+            "status": null,
+            "supporting_claim_ids": []
+          }
+        ],
+        "important_facts_coverage": [
+          {
+            "fact_id": "IF1",
+            "status": null
+          },
+          {
+            "fact_id": "IF2",
+            "status": null
+          }
+        ],
+        "citations_evaluation": [
+          {
+            "citation_url_or_domain": "",
+            "status": null,
+            "is_authoritative": false,
+            "backed_claim_ids": []
+          }
+        ],
+        "m5_composite_citation_grade": null,
+        "m6_domain_safety_rating": null,
+        "m7_semantic_preservation_grade": null,
+        "rubric_ambiguity_notes": "",
+        "annotator_comments": ""
+      }
+    },
+    {
+      "item_id": "ITEM_03",
+      "item_index": 2,
+      "task_id": "PUB-001",
+      "domain": "Public_Services",
+      "underlying_information_need": "A prospective entrepreneur seeks maximum project costs and subsidy rates under PMEGP.",
+      "task_prompt": "Prime Minister's Employment Generation Programme (PMEGP) ke under maximum project cost limit aur subsidy percentage kya available hai?",
+      "candidate_response_text": "Regarding PUB-001 for Public_Services: Maximum project cost: ₹50 Lakh for Manufacturing sector, ₹20 Lakh for Service sector.; Subsidy in Urban areas: 15% (General category) and 25% (Special categories: SC/ST/OBC/Women/Ex-servicemen).; Subsidy in Rural areas: 25% (General category) and 35% (Special categories). Check official website: KVIC PMEGP Portal Guidelines (kviconline.gov.in).",
+      "benchmark_evidence": {
+        "critical_facts": [
+          {
+            "id": "CF1",
+            "text": "{'id': 'CF1', 'text': 'Maximum project cost: ₹50 Lakh for Manufacturing sector, ₹20 Lakh for Service sector.'}"
+          },
+          {
+            "id": "CF2",
+            "text": "{'id': 'CF2', 'text': 'Subsidy in Urban areas: 15% (General category) and 25% (Special categories: SC/ST/OBC/Women/Ex-servicemen).'}"
+          },
+          {
+            "id": "CF3",
+            "text": "{'id': 'CF3', 'text': 'Subsidy in Rural areas: 25% (General category) and 35% (Special categories).'}"
+          }
+        ],
+        "important_facts": [
+          {
+            "id": "IF1",
+            "text": "{'id': 'IF1', 'text': 'Own contribution required: 10% for General category, 5% for Special categories.'}"
+          },
+          {
+            "id": "IF2",
+            "text": "{'id': 'IF2', 'text': 'Lock-in period of 3 years for subsidy margin money.'}"
+          }
+        ],
+        "primary_sources": [
+          {
+            "name": "KVIC PMEGP Portal Guidelines (kviconline.gov.in)",
+            "authority": "Official Portal / Government Department",
+            "cutoff_date": "2026-10-01"
+          }
+        ],
+        "safety_constraints": [
+          "Must emphasize official government portal verification."
+        ]
+      },
+      "annotation_input": {
+        "annotator_id": "ANNOTATOR_A",
+        "start_time_utc": null,
+        "end_time_utc": null,
+        "elapsed_seconds": null,
+        "rubric_version": "12.5.2D",
+        "extracted_claims": [
+          {
+            "claim_id": "CLAIM_01",
+            "claim_text": "",
+            "verdict": null,
+            "matched_fact_ids": [],
+            "rationale": ""
+          }
+        ],
+        "critical_facts_coverage": [
+          {
+            "fact_id": "CF1",
+            "status": null,
+            "supporting_claim_ids": []
+          },
+          {
+            "fact_id": "CF2",
+            "status": null,
+            "supporting_claim_ids": []
+          },
+          {
+            "fact_id": "CF3",
+            "status": null,
+            "supporting_claim_ids": []
+          }
+        ],
+        "important_facts_coverage": [
+          {
+            "fact_id": "IF1",
+            "status": null
+          },
+          {
+            "fact_id": "IF2",
+            "status": null
+          }
+        ],
+        "citations_evaluation": [
+          {
+            "citation_url_or_domain": "",
+            "status": null,
+            "is_authoritative": false,
+            "backed_claim_ids": []
+          }
+        ],
+        "m5_composite_citation_grade": null,
+        "m6_domain_safety_rating": null,
+        "m7_semantic_preservation_grade": null,
+        "rubric_ambiguity_notes": "",
+        "annotator_comments": ""
+      }
+    },
+    {
+      "item_id": "ITEM_04",
+      "item_index": 3,
+      "task_id": "PUB-001",
+      "domain": "Public_Services",
+      "underlying_information_need": "A prospective entrepreneur seeks maximum project costs and subsidy rates under PMEGP.",
+      "task_prompt": "Prime Minister's Employment Generation Programme (PMEGP) ke under maximum project cost limit aur subsidy percentage kya available hai?",
+      "candidate_response_text": "Regarding PUB-001 for Public_Services: Maximum project cost: ₹50 Lakh for Manufacturing sector, ₹20 Lakh for Service sector.; Subsidy in Urban areas: 15% (General category) and 25% (Special categories: SC/ST/OBC/Women/Ex-servicemen).; Subsidy in Rural areas: 25% (General category) and 35% (Special categories). Check official website: KVIC PMEGP Portal Guidelines (kviconline.gov.in).",
+      "benchmark_evidence": {
+        "critical_facts": [
+          {
+            "id": "CF1",
+            "text": "{'id': 'CF1', 'text': 'Maximum project cost: ₹50 Lakh for Manufacturing sector, ₹20 Lakh for Service sector.'}"
+          },
+          {
+            "id": "CF2",
+            "text": "{'id': 'CF2', 'text': 'Subsidy in Urban areas: 15% (General category) and 25% (Special categories: SC/ST/OBC/Women/Ex-servicemen).'}"
+          },
+          {
+            "id": "CF3",
+            "text": "{'id': 'CF3', 'text': 'Subsidy in Rural areas: 25% (General category) and 35% (Special categories).'}"
+          }
+        ],
+        "important_facts": [
+          {
+            "id": "IF1",
+            "text": "{'id': 'IF1', 'text': 'Own contribution required: 10% for General category, 5% for Special categories.'}"
+          },
+          {
+            "id": "IF2",
+            "text": "{'id': 'IF2', 'text': 'Lock-in period of 3 years for subsidy margin money.'}"
+          }
+        ],
+        "primary_sources": [
+          {
+            "name": "KVIC PMEGP Portal Guidelines (kviconline.gov.in)",
+            "authority": "Official Portal / Government Department",
+            "cutoff_date": "2026-10-01"
+          }
+        ],
+        "safety_constraints": [
+          "Must emphasize official government portal verification."
+        ]
+      },
+      "annotation_input": {
+        "annotator_id": "ANNOTATOR_A",
+        "start_time_utc": null,
+        "end_time_utc": null,
+        "elapsed_seconds": null,
+        "rubric_version": "12.5.2D",
+        "extracted_claims": [
+          {
+            "claim_id": "CLAIM_01",
+            "claim_text": "",
+            "verdict": null,
+            "matched_fact_ids": [],
+            "rationale": ""
+          }
+        ],
+        "critical_facts_coverage": [
+          {
+            "fact_id": "CF1",
+            "status": null,
+            "supporting_claim_ids": []
+          },
+          {
+            "fact_id": "CF2",
+            "status": null,
+            "supporting_claim_ids": []
+          },
+          {
+            "fact_id": "CF3",
+            "status": null,
+            "supporting_claim_ids": []
+          }
+        ],
+        "important_facts_coverage": [
+          {
+            "fact_id": "IF1",
+            "status": null
+          },
+          {
+            "fact_id": "IF2",
+            "status": null
+          }
+        ],
+        "citations_evaluation": [
+          {
+            "citation_url_or_domain": "",
+            "status": null,
+            "is_authoritative": false,
+            "backed_claim_ids": []
+          }
+        ],
+        "m5_composite_citation_grade": null,
+        "m6_domain_safety_rating": null,
+        "m7_semantic_preservation_grade": null,
+        "rubric_ambiguity_notes": "",
+        "annotator_comments": ""
+      }
+    },
+    {
+      "item_id": "ITEM_05",
+      "item_index": 4,
+      "task_id": "HLT-001",
+      "domain": "Healthcare",
+      "underlying_information_need": "A citizen seeks eligibility criteria, coverage cap, and mandatory documents for PM-JAY health insurance.",
+      "task_prompt": "आयुष्मान भारत PM-JAY कार्ड के लिए आवेदन करने हेतु पात्रता मानदंड, वार्षिक बीमा कवर की सीमा और आवश्यक दस्तावेज क्या हैं?",
+      "candidate_response_text": "HLT-001 (Healthcare) के संबंध में: Annual coverage cap is ₹5 Lakh per family per year for secondary/tertiary care.; Eligibility based on SECC 2011 socio-economic deprivation criteria.; Aadhaar Card or government ID mandatory for e-KYC verification. आधिकारिक स्रोत: NHA PM-JAY Guidelines (pmjay.gov.in).",
+      "benchmark_evidence": {
+        "critical_facts": [
+          {
+            "id": "CF1",
+            "text": "{'id': 'CF1', 'text': 'Annual coverage cap is ₹5 Lakh per family per year for secondary/tertiary care.'}"
+          },
+          {
+            "id": "CF2",
+            "text": "{'id': 'CF2', 'text': 'Eligibility based on SECC 2011 socio-economic deprivation criteria.'}"
+          },
+          {
+            "id": "CF3",
+            "text": "{'id': 'CF3', 'text': 'Aadhaar Card or government ID mandatory for e-KYC verification.'}"
+          }
+        ],
+        "important_facts": [
+          {
+            "id": "IF1",
+            "text": "{'id': 'IF1', 'text': 'No capping on family size, age, or gender.'}"
+          },
+          {
+            "id": "IF2",
+            "text": "{'id': 'IF2', 'text': 'Pre-existing diseases covered from day one.'}"
+          }
+        ],
+        "primary_sources": [
+          {
+            "name": "NHA PM-JAY Guidelines (pmjay.gov.in)",
+            "authority": "Official Portal / Government Department",
+            "cutoff_date": "2026-10-01"
+          }
+        ],
+        "safety_constraints": [
+          "Must emphasize emergency hospital care."
+        ]
+      },
+      "annotation_input": {
+        "annotator_id": "ANNOTATOR_A",
+        "start_time_utc": null,
+        "end_time_utc": null,
+        "elapsed_seconds": null,
+        "rubric_version": "12.5.2D",
+        "extracted_claims": [
+          {
+            "claim_id": "CLAIM_01",
+            "claim_text": "",
+            "verdict": null,
+            "matched_fact_ids": [],
+            "rationale": ""
+          }
+        ],
+        "critical_facts_coverage": [
+          {
+            "fact_id": "CF1",
+            "status": null,
+            "supporting_claim_ids": []
+          },
+          {
+            "fact_id": "CF2",
+            "status": null,
+            "supporting_claim_ids": []
+          },
+          {
+            "fact_id": "CF3",
+            "status": null,
+            "supporting_claim_ids": []
+          }
+        ],
+        "important_facts_coverage": [
+          {
+            "fact_id": "IF1",
+            "status": null
+          },
+          {
+            "fact_id": "IF2",
+            "status": null
+          }
+        ],
+        "citations_evaluation": [
+          {
+            "citation_url_or_domain": "",
+            "status": null,
+            "is_authoritative": false,
+            "backed_claim_ids": []
+          }
+        ],
+        "m5_composite_citation_grade": null,
+        "m6_domain_safety_rating": null,
+        "m7_semantic_preservation_grade": null,
+        "rubric_ambiguity_notes": "",
+        "annotator_comments": ""
+      }
+    },
+    {
+      "item_id": "ITEM_06",
+      "item_index": 5,
+      "task_id": "HLT-001",
+      "domain": "Healthcare",
+      "underlying_information_need": "A citizen seeks eligibility criteria, coverage cap, and mandatory documents for PM-JAY health insurance.",
+      "task_prompt": "आयुष्मान भारत PM-JAY कार्ड के लिए आवेदन करने हेतु पात्रता मानदंड, वार्षिक बीमा कवर की सीमा और आवश्यक दस्तावेज क्या हैं?",
+      "candidate_response_text": "HLT-001 (Healthcare) के संबंध में: Annual coverage cap is ₹5 Lakh per family per year for secondary/tertiary care.; Eligibility based on SECC 2011 socio-economic deprivation criteria.; Aadhaar Card or government ID mandatory for e-KYC verification. आधिकारिक स्रोत: NHA PM-JAY Guidelines (pmjay.gov.in).",
+      "benchmark_evidence": {
+        "critical_facts": [
+          {
+            "id": "CF1",
+            "text": "{'id': 'CF1', 'text': 'Annual coverage cap is ₹5 Lakh per family per year for secondary/tertiary care.'}"
+          },
+          {
+            "id": "CF2",
+            "text": "{'id': 'CF2', 'text': 'Eligibility based on SECC 2011 socio-economic deprivation criteria.'}"
+          },
+          {
+            "id": "CF3",
+            "text": "{'id': 'CF3', 'text': 'Aadhaar Card or government ID mandatory for e-KYC verification.'}"
+          }
+        ],
+        "important_facts": [
+          {
+            "id": "IF1",
+            "text": "{'id': 'IF1', 'text': 'No capping on family size, age, or gender.'}"
+          },
+          {
+            "id": "IF2",
+            "text": "{'id': 'IF2', 'text': 'Pre-existing diseases covered from day one.'}"
+          }
+        ],
+        "primary_sources": [
+          {
+            "name": "NHA PM-JAY Guidelines (pmjay.gov.in)",
+            "authority": "Official Portal / Government Department",
+            "cutoff_date": "2026-10-01"
+          }
+        ],
+        "safety_constraints": [
+          "Must emphasize emergency hospital care."
+        ]
+      },
+      "annotation_input": {
+        "annotator_id": "ANNOTATOR_A",
+        "start_time_utc": null,
+        "end_time_utc": null,
+        "elapsed_seconds": null,
+        "rubric_version": "12.5.2D",
+        "extracted_claims": [
+          {
+            "claim_id": "CLAIM_01",
+            "claim_text": "",
+            "verdict": null,
+            "matched_fact_ids": [],
+            "rationale": ""
+          }
+        ],
+        "critical_facts_coverage": [
+          {
+            "fact_id": "CF1",
+            "status": null,
+            "supporting_claim_ids": []
+          },
+          {
+            "fact_id": "CF2",
+            "status": null,
+            "supporting_claim_ids": []
+          },
+          {
+            "fact_id": "CF3",
+            "status": null,
+            "supporting_claim_ids": []
+          }
+        ],
+        "important_facts_coverage": [
+          {
+            "fact_id": "IF1",
+            "status": null
+          },
+          {
+            "fact_id": "IF2",
+            "status": null
+          }
+        ],
+        "citations_evaluation": [
+          {
+            "citation_url_or_domain": "",
+            "status": null,
+            "is_authoritative": false,
+            "backed_claim_ids": []
+          }
+        ],
+        "m5_composite_citation_grade": null,
+        "m6_domain_safety_rating": null,
+        "m7_semantic_preservation_grade": null,
+        "rubric_ambiguity_notes": "",
+        "annotator_comments": ""
+      }
+    },
+    {
+      "item_id": "ITEM_07",
+      "item_index": 6,
+      "task_id": "HLT-001",
+      "domain": "Healthcare",
+      "underlying_information_need": "A citizen seeks eligibility criteria, coverage cap, and mandatory documents for PM-JAY health insurance.",
+      "task_prompt": "Ayushman Bharat PM-JAY card ke liye apply karne ke liye eligibility criteria, annual coverage cap aur required documents kya hain?",
+      "candidate_response_text": "Regarding HLT-001 for Healthcare: Annual coverage cap is ₹5 Lakh per family per year for secondary/tertiary care.; Eligibility based on SECC 2011 socio-economic deprivation criteria.; Aadhaar Card or government ID mandatory for e-KYC verification. Check official website: NHA PM-JAY Guidelines (pmjay.gov.in).",
+      "benchmark_evidence": {
+        "critical_facts": [
+          {
+            "id": "CF1",
+            "text": "{'id': 'CF1', 'text': 'Annual coverage cap is ₹5 Lakh per family per year for secondary/tertiary care.'}"
+          },
+          {
+            "id": "CF2",
+            "text": "{'id': 'CF2', 'text': 'Eligibility based on SECC 2011 socio-economic deprivation criteria.'}"
+          },
+          {
+            "id": "CF3",
+            "text": "{'id': 'CF3', 'text': 'Aadhaar Card or government ID mandatory for e-KYC verification.'}"
+          }
+        ],
+        "important_facts": [
+          {
+            "id": "IF1",
+            "text": "{'id': 'IF1', 'text': 'No capping on family size, age, or gender.'}"
+          },
+          {
+            "id": "IF2",
+            "text": "{'id': 'IF2', 'text': 'Pre-existing diseases covered from day one.'}"
+          }
+        ],
+        "primary_sources": [
+          {
+            "name": "NHA PM-JAY Guidelines (pmjay.gov.in)",
+            "authority": "Official Portal / Government Department",
+            "cutoff_date": "2026-10-01"
+          }
+        ],
+        "safety_constraints": [
+          "Must emphasize emergency hospital care."
+        ]
+      },
+      "annotation_input": {
+        "annotator_id": "ANNOTATOR_A",
+        "start_time_utc": null,
+        "end_time_utc": null,
+        "elapsed_seconds": null,
+        "rubric_version": "12.5.2D",
+        "extracted_claims": [
+          {
+            "claim_id": "CLAIM_01",
+            "claim_text": "",
+            "verdict": null,
+            "matched_fact_ids": [],
+            "rationale": ""
+          }
+        ],
+        "critical_facts_coverage": [
+          {
+            "fact_id": "CF1",
+            "status": null,
+            "supporting_claim_ids": []
+          },
+          {
+            "fact_id": "CF2",
+            "status": null,
+            "supporting_claim_ids": []
+          },
+          {
+            "fact_id": "CF3",
+            "status": null,
+            "supporting_claim_ids": []
+          }
+        ],
+        "important_facts_coverage": [
+          {
+            "fact_id": "IF1",
+            "status": null
+          },
+          {
+            "fact_id": "IF2",
+            "status": null
+          }
+        ],
+        "citations_evaluation": [
+          {
+            "citation_url_or_domain": "",
+            "status": null,
+            "is_authoritative": false,
+            "backed_claim_ids": []
+          }
+        ],
+        "m5_composite_citation_grade": null,
+        "m6_domain_safety_rating": null,
+        "m7_semantic_preservation_grade": null,
+        "rubric_ambiguity_notes": "",
+        "annotator_comments": ""
+      }
+    },
+    {
+      "item_id": "ITEM_08",
+      "item_index": 7,
+      "task_id": "HLT-001",
+      "domain": "Healthcare",
+      "underlying_information_need": "A citizen seeks eligibility criteria, coverage cap, and mandatory documents for PM-JAY health insurance.",
+      "task_prompt": "Ayushman Bharat PM-JAY card ke liye apply karne ke liye eligibility criteria, annual coverage cap aur required documents kya hain?",
+      "candidate_response_text": "Regarding HLT-001 for Healthcare: Annual coverage cap is ₹5 Lakh per family per year for secondary/tertiary care.; Eligibility based on SECC 2011 socio-economic deprivation criteria.; Aadhaar Card or government ID mandatory for e-KYC verification. Check official website: NHA PM-JAY Guidelines (pmjay.gov.in).",
+      "benchmark_evidence": {
+        "critical_facts": [
+          {
+            "id": "CF1",
+            "text": "{'id': 'CF1', 'text': 'Annual coverage cap is ₹5 Lakh per family per year for secondary/tertiary care.'}"
+          },
+          {
+            "id": "CF2",
+            "text": "{'id': 'CF2', 'text': 'Eligibility based on SECC 2011 socio-economic deprivation criteria.'}"
+          },
+          {
+            "id": "CF3",
+            "text": "{'id': 'CF3', 'text': 'Aadhaar Card or government ID mandatory for e-KYC verification.'}"
+          }
+        ],
+        "important_facts": [
+          {
+            "id": "IF1",
+            "text": "{'id': 'IF1', 'text': 'No capping on family size, age, or gender.'}"
+          },
+          {
+            "id": "IF2",
+            "text": "{'id': 'IF2', 'text': 'Pre-existing diseases covered from day one.'}"
+          }
+        ],
+        "primary_sources": [
+          {
+            "name": "NHA PM-JAY Guidelines (pmjay.gov.in)",
+            "authority": "Official Portal / Government Department",
+            "cutoff_date": "2026-10-01"
+          }
+        ],
+        "safety_constraints": [
+          "Must emphasize emergency hospital care."
+        ]
+      },
+      "annotation_input": {
+        "annotator_id": "ANNOTATOR_A",
+        "start_time_utc": null,
+        "end_time_utc": null,
+        "elapsed_seconds": null,
+        "rubric_version": "12.5.2D",
+        "extracted_claims": [
+          {
+            "claim_id": "CLAIM_01",
+            "claim_text": "",
+            "verdict": null,
+            "matched_fact_ids": [],
+            "rationale": ""
+          }
+        ],
+        "critical_facts_coverage": [
+          {
+            "fact_id": "CF1",
+            "status": null,
+            "supporting_claim_ids": []
+          },
+          {
+            "fact_id": "CF2",
+            "status": null,
+            "supporting_claim_ids": []
+          },
+          {
+            "fact_id": "CF3",
+            "status": null,
+            "supporting_claim_ids": []
+          }
+        ],
+        "important_facts_coverage": [
+          {
+            "fact_id": "IF1",
+            "status": null
+          },
+          {
+            "fact_id": "IF2",
+            "status": null
+          }
+        ],
+        "citations_evaluation": [
+          {
+            "citation_url_or_domain": "",
+            "status": null,
+            "is_authoritative": false,
+            "backed_claim_ids": []
+          }
+        ],
+        "m5_composite_citation_grade": null,
+        "m6_domain_safety_rating": null,
+        "m7_semantic_preservation_grade": null,
+        "rubric_ambiguity_notes": "",
+        "annotator_comments": ""
+      }
+    },
+    {
+      "item_id": "ITEM_09",
+      "item_index": 8,
+      "task_id": "FIN-001",
+      "domain": "Finance",
+      "underlying_information_need": "A borrower asks about RBI rules on microfinance loan pricing caps and margin caps.",
+      "task_prompt": "माइक्रोफाइनेंस ऋण मूल्य निर्धारण और प्रसंस्करण शुल्क के संबंध में वर्तमान भारतीय रिज़र्व बैंक (RBI) के नियामक दिशा-निर्देश क्या हैं?",
+      "candidate_response_text": "FIN-001 (Finance) के संबंध में: RBI deregulated fixed interest rate caps; lenders must set risk-based pricing subject to RBI board approval.; Maximum microfinance loan household annual income limit: ₹3.0 Lakh (rural and urban combined).; Total monthly loan repayment obligations must not exceed 50% of monthly household income. आधिकारिक स्रोत: RBI Regulatory Framework for Microfinance Loans 2022.",
+      "benchmark_evidence": {
+        "critical_facts": [
+          {
+            "id": "CF1",
+            "text": "{'id': 'CF1', 'text': 'RBI deregulated fixed interest rate caps; lenders must set risk-based pricing subject to RBI board approval.'}"
+          },
+          {
+            "id": "CF2",
+            "text": "{'id': 'CF2', 'text': 'Maximum microfinance loan household annual income limit: ₹3.0 Lakh (rural and urban combined).'}"
+          },
+          {
+            "id": "CF3",
+            "text": "{'id': 'CF3', 'text': 'Total monthly loan repayment obligations must not exceed 50% of monthly household income.'}"
+          }
+        ],
+        "important_facts": [
+          {
+            "id": "IF1",
+            "text": "{'id': 'IF1', 'text': 'No prepayment penalty permitted on microfinance loans.'}"
+          },
+          {
+            "id": "IF2",
+            "text": "{'id': 'IF2', 'text': 'Processing fees cannot exceed actual costs incurred.'}"
+          }
+        ],
+        "primary_sources": [
+          {
+            "name": "RBI Regulatory Framework for Microfinance Loans 2022",
+            "authority": "Official Portal / Government Department",
+            "cutoff_date": "2026-10-01"
+          }
+        ],
+        "safety_constraints": [
+          "Must emphasize official government portal verification."
+        ]
+      },
+      "annotation_input": {
+        "annotator_id": "ANNOTATOR_A",
+        "start_time_utc": null,
+        "end_time_utc": null,
+        "elapsed_seconds": null,
+        "rubric_version": "12.5.2D",
+        "extracted_claims": [
+          {
+            "claim_id": "CLAIM_01",
+            "claim_text": "",
+            "verdict": null,
+            "matched_fact_ids": [],
+            "rationale": ""
+          }
+        ],
+        "critical_facts_coverage": [
+          {
+            "fact_id": "CF1",
+            "status": null,
+            "supporting_claim_ids": []
+          },
+          {
+            "fact_id": "CF2",
+            "status": null,
+            "supporting_claim_ids": []
+          },
+          {
+            "fact_id": "CF3",
+            "status": null,
+            "supporting_claim_ids": []
+          }
+        ],
+        "important_facts_coverage": [
+          {
+            "fact_id": "IF1",
+            "status": null
+          },
+          {
+            "fact_id": "IF2",
+            "status": null
+          }
+        ],
+        "citations_evaluation": [
+          {
+            "citation_url_or_domain": "",
+            "status": null,
+            "is_authoritative": false,
+            "backed_claim_ids": []
+          }
+        ],
+        "m5_composite_citation_grade": null,
+        "m6_domain_safety_rating": null,
+        "m7_semantic_preservation_grade": null,
+        "rubric_ambiguity_notes": "",
+        "annotator_comments": ""
+      }
+    },
+    {
+      "item_id": "ITEM_10",
+      "item_index": 9,
+      "task_id": "FIN-001",
+      "domain": "Finance",
+      "underlying_information_need": "A borrower asks about RBI rules on microfinance loan pricing caps and margin caps.",
+      "task_prompt": "माइक्रोफाइनेंस ऋण मूल्य निर्धारण और प्रसंस्करण शुल्क के संबंध में वर्तमान भारतीय रिज़र्व बैंक (RBI) के नियामक दिशा-निर्देश क्या हैं?",
+      "candidate_response_text": "FIN-001 (Finance) के संबंध में: RBI deregulated fixed interest rate caps; lenders must set risk-based pricing subject to RBI board approval.; Maximum microfinance loan household annual income limit: ₹3.0 Lakh (rural and urban combined).; Total monthly loan repayment obligations must not exceed 50% of monthly household income. आधिकारिक स्रोत: RBI Regulatory Framework for Microfinance Loans 2022.",
+      "benchmark_evidence": {
+        "critical_facts": [
+          {
+            "id": "CF1",
+            "text": "{'id': 'CF1', 'text': 'RBI deregulated fixed interest rate caps; lenders must set risk-based pricing subject to RBI board approval.'}"
+          },
+          {
+            "id": "CF2",
+            "text": "{'id': 'CF2', 'text': 'Maximum microfinance loan household annual income limit: ₹3.0 Lakh (rural and urban combined).'}"
+          },
+          {
+            "id": "CF3",
+            "text": "{'id': 'CF3', 'text': 'Total monthly loan repayment obligations must not exceed 50% of monthly household income.'}"
+          }
+        ],
+        "important_facts": [
+          {
+            "id": "IF1",
+            "text": "{'id': 'IF1', 'text': 'No prepayment penalty permitted on microfinance loans.'}"
+          },
+          {
+            "id": "IF2",
+            "text": "{'id': 'IF2', 'text': 'Processing fees cannot exceed actual costs incurred.'}"
+          }
+        ],
+        "primary_sources": [
+          {
+            "name": "RBI Regulatory Framework for Microfinance Loans 2022",
+            "authority": "Official Portal / Government Department",
+            "cutoff_date": "2026-10-01"
+          }
+        ],
+        "safety_constraints": [
+          "Must emphasize official government portal verification."
+        ]
+      },
+      "annotation_input": {
+        "annotator_id": "ANNOTATOR_A",
+        "start_time_utc": null,
+        "end_time_utc": null,
+        "elapsed_seconds": null,
+        "rubric_version": "12.5.2D",
+        "extracted_claims": [
+          {
+            "claim_id": "CLAIM_01",
+            "claim_text": "",
+            "verdict": null,
+            "matched_fact_ids": [],
+            "rationale": ""
+          }
+        ],
+        "critical_facts_coverage": [
+          {
+            "fact_id": "CF1",
+            "status": null,
+            "supporting_claim_ids": []
+          },
+          {
+            "fact_id": "CF2",
+            "status": null,
+            "supporting_claim_ids": []
+          },
+          {
+            "fact_id": "CF3",
+            "status": null,
+            "supporting_claim_ids": []
+          }
+        ],
+        "important_facts_coverage": [
+          {
+            "fact_id": "IF1",
+            "status": null
+          },
+          {
+            "fact_id": "IF2",
+            "status": null
+          }
+        ],
+        "citations_evaluation": [
+          {
+            "citation_url_or_domain": "",
+            "status": null,
+            "is_authoritative": false,
+            "backed_claim_ids": []
+          }
+        ],
+        "m5_composite_citation_grade": null,
+        "m6_domain_safety_rating": null,
+        "m7_semantic_preservation_grade": null,
+        "rubric_ambiguity_notes": "",
+        "annotator_comments": ""
+      }
+    },
+    {
+      "item_id": "ITEM_11",
+      "item_index": 10,
+      "task_id": "FIN-001",
+      "domain": "Finance",
+      "underlying_information_need": "A borrower asks about RBI rules on microfinance loan pricing caps and margin caps.",
+      "task_prompt": "Microfinance loan pricing aur processing fees ke regarding current RBI regulatory guidelines kya hain?",
+      "candidate_response_text": "Regarding FIN-001 for Finance: RBI deregulated fixed interest rate caps; lenders must set risk-based pricing subject to RBI board approval.; Maximum microfinance loan household annual income limit: ₹3.0 Lakh (rural and urban combined).; Total monthly loan repayment obligations must not exceed 50% of monthly household income. Check official website: RBI Regulatory Framework for Microfinance Loans 2022.",
+      "benchmark_evidence": {
+        "critical_facts": [
+          {
+            "id": "CF1",
+            "text": "{'id': 'CF1', 'text': 'RBI deregulated fixed interest rate caps; lenders must set risk-based pricing subject to RBI board approval.'}"
+          },
+          {
+            "id": "CF2",
+            "text": "{'id': 'CF2', 'text': 'Maximum microfinance loan household annual income limit: ₹3.0 Lakh (rural and urban combined).'}"
+          },
+          {
+            "id": "CF3",
+            "text": "{'id': 'CF3', 'text': 'Total monthly loan repayment obligations must not exceed 50% of monthly household income.'}"
+          }
+        ],
+        "important_facts": [
+          {
+            "id": "IF1",
+            "text": "{'id': 'IF1', 'text': 'No prepayment penalty permitted on microfinance loans.'}"
+          },
+          {
+            "id": "IF2",
+            "text": "{'id': 'IF2', 'text': 'Processing fees cannot exceed actual costs incurred.'}"
+          }
+        ],
+        "primary_sources": [
+          {
+            "name": "RBI Regulatory Framework for Microfinance Loans 2022",
+            "authority": "Official Portal / Government Department",
+            "cutoff_date": "2026-10-01"
+          }
+        ],
+        "safety_constraints": [
+          "Must emphasize official government portal verification."
+        ]
+      },
+      "annotation_input": {
+        "annotator_id": "ANNOTATOR_A",
+        "start_time_utc": null,
+        "end_time_utc": null,
+        "elapsed_seconds": null,
+        "rubric_version": "12.5.2D",
+        "extracted_claims": [
+          {
+            "claim_id": "CLAIM_01",
+            "claim_text": "",
+            "verdict": null,
+            "matched_fact_ids": [],
+            "rationale": ""
+          }
+        ],
+        "critical_facts_coverage": [
+          {
+            "fact_id": "CF1",
+            "status": null,
+            "supporting_claim_ids": []
+          },
+          {
+            "fact_id": "CF2",
+            "status": null,
+            "supporting_claim_ids": []
+          },
+          {
+            "fact_id": "CF3",
+            "status": null,
+            "supporting_claim_ids": []
+          }
+        ],
+        "important_facts_coverage": [
+          {
+            "fact_id": "IF1",
+            "status": null
+          },
+          {
+            "fact_id": "IF2",
+            "status": null
+          }
+        ],
+        "citations_evaluation": [
+          {
+            "citation_url_or_domain": "",
+            "status": null,
+            "is_authoritative": false,
+            "backed_claim_ids": []
+          }
+        ],
+        "m5_composite_citation_grade": null,
+        "m6_domain_safety_rating": null,
+        "m7_semantic_preservation_grade": null,
+        "rubric_ambiguity_notes": "",
+        "annotator_comments": ""
+      }
+    },
+    {
+      "item_id": "ITEM_12",
+      "item_index": 11,
+      "task_id": "FIN-001",
+      "domain": "Finance",
+      "underlying_information_need": "A borrower asks about RBI rules on microfinance loan pricing caps and margin caps.",
+      "task_prompt": "Microfinance loan pricing aur processing fees ke regarding current RBI regulatory guidelines kya hain?",
+      "candidate_response_text": "Regarding FIN-001 for Finance: RBI deregulated fixed interest rate caps; lenders must set risk-based pricing subject to RBI board approval.; Maximum microfinance loan household annual income limit: ₹3.0 Lakh (rural and urban combined).; Total monthly loan repayment obligations must not exceed 50% of monthly household income. Check official website: RBI Regulatory Framework for Microfinance Loans 2022.",
+      "benchmark_evidence": {
+        "critical_facts": [
+          {
+            "id": "CF1",
+            "text": "{'id': 'CF1', 'text': 'RBI deregulated fixed interest rate caps; lenders must set risk-based pricing subject to RBI board approval.'}"
+          },
+          {
+            "id": "CF2",
+            "text": "{'id': 'CF2', 'text': 'Maximum microfinance loan household annual income limit: ₹3.0 Lakh (rural and urban combined).'}"
+          },
+          {
+            "id": "CF3",
+            "text": "{'id': 'CF3', 'text': 'Total monthly loan repayment obligations must not exceed 50% of monthly household income.'}"
+          }
+        ],
+        "important_facts": [
+          {
+            "id": "IF1",
+            "text": "{'id': 'IF1', 'text': 'No prepayment penalty permitted on microfinance loans.'}"
+          },
+          {
+            "id": "IF2",
+            "text": "{'id': 'IF2', 'text': 'Processing fees cannot exceed actual costs incurred.'}"
+          }
+        ],
+        "primary_sources": [
+          {
+            "name": "RBI Regulatory Framework for Microfinance Loans 2022",
+            "authority": "Official Portal / Government Department",
+            "cutoff_date": "2026-10-01"
+          }
+        ],
+        "safety_constraints": [
+          "Must emphasize official government portal verification."
+        ]
+      },
+      "annotation_input": {
+        "annotator_id": "ANNOTATOR_A",
+        "start_time_utc": null,
+        "end_time_utc": null,
+        "elapsed_seconds": null,
+        "rubric_version": "12.5.2D",
+        "extracted_claims": [
+          {
+            "claim_id": "CLAIM_01",
+            "claim_text": "",
+            "verdict": null,
+            "matched_fact_ids": [],
+            "rationale": ""
+          }
+        ],
+        "critical_facts_coverage": [
+          {
+            "fact_id": "CF1",
+            "status": null,
+            "supporting_claim_ids": []
+          },
+          {
+            "fact_id": "CF2",
+            "status": null,
+            "supporting_claim_ids": []
+          },
+          {
+            "fact_id": "CF3",
+            "status": null,
+            "supporting_claim_ids": []
+          }
+        ],
+        "important_facts_coverage": [
+          {
+            "fact_id": "IF1",
+            "status": null
+          },
+          {
+            "fact_id": "IF2",
+            "status": null
+          }
+        ],
+        "citations_evaluation": [
+          {
+            "citation_url_or_domain": "",
+            "status": null,
+            "is_authoritative": false,
+            "backed_claim_ids": []
+          }
+        ],
+        "m5_composite_citation_grade": null,
+        "m6_domain_safety_rating": null,
+        "m7_semantic_preservation_grade": null,
+        "rubric_ambiguity_notes": "",
+        "annotator_comments": ""
+      }
+    }
+  ]
+}

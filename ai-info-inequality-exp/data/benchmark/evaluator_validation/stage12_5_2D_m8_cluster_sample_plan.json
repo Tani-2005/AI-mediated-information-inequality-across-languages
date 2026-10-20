@@ -1,0 +1,1131 @@
+{
+  "plan_name": "STAGE_12_5_2D_M8_CLUSTER_SAMPLE_PLAN",
+  "version": "1.0.0",
+  "created_at": "2026-10-11T21:40:00Z",
+  "status": "PROPOSED_SUPPLEMENTAL_SAMPLE",
+  "purpose": "Provide complete repetition clusters (n=3 repetitions per cell, df=2) for M8a (Completeness Variance) and M8b (Critical Fact Jaccard Concordance) evaluator validation.",
+  "preservation_notice": "The original 270-response validation sample (validation_ids_sha256: f3dacaf03a5c782407f5d0c5a9223630e0486266214568807ce9e7ff7c604a93) remains completely frozen and unchanged. This M8 cluster sample is an independent supplemental validation set.",
+  "sampling_parameters": {
+    "seed": 842105,
+    "algorithm": "Stratified random selection of 1 task per (domain, language, model) stratum from the benchmark task registry; extraction of all 3 stochastic repetitions per selected cell.",
+    "sampling_frame": "1,800 cells (5,400 responses) from stage12_4_full_evaluation_responses.json",
+    "strata_count": 60,
+    "total_cells": 60,
+    "repetitions_per_cell": 3,
+    "total_responses": 180,
+    "unique_response_ids": 180,
+    "response_ids_sha256": "c2a3e8e96cdc95c9a3df952f50320433d9a7de8f92c89fc6ce80a0e2c35905ec",
+    "cell_ids_sha256": "f6587e24b463ba08378d808f5f44135fdc7415874bf2b1adada75d2145eae1bc"
+  },
+  "stratum_coverage": {
+    "domains": {
+      "Education": 12,
+      "Finance": 12,
+      "General_Knowledge": 12,
+      "Healthcare": 12,
+      "Public_Services": 12
+    },
+    "languages": {
+      "CODE_SWITCHING": 20,
+      "ENGLISH": 20,
+      "HINDI": 20
+    },
+    "models": {
+      "claude-3.5-sonnet": 15,
+      "gemini-3.5-flash": 15,
+      "gpt-4o": 15,
+      "llama-3.1-70b": 15
+    }
+  },
+  "annotation_workload_analysis": {
+    "total_responses_to_annotate": 180,
+    "reuse_of_adjudicated_labels": "M8a and M8b are purely deterministic mathematical functions of critical fact coverage (M2a) across the 3 repetitions. Zero additional manual questions are required. Human annotators annotate the 180 responses using standard claim and fact rubrics; M8a and M8b are then computed automatically.",
+    "estimated_annotator_hours": "180 responses * ~20 mins = 60 hours per annotator"
+  },
+  "precision_scope_and_limitations": {
+    "what_sample_can_establish": "Can estimate human-evaluator concordance and inter-rater reliability on repetition variance (M8a) and Jaccard overlap (M8b) across 60 balanced strata (df=59), providing robust assessment of whether evaluator reliably captures consistency differences across languages and models.",
+    "what_sample_cannot_establish": "Cannot detect tiny subtle variance differences (e.g. sigma^2 differences < 0.02) with extreme statistical power, nor guarantee zero sampling error for individual low-resource subcategories."
+  },
+  "selected_cells": [
+    {
+      "cell_id": "EDU-015_CODE_SWITCHING_claude-3.5-sonnet",
+      "domain": "Education",
+      "task_id": "EDU-015",
+      "language": "CODE_SWITCHING",
+      "model": "claude-3.5-sonnet",
+      "repetition_count": 3,
+      "response_ids": [
+        "resp_ea76ae974a76",
+        "resp_02a1d0c3fbd2",
+        "resp_d42ba9f1fd2a"
+      ],
+      "repetition_indices": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "cell_id": "EDU-020_CODE_SWITCHING_gemini-3.5-flash",
+      "domain": "Education",
+      "task_id": "EDU-020",
+      "language": "CODE_SWITCHING",
+      "model": "gemini-3.5-flash",
+      "repetition_count": 3,
+      "response_ids": [
+        "resp_3ee8994c8610",
+        "resp_a20afc407acf",
+        "resp_8dc1b0040e24"
+      ],
+      "repetition_indices": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "cell_id": "EDU-021_CODE_SWITCHING_gpt-4o",
+      "domain": "Education",
+      "task_id": "EDU-021",
+      "language": "CODE_SWITCHING",
+      "model": "gpt-4o",
+      "repetition_count": 3,
+      "response_ids": [
+        "resp_6c5fd1fac441",
+        "resp_a05de0e518c4",
+        "resp_920c27e4850e"
+      ],
+      "repetition_indices": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "cell_id": "EDU-011_CODE_SWITCHING_llama-3.1-70b",
+      "domain": "Education",
+      "task_id": "EDU-011",
+      "language": "CODE_SWITCHING",
+      "model": "llama-3.1-70b",
+      "repetition_count": 3,
+      "response_ids": [
+        "resp_a618b355e195",
+        "resp_b89cb02d6a98",
+        "resp_3f8f0032d269"
+      ],
+      "repetition_indices": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "cell_id": "EDU-002_ENGLISH_claude-3.5-sonnet",
+      "domain": "Education",
+      "task_id": "EDU-002",
+      "language": "ENGLISH",
+      "model": "claude-3.5-sonnet",
+      "repetition_count": 3,
+      "response_ids": [
+        "resp_09db17ef47f1",
+        "resp_76ac99ae3fc3",
+        "resp_745e2ff61782"
+      ],
+      "repetition_indices": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "cell_id": "EDU-012_ENGLISH_gemini-3.5-flash",
+      "domain": "Education",
+      "task_id": "EDU-012",
+      "language": "ENGLISH",
+      "model": "gemini-3.5-flash",
+      "repetition_count": 3,
+      "response_ids": [
+        "resp_450ca54eddfc",
+        "resp_70d13d5da21c",
+        "resp_49245796a188"
+      ],
+      "repetition_indices": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "cell_id": "EDU-008_ENGLISH_gpt-4o",
+      "domain": "Education",
+      "task_id": "EDU-008",
+      "language": "ENGLISH",
+      "model": "gpt-4o",
+      "repetition_count": 3,
+      "response_ids": [
+        "resp_357565b4a676",
+        "resp_2d259b3ad51c",
+        "resp_4e75788fc478"
+      ],
+      "repetition_indices": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "cell_id": "EDU-006_ENGLISH_llama-3.1-70b",
+      "domain": "Education",
+      "task_id": "EDU-006",
+      "language": "ENGLISH",
+      "model": "llama-3.1-70b",
+      "repetition_count": 3,
+      "response_ids": [
+        "resp_5b87ad7c8825",
+        "resp_256c84a7615b",
+        "resp_51597712e4df"
+      ],
+      "repetition_indices": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "cell_id": "EDU-015_HINDI_claude-3.5-sonnet",
+      "domain": "Education",
+      "task_id": "EDU-015",
+      "language": "HINDI",
+      "model": "claude-3.5-sonnet",
+      "repetition_count": 3,
+      "response_ids": [
+        "resp_74b4e5d40548",
+        "resp_4773b4d4898c",
+        "resp_f1972d957984"
+      ],
+      "repetition_indices": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "cell_id": "EDU-003_HINDI_gemini-3.5-flash",
+      "domain": "Education",
+      "task_id": "EDU-003",
+      "language": "HINDI",
+      "model": "gemini-3.5-flash",
+      "repetition_count": 3,
+      "response_ids": [
+        "resp_7679e51c2733",
+        "resp_f5d4e2915db5",
+        "resp_986b085af28b"
+      ],
+      "repetition_indices": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "cell_id": "EDU-009_HINDI_gpt-4o",
+      "domain": "Education",
+      "task_id": "EDU-009",
+      "language": "HINDI",
+      "model": "gpt-4o",
+      "repetition_count": 3,
+      "response_ids": [
+        "resp_a88d9dcde98d",
+        "resp_329887171a7b",
+        "resp_9596d7433b74"
+      ],
+      "repetition_indices": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "cell_id": "EDU-011_HINDI_llama-3.1-70b",
+      "domain": "Education",
+      "task_id": "EDU-011",
+      "language": "HINDI",
+      "model": "llama-3.1-70b",
+      "repetition_count": 3,
+      "response_ids": [
+        "resp_ce6f605c5b4d",
+        "resp_622f292f5379",
+        "resp_6284493b840b"
+      ],
+      "repetition_indices": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "cell_id": "FIN-009_CODE_SWITCHING_claude-3.5-sonnet",
+      "domain": "Finance",
+      "task_id": "FIN-009",
+      "language": "CODE_SWITCHING",
+      "model": "claude-3.5-sonnet",
+      "repetition_count": 3,
+      "response_ids": [
+        "resp_49180ab94338",
+        "resp_7f13b4f0464e",
+        "resp_3100e0cc2523"
+      ],
+      "repetition_indices": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "cell_id": "FIN-025_CODE_SWITCHING_gemini-3.5-flash",
+      "domain": "Finance",
+      "task_id": "FIN-025",
+      "language": "CODE_SWITCHING",
+      "model": "gemini-3.5-flash",
+      "repetition_count": 3,
+      "response_ids": [
+        "resp_06d67ff06ab9",
+        "resp_f0f749a94879",
+        "resp_cd9de93e9779"
+      ],
+      "repetition_indices": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "cell_id": "FIN-018_CODE_SWITCHING_gpt-4o",
+      "domain": "Finance",
+      "task_id": "FIN-018",
+      "language": "CODE_SWITCHING",
+      "model": "gpt-4o",
+      "repetition_count": 3,
+      "response_ids": [
+        "resp_a671aaed20c7",
+        "resp_b2832b1d8a06",
+        "resp_b8bb5a38929d"
+      ],
+      "repetition_indices": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "cell_id": "FIN-025_CODE_SWITCHING_llama-3.1-70b",
+      "domain": "Finance",
+      "task_id": "FIN-025",
+      "language": "CODE_SWITCHING",
+      "model": "llama-3.1-70b",
+      "repetition_count": 3,
+      "response_ids": [
+        "resp_68335c84fa7f",
+        "resp_72db0900c5b0",
+        "resp_c80e292c0ee3"
+      ],
+      "repetition_indices": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "cell_id": "FIN-001_ENGLISH_claude-3.5-sonnet",
+      "domain": "Finance",
+      "task_id": "FIN-001",
+      "language": "ENGLISH",
+      "model": "claude-3.5-sonnet",
+      "repetition_count": 3,
+      "response_ids": [
+        "resp_cf51abb22dae",
+        "resp_2dc9e2d7dafc",
+        "resp_6648244a476c"
+      ],
+      "repetition_indices": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "cell_id": "FIN-027_ENGLISH_gemini-3.5-flash",
+      "domain": "Finance",
+      "task_id": "FIN-027",
+      "language": "ENGLISH",
+      "model": "gemini-3.5-flash",
+      "repetition_count": 3,
+      "response_ids": [
+        "resp_1de93e7766b1",
+        "resp_bb40b7e645ce",
+        "resp_cc23a0833650"
+      ],
+      "repetition_indices": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "cell_id": "FIN-005_ENGLISH_gpt-4o",
+      "domain": "Finance",
+      "task_id": "FIN-005",
+      "language": "ENGLISH",
+      "model": "gpt-4o",
+      "repetition_count": 3,
+      "response_ids": [
+        "resp_a17b2cb8abe0",
+        "resp_23b86b30f1b0",
+        "resp_906c8102dada"
+      ],
+      "repetition_indices": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "cell_id": "FIN-008_ENGLISH_llama-3.1-70b",
+      "domain": "Finance",
+      "task_id": "FIN-008",
+      "language": "ENGLISH",
+      "model": "llama-3.1-70b",
+      "repetition_count": 3,
+      "response_ids": [
+        "resp_d56048e18885",
+        "resp_353cb4827d3e",
+        "resp_b0e09afd4f20"
+      ],
+      "repetition_indices": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "cell_id": "FIN-019_HINDI_claude-3.5-sonnet",
+      "domain": "Finance",
+      "task_id": "FIN-019",
+      "language": "HINDI",
+      "model": "claude-3.5-sonnet",
+      "repetition_count": 3,
+      "response_ids": [
+        "resp_85823c740df4",
+        "resp_698613c41575",
+        "resp_6598520dad16"
+      ],
+      "repetition_indices": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "cell_id": "FIN-006_HINDI_gemini-3.5-flash",
+      "domain": "Finance",
+      "task_id": "FIN-006",
+      "language": "HINDI",
+      "model": "gemini-3.5-flash",
+      "repetition_count": 3,
+      "response_ids": [
+        "resp_3d4121741ebe",
+        "resp_93450332af54",
+        "resp_39fecafbfbe6"
+      ],
+      "repetition_indices": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "cell_id": "FIN-018_HINDI_gpt-4o",
+      "domain": "Finance",
+      "task_id": "FIN-018",
+      "language": "HINDI",
+      "model": "gpt-4o",
+      "repetition_count": 3,
+      "response_ids": [
+        "resp_7de145aca227",
+        "resp_0baac62bc131",
+        "resp_ea88ffbf193e"
+      ],
+      "repetition_indices": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "cell_id": "FIN-020_HINDI_llama-3.1-70b",
+      "domain": "Finance",
+      "task_id": "FIN-020",
+      "language": "HINDI",
+      "model": "llama-3.1-70b",
+      "repetition_count": 3,
+      "response_ids": [
+        "resp_a1030d82a755",
+        "resp_83d537bde16b",
+        "resp_c943905ac85b"
+      ],
+      "repetition_indices": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "cell_id": "GEN-014_CODE_SWITCHING_claude-3.5-sonnet",
+      "domain": "General_Knowledge",
+      "task_id": "GEN-014",
+      "language": "CODE_SWITCHING",
+      "model": "claude-3.5-sonnet",
+      "repetition_count": 3,
+      "response_ids": [
+        "resp_68c1c33c8572",
+        "resp_4c8794525ae6",
+        "resp_3175ed5cf9f3"
+      ],
+      "repetition_indices": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "cell_id": "GEN-019_CODE_SWITCHING_gemini-3.5-flash",
+      "domain": "General_Knowledge",
+      "task_id": "GEN-019",
+      "language": "CODE_SWITCHING",
+      "model": "gemini-3.5-flash",
+      "repetition_count": 3,
+      "response_ids": [
+        "resp_f8238cb9c0aa",
+        "resp_0db58b1ed1db",
+        "resp_f41ba6fc1bb5"
+      ],
+      "repetition_indices": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "cell_id": "GEN-004_CODE_SWITCHING_gpt-4o",
+      "domain": "General_Knowledge",
+      "task_id": "GEN-004",
+      "language": "CODE_SWITCHING",
+      "model": "gpt-4o",
+      "repetition_count": 3,
+      "response_ids": [
+        "resp_b16295cb2d09",
+        "resp_1f127ffaf641",
+        "resp_8089ce112e9e"
+      ],
+      "repetition_indices": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "cell_id": "GEN-008_CODE_SWITCHING_llama-3.1-70b",
+      "domain": "General_Knowledge",
+      "task_id": "GEN-008",
+      "language": "CODE_SWITCHING",
+      "model": "llama-3.1-70b",
+      "repetition_count": 3,
+      "response_ids": [
+        "resp_b430f0c64e9d",
+        "resp_82f335f8b98f",
+        "resp_6e4ae0d64fe4"
+      ],
+      "repetition_indices": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "cell_id": "GEN-010_ENGLISH_claude-3.5-sonnet",
+      "domain": "General_Knowledge",
+      "task_id": "GEN-010",
+      "language": "ENGLISH",
+      "model": "claude-3.5-sonnet",
+      "repetition_count": 3,
+      "response_ids": [
+        "resp_286563c55d2d",
+        "resp_cb314092a747",
+        "resp_adc6811b32bd"
+      ],
+      "repetition_indices": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "cell_id": "GEN-013_ENGLISH_gemini-3.5-flash",
+      "domain": "General_Knowledge",
+      "task_id": "GEN-013",
+      "language": "ENGLISH",
+      "model": "gemini-3.5-flash",
+      "repetition_count": 3,
+      "response_ids": [
+        "resp_d1701ad2ccd5",
+        "resp_4ebe45044f50",
+        "resp_3d5a714aa73c"
+      ],
+      "repetition_indices": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "cell_id": "GEN-029_ENGLISH_gpt-4o",
+      "domain": "General_Knowledge",
+      "task_id": "GEN-029",
+      "language": "ENGLISH",
+      "model": "gpt-4o",
+      "repetition_count": 3,
+      "response_ids": [
+        "resp_0cd20dc2e8bb",
+        "resp_fddadd9b27b8",
+        "resp_6da82ec51274"
+      ],
+      "repetition_indices": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "cell_id": "GEN-001_ENGLISH_llama-3.1-70b",
+      "domain": "General_Knowledge",
+      "task_id": "GEN-001",
+      "language": "ENGLISH",
+      "model": "llama-3.1-70b",
+      "repetition_count": 3,
+      "response_ids": [
+        "resp_c0422039af63",
+        "resp_92e51eb422c1",
+        "resp_c32ceda126bd"
+      ],
+      "repetition_indices": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "cell_id": "GEN-004_HINDI_claude-3.5-sonnet",
+      "domain": "General_Knowledge",
+      "task_id": "GEN-004",
+      "language": "HINDI",
+      "model": "claude-3.5-sonnet",
+      "repetition_count": 3,
+      "response_ids": [
+        "resp_0857d1f9faeb",
+        "resp_1e1003a76141",
+        "resp_cdccb50a88b6"
+      ],
+      "repetition_indices": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "cell_id": "GEN-014_HINDI_gemini-3.5-flash",
+      "domain": "General_Knowledge",
+      "task_id": "GEN-014",
+      "language": "HINDI",
+      "model": "gemini-3.5-flash",
+      "repetition_count": 3,
+      "response_ids": [
+        "resp_a05ceb5b2926",
+        "resp_0cd1610031f1",
+        "resp_3199e9e7bd5a"
+      ],
+      "repetition_indices": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "cell_id": "GEN-014_HINDI_gpt-4o",
+      "domain": "General_Knowledge",
+      "task_id": "GEN-014",
+      "language": "HINDI",
+      "model": "gpt-4o",
+      "repetition_count": 3,
+      "response_ids": [
+        "resp_a444b3054f37",
+        "resp_77d7de8effb5",
+        "resp_a281399ee740"
+      ],
+      "repetition_indices": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "cell_id": "GEN-007_HINDI_llama-3.1-70b",
+      "domain": "General_Knowledge",
+      "task_id": "GEN-007",
+      "language": "HINDI",
+      "model": "llama-3.1-70b",
+      "repetition_count": 3,
+      "response_ids": [
+        "resp_ae20dac2c739",
+        "resp_6b7b56e8beb9",
+        "resp_1cd716d9def3"
+      ],
+      "repetition_indices": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "cell_id": "HLT-023_CODE_SWITCHING_claude-3.5-sonnet",
+      "domain": "Healthcare",
+      "task_id": "HLT-023",
+      "language": "CODE_SWITCHING",
+      "model": "claude-3.5-sonnet",
+      "repetition_count": 3,
+      "response_ids": [
+        "resp_38b3416395fb",
+        "resp_d6040766bd01",
+        "resp_6da70d6dab2b"
+      ],
+      "repetition_indices": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "cell_id": "HLT-020_CODE_SWITCHING_gemini-3.5-flash",
+      "domain": "Healthcare",
+      "task_id": "HLT-020",
+      "language": "CODE_SWITCHING",
+      "model": "gemini-3.5-flash",
+      "repetition_count": 3,
+      "response_ids": [
+        "resp_dcd798d393ce",
+        "resp_23df13537451",
+        "resp_8c6625203cec"
+      ],
+      "repetition_indices": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "cell_id": "HLT-019_CODE_SWITCHING_gpt-4o",
+      "domain": "Healthcare",
+      "task_id": "HLT-019",
+      "language": "CODE_SWITCHING",
+      "model": "gpt-4o",
+      "repetition_count": 3,
+      "response_ids": [
+        "resp_7b8498fe672c",
+        "resp_a7335a6d4323",
+        "resp_37df36783675"
+      ],
+      "repetition_indices": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "cell_id": "HLT-020_CODE_SWITCHING_llama-3.1-70b",
+      "domain": "Healthcare",
+      "task_id": "HLT-020",
+      "language": "CODE_SWITCHING",
+      "model": "llama-3.1-70b",
+      "repetition_count": 3,
+      "response_ids": [
+        "resp_7d284308a4b2",
+        "resp_e833b999d5f0",
+        "resp_e1e214d9b26d"
+      ],
+      "repetition_indices": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "cell_id": "HLT-006_ENGLISH_claude-3.5-sonnet",
+      "domain": "Healthcare",
+      "task_id": "HLT-006",
+      "language": "ENGLISH",
+      "model": "claude-3.5-sonnet",
+      "repetition_count": 3,
+      "response_ids": [
+        "resp_6c3d1b41388d",
+        "resp_bd9609ee941b",
+        "resp_58f3320e9aa7"
+      ],
+      "repetition_indices": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "cell_id": "HLT-017_ENGLISH_gemini-3.5-flash",
+      "domain": "Healthcare",
+      "task_id": "HLT-017",
+      "language": "ENGLISH",
+      "model": "gemini-3.5-flash",
+      "repetition_count": 3,
+      "response_ids": [
+        "resp_dd90fa62ffb8",
+        "resp_49cae4a6db90",
+        "resp_05c621fd8b6f"
+      ],
+      "repetition_indices": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "cell_id": "HLT-002_ENGLISH_gpt-4o",
+      "domain": "Healthcare",
+      "task_id": "HLT-002",
+      "language": "ENGLISH",
+      "model": "gpt-4o",
+      "repetition_count": 3,
+      "response_ids": [
+        "resp_6b119b77010c",
+        "resp_3f712ecdb8fb",
+        "resp_0cc61577e8f4"
+      ],
+      "repetition_indices": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "cell_id": "HLT-007_ENGLISH_llama-3.1-70b",
+      "domain": "Healthcare",
+      "task_id": "HLT-007",
+      "language": "ENGLISH",
+      "model": "llama-3.1-70b",
+      "repetition_count": 3,
+      "response_ids": [
+        "resp_f365af0c80af",
+        "resp_63cbc59ebbc3",
+        "resp_e1370c38e0c2"
+      ],
+      "repetition_indices": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "cell_id": "HLT-011_HINDI_claude-3.5-sonnet",
+      "domain": "Healthcare",
+      "task_id": "HLT-011",
+      "language": "HINDI",
+      "model": "claude-3.5-sonnet",
+      "repetition_count": 3,
+      "response_ids": [
+        "resp_2ccc151628d7",
+        "resp_88f28f3bd5ad",
+        "resp_9bd52124b378"
+      ],
+      "repetition_indices": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "cell_id": "HLT-012_HINDI_gemini-3.5-flash",
+      "domain": "Healthcare",
+      "task_id": "HLT-012",
+      "language": "HINDI",
+      "model": "gemini-3.5-flash",
+      "repetition_count": 3,
+      "response_ids": [
+        "resp_0c9502669d06",
+        "resp_f36c735989f4",
+        "resp_0a2538b6b94e"
+      ],
+      "repetition_indices": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "cell_id": "HLT-017_HINDI_gpt-4o",
+      "domain": "Healthcare",
+      "task_id": "HLT-017",
+      "language": "HINDI",
+      "model": "gpt-4o",
+      "repetition_count": 3,
+      "response_ids": [
+        "resp_5de608fd713e",
+        "resp_4fc59c29e08a",
+        "resp_8410ca41e9b5"
+      ],
+      "repetition_indices": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "cell_id": "HLT-007_HINDI_llama-3.1-70b",
+      "domain": "Healthcare",
+      "task_id": "HLT-007",
+      "language": "HINDI",
+      "model": "llama-3.1-70b",
+      "repetition_count": 3,
+      "response_ids": [
+        "resp_23f0d01b29f3",
+        "resp_6757e89f3e9b",
+        "resp_9c9ba5396d5c"
+      ],
+      "repetition_indices": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "cell_id": "PUB-012_CODE_SWITCHING_claude-3.5-sonnet",
+      "domain": "Public_Services",
+      "task_id": "PUB-012",
+      "language": "CODE_SWITCHING",
+      "model": "claude-3.5-sonnet",
+      "repetition_count": 3,
+      "response_ids": [
+        "resp_a4e9b0407df7",
+        "resp_f70a8ddb2f60",
+        "resp_8224db599874"
+      ],
+      "repetition_indices": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "cell_id": "PUB-019_CODE_SWITCHING_gemini-3.5-flash",
+      "domain": "Public_Services",
+      "task_id": "PUB-019",
+      "language": "CODE_SWITCHING",
+      "model": "gemini-3.5-flash",
+      "repetition_count": 3,
+      "response_ids": [
+        "resp_7f8b645c7bb0",
+        "resp_0ae354934464",
+        "resp_a9ff2625290b"
+      ],
+      "repetition_indices": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "cell_id": "PUB-027_CODE_SWITCHING_gpt-4o",
+      "domain": "Public_Services",
+      "task_id": "PUB-027",
+      "language": "CODE_SWITCHING",
+      "model": "gpt-4o",
+      "repetition_count": 3,
+      "response_ids": [
+        "resp_1672f28203db",
+        "resp_5858f5ac37db",
+        "resp_94259e149f8f"
+      ],
+      "repetition_indices": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "cell_id": "PUB-014_CODE_SWITCHING_llama-3.1-70b",
+      "domain": "Public_Services",
+      "task_id": "PUB-014",
+      "language": "CODE_SWITCHING",
+      "model": "llama-3.1-70b",
+      "repetition_count": 3,
+      "response_ids": [
+        "resp_35ac14931867",
+        "resp_fa13bcfab6bc",
+        "resp_8204e3f4a3a6"
+      ],
+      "repetition_indices": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "cell_id": "PUB-019_ENGLISH_claude-3.5-sonnet",
+      "domain": "Public_Services",
+      "task_id": "PUB-019",
+      "language": "ENGLISH",
+      "model": "claude-3.5-sonnet",
+      "repetition_count": 3,
+      "response_ids": [
+        "resp_4c15d794da78",
+        "resp_b26904079f71",
+        "resp_d5d7cad18c6a"
+      ],
+      "repetition_indices": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "cell_id": "PUB-027_ENGLISH_gemini-3.5-flash",
+      "domain": "Public_Services",
+      "task_id": "PUB-027",
+      "language": "ENGLISH",
+      "model": "gemini-3.5-flash",
+      "repetition_count": 3,
+      "response_ids": [
+        "resp_24227d75098d",
+        "resp_2512f436a95a",
+        "resp_16bf59a9ba32"
+      ],
+      "repetition_indices": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "cell_id": "PUB-015_ENGLISH_gpt-4o",
+      "domain": "Public_Services",
+      "task_id": "PUB-015",
+      "language": "ENGLISH",
+      "model": "gpt-4o",
+      "repetition_count": 3,
+      "response_ids": [
+        "resp_9a0c6db92227",
+        "resp_b0ab5e3df8d2",
+        "resp_5ae94978c536"
+      ],
+      "repetition_indices": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "cell_id": "PUB-003_ENGLISH_llama-3.1-70b",
+      "domain": "Public_Services",
+      "task_id": "PUB-003",
+      "language": "ENGLISH",
+      "model": "llama-3.1-70b",
+      "repetition_count": 3,
+      "response_ids": [
+        "resp_6ef1442d9b1b",
+        "resp_5959a986b5a4",
+        "resp_79ad8758aeb6"
+      ],
+      "repetition_indices": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "cell_id": "PUB-026_HINDI_claude-3.5-sonnet",
+      "domain": "Public_Services",
+      "task_id": "PUB-026",
+      "language": "HINDI",
+      "model": "claude-3.5-sonnet",
+      "repetition_count": 3,
+      "response_ids": [
+        "resp_10e41ecb1a7e",
+        "resp_2551e6f9ac19",
+        "resp_f25e6ac41ba2"
+      ],
+      "repetition_indices": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "cell_id": "PUB-008_HINDI_gemini-3.5-flash",
+      "domain": "Public_Services",
+      "task_id": "PUB-008",
+      "language": "HINDI",
+      "model": "gemini-3.5-flash",
+      "repetition_count": 3,
+      "response_ids": [
+        "resp_eb4340fbdcf4",
+        "resp_a7f1280ef9f5",
+        "resp_496eb10ea1b5"
+      ],
+      "repetition_indices": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "cell_id": "PUB-022_HINDI_gpt-4o",
+      "domain": "Public_Services",
+      "task_id": "PUB-022",
+      "language": "HINDI",
+      "model": "gpt-4o",
+      "repetition_count": 3,
+      "response_ids": [
+        "resp_64b474bdd30a",
+        "resp_8060a202f1ce",
+        "resp_433a3102e00a"
+      ],
+      "repetition_indices": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "cell_id": "PUB-014_HINDI_llama-3.1-70b",
+      "domain": "Public_Services",
+      "task_id": "PUB-014",
+      "language": "HINDI",
+      "model": "llama-3.1-70b",
+      "repetition_count": 3,
+      "response_ids": [
+        "resp_6879d5a1e641",
+        "resp_5a4327ed7c79",
+        "resp_93388fe86d02"
+      ],
+      "repetition_indices": [
+        1,
+        2,
+        3
+      ]
+    }
+  ]
+}

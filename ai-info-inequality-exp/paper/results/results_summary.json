@@ -1,0 +1,455 @@
+{
+  "dataset_metadata": {
+    "raw_responses_file": "C:/Antigravity Projects/AI-mediated information inequality across languages/ai-info-inequality-exp/data/benchmark/raw_responses/stage12_4_full_evaluation_responses.json",
+    "file_size_bytes": 10418007,
+    "sha256_raw_file_bytes": "095b8caa9497b4d8cf804b29baad23b4d3de813bda9f865b7a1da3ef658ca5f3",
+    "sha256_canonical_sorted_json": "296bb1650f06cc7934f16e90ef662f9c9b0207971344b0935ee02704b8bf4248",
+    "manifest_hash_match": true,
+    "total_records": 5400,
+    "expected_cells": 5400,
+    "unique_cells": 5400,
+    "missing_cells": 0,
+    "duplicate_cells": 0,
+    "provenance_findings": {
+      "collection_mode": "Programmatic synthetic baseline generation (Stage 12.4)",
+      "recorded_latency_ms": "0 ms across all records (in-memory formatting runtime < 1 ms)",
+      "live_api_execution": false,
+      "forensic_note": "Stage 12.4 collected template-rendered baseline responses against benchmark ground truth. Previous Stage 12.5.2 validation was quarantined due to cloned records and fabricated agreement stats."
+    }
+  },
+  "benchmark_design": {
+    "total_tasks": 150,
+    "domains": {
+      "Healthcare": 30,
+      "Education": 30,
+      "Public_Services": 30,
+      "Finance": 30,
+      "General_Knowledge": 30
+    },
+    "difficulties": {
+      "HIGH": 36,
+      "MODERATE": 66,
+      "LOW": 48
+    },
+    "safety_sensitivities": {
+      "HIGH": 60,
+      "MODERATE": 60,
+      "LOW": 30
+    },
+    "critical_facts_per_task": 3,
+    "important_facts_per_task": 2,
+    "primary_sources_per_task": 1,
+    "total_critical_facts": 450,
+    "total_important_facts": 300,
+    "prompt_length_words": {
+      "english": {
+        "n": 150,
+        "mean": 26.14,
+        "sd": 3.89,
+        "median": 27.0,
+        "iqr": 4,
+        "min": 14,
+        "max": 32
+      },
+      "hindi": {
+        "n": 150,
+        "mean": 27.65,
+        "sd": 4.21,
+        "median": 28.5,
+        "iqr": 4,
+        "min": 16,
+        "max": 33
+      },
+      "code_switch": {
+        "n": 150,
+        "mean": 26.25,
+        "sd": 4.34,
+        "median": 28.0,
+        "iqr": 3,
+        "min": 13,
+        "max": 32
+      }
+    }
+  },
+  "synthetic_fixture_diagnostics": {
+    "description": "Diagnostic properties of programmatic fixtures used for pipeline verification (NOT live model responses)",
+    "character_length": {
+      "by_language": {
+        "ENGLISH": {
+          "n": 1800,
+          "mean": 339.8,
+          "sd": 45.33,
+          "median": 340.0,
+          "iqr": 57,
+          "min": 226,
+          "max": 424
+        },
+        "HINDI": {
+          "n": 1800,
+          "mean": 326.8,
+          "sd": 45.33,
+          "median": 327.0,
+          "iqr": 57,
+          "min": 213,
+          "max": 411
+        },
+        "CODE_SWITCHING": {
+          "n": 1800,
+          "mean": 333.8,
+          "sd": 45.33,
+          "median": 334.0,
+          "iqr": 57,
+          "min": 220,
+          "max": 418
+        }
+      },
+      "by_model": {
+        "gemini-3.5-flash": {
+          "n": 1350,
+          "mean": 333.47,
+          "sd": 45.64,
+          "median": 337.0,
+          "iqr": 65,
+          "min": 213,
+          "max": 424
+        },
+        "gpt-4o": {
+          "n": 1350,
+          "mean": 333.47,
+          "sd": 45.64,
+          "median": 337.0,
+          "iqr": 65,
+          "min": 213,
+          "max": 424
+        },
+        "claude-3.5-sonnet": {
+          "n": 1350,
+          "mean": 333.47,
+          "sd": 45.64,
+          "median": 337.0,
+          "iqr": 65,
+          "min": 213,
+          "max": 424
+        },
+        "llama-3.1-70b": {
+          "n": 1350,
+          "mean": 333.47,
+          "sd": 45.64,
+          "median": 337.0,
+          "iqr": 65,
+          "min": 213,
+          "max": 424
+        }
+      },
+      "by_domain": {
+        "Education": {
+          "n": 1080,
+          "mean": 342.67,
+          "sd": 20.73,
+          "median": 337.0,
+          "iqr": 42,
+          "min": 310,
+          "max": 373
+        },
+        "Finance": {
+          "n": 1080,
+          "mean": 362.67,
+          "sd": 46.06,
+          "median": 366.0,
+          "iqr": 83,
+          "min": 286,
+          "max": 424
+        },
+        "General_Knowledge": {
+          "n": 1080,
+          "mean": 306.07,
+          "sd": 33.98,
+          "median": 312.0,
+          "iqr": 65,
+          "min": 253,
+          "max": 358
+        },
+        "Healthcare": {
+          "n": 1080,
+          "mean": 289.07,
+          "sd": 39.73,
+          "median": 296.0,
+          "iqr": 39,
+          "min": 213,
+          "max": 345
+        },
+        "Public_Services": {
+          "n": 1080,
+          "mean": 366.87,
+          "sd": 18.79,
+          "median": 376.0,
+          "iqr": 37,
+          "min": 337,
+          "max": 391
+        }
+      }
+    },
+    "word_length": {
+      "by_language": {
+        "ENGLISH": {
+          "n": 1800,
+          "mean": 47.16,
+          "sd": 6.08,
+          "median": 47.0,
+          "iqr": 7,
+          "min": 33,
+          "max": 61
+        },
+        "HINDI": {
+          "n": 1800,
+          "mean": 46.16,
+          "sd": 6.08,
+          "median": 46.0,
+          "iqr": 7,
+          "min": 32,
+          "max": 60
+        },
+        "CODE_SWITCHING": {
+          "n": 1800,
+          "mean": 46.16,
+          "sd": 6.08,
+          "median": 46.0,
+          "iqr": 7,
+          "min": 32,
+          "max": 60
+        }
+      },
+      "by_model": {
+        "gemini-3.5-flash": {
+          "n": 1350,
+          "mean": 46.49,
+          "sd": 6.1,
+          "median": 46.0,
+          "iqr": 7,
+          "min": 32,
+          "max": 61
+        },
+        "gpt-4o": {
+          "n": 1350,
+          "mean": 46.49,
+          "sd": 6.1,
+          "median": 46.0,
+          "iqr": 7,
+          "min": 32,
+          "max": 61
+        },
+        "claude-3.5-sonnet": {
+          "n": 1350,
+          "mean": 46.49,
+          "sd": 6.1,
+          "median": 46.0,
+          "iqr": 7,
+          "min": 32,
+          "max": 61
+        },
+        "llama-3.1-70b": {
+          "n": 1350,
+          "mean": 46.49,
+          "sd": 6.1,
+          "median": 46.0,
+          "iqr": 7,
+          "min": 32,
+          "max": 61
+        }
+      }
+    },
+    "script_composition": {
+      "ENGLISH": {
+        "devanagari_chars": 0,
+        "latin_chars": 467280,
+        "other_chars": 144360,
+        "devanagari_pct": 0.0,
+        "latin_pct": 100.0
+      },
+      "HINDI": {
+        "devanagari_chars": 41400,
+        "latin_chars": 400680,
+        "other_chars": 146160,
+        "devanagari_pct": 9.36,
+        "latin_pct": 90.64
+      },
+      "CODE_SWITCHING": {
+        "devanagari_chars": 0,
+        "latin_chars": 458280,
+        "other_chars": 142560,
+        "devanagari_pct": 0.0,
+        "latin_pct": 100.0
+      }
+    },
+    "within_cell_variance": {
+      "zero_variance_cells": 1800,
+      "total_cells": 1800,
+      "zero_variance_pct": 100.0,
+      "variance_distribution": {
+        "n": 1800,
+        "mean": 0.0,
+        "sd": 0.0,
+        "median": 0.0,
+        "iqr": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      }
+    }
+  },
+  "metric_inventory": [
+    {
+      "code": "M1",
+      "name": "Factual Precision",
+      "formula": "N_Supported / N_adjudicated",
+      "category": "Primary Confirmatory",
+      "model": "Binomial GLMM (logit link)",
+      "implemented": true,
+      "unit_tested": true,
+      "validated": false,
+      "status": "UNVALIDATED (Pending independent human annotation)"
+    },
+    {
+      "code": "M1b",
+      "name": "Contradiction-Only Precision",
+      "formula": "N_Supported / (N_Supported + N_Contradicted)",
+      "category": "Secondary Sensitivity",
+      "model": "Binomial GLMM (logit link)",
+      "implemented": true,
+      "unit_tested": true,
+      "validated": false,
+      "status": "UNVALIDATED (Pending independent human annotation)"
+    },
+    {
+      "code": "M2a",
+      "name": "Critical Fact Coverage",
+      "formula": "CF_covered / CF_total",
+      "category": "Primary Confirmatory",
+      "model": "Binomial GLMM (logit link)",
+      "implemented": true,
+      "unit_tested": true,
+      "validated": false,
+      "status": "UNVALIDATED (Pending independent human annotation)"
+    },
+    {
+      "code": "M2c",
+      "name": "Weighted Completeness",
+      "formula": "(sum CF_wt + 0.5 sum IF_wt) / (|CF| + 0.5 |IF|)",
+      "category": "Secondary Sensitivity",
+      "model": "Linear Mixed Model (LMM)",
+      "implemented": true,
+      "unit_tested": true,
+      "validated": false,
+      "status": "UNVALIDATED (Pending independent human annotation)"
+    },
+    {
+      "code": "M3",
+      "name": "Critical Fact Omission Rate",
+      "formula": "CF_omitted / CF_total",
+      "category": "Primary Confirmatory",
+      "model": "Binomial GLMM (logit link)",
+      "implemented": true,
+      "unit_tested": true,
+      "validated": false,
+      "status": "UNVALIDATED (Pending independent human annotation)"
+    },
+    {
+      "code": "M4a",
+      "name": "Deduplicated Error Count",
+      "formula": "|Claims_contra| + sum unlinked(CF_contra)",
+      "category": "Secondary Confirmatory",
+      "model": "Negative Binomial GLMM (log link, log offset)",
+      "implemented": true,
+      "unit_tested": true,
+      "validated": false,
+      "status": "UNVALIDATED (Pending independent human annotation)"
+    },
+    {
+      "code": "M4b",
+      "name": "Any Error Indicator",
+      "formula": "1(M4a > 0)",
+      "category": "Secondary Confirmatory",
+      "model": "Binomial GLMM (logit link)",
+      "implemented": true,
+      "unit_tested": true,
+      "validated": false,
+      "status": "UNVALIDATED (Pending independent human annotation)"
+    },
+    {
+      "code": "M4c",
+      "name": "Normalized Factual Error Rate",
+      "formula": "N_Contradicted / N_adjudicated",
+      "category": "Secondary Confirmatory",
+      "model": "Binomial GLMM (logit link)",
+      "implemented": true,
+      "unit_tested": true,
+      "validated": false,
+      "status": "UNVALIDATED (Pending independent human annotation)"
+    },
+    {
+      "code": "M5",
+      "name": "Citation Quality Grade",
+      "formula": "Ordinal rubric {0, 1, 2, 3, 4}",
+      "category": "Secondary Confirmatory",
+      "model": "Cumulative Link Mixed Model (CLMM)",
+      "implemented": true,
+      "unit_tested": true,
+      "validated": false,
+      "status": "UNVALIDATED (Pending independent human annotation)"
+    },
+    {
+      "code": "M6",
+      "name": "Domain Safety Level",
+      "formula": "Ordinal scale {0, 1, 2}",
+      "category": "Secondary Confirmatory",
+      "model": "Cumulative Link Mixed Model (CLMM)",
+      "implemented": true,
+      "unit_tested": true,
+      "validated": false,
+      "status": "UNVALIDATED (Pending independent human annotation)"
+    },
+    {
+      "code": "M7",
+      "name": "Semantic Preservation (UIN)",
+      "formula": "Ordinal scale {0, 1, 2, 3, 4} (anchored to UIN)",
+      "category": "Secondary Confirmatory",
+      "model": "Cumulative Link Mixed Model (CLMM)",
+      "implemented": true,
+      "unit_tested": true,
+      "validated": false,
+      "status": "UNVALIDATED (Pending independent human annotation)"
+    },
+    {
+      "code": "M8a",
+      "name": "Completeness Variance",
+      "formula": "s^2_CF over 3 repetitions",
+      "category": "Secondary Confirmatory",
+      "model": "Two-Part Hurdle GLMM (Logit + Gamma)",
+      "implemented": true,
+      "unit_tested": true,
+      "validated": false,
+      "status": "UNVALIDATED (Pending independent human annotation)"
+    },
+    {
+      "code": "M8b",
+      "name": "Critical Fact Jaccard Concordance",
+      "formula": "K_overlap / K_union over 3 repetitions",
+      "category": "Secondary Confirmatory",
+      "model": "Binomial GLMM (logit link)",
+      "implemented": true,
+      "unit_tested": true,
+      "validated": false,
+      "status": "UNVALIDATED (Pending independent human annotation)"
+    }
+  ],
+  "validation_status": {
+    "human_annotation_pilot_conducted": false,
+    "independent_human_annotations_secured": 0,
+    "quarantined_artifacts_excluded": true,
+    "quarantined_artifacts_count": 4,
+    "substantive_metrics_empirically_validated": 0,
+    "substantive_metrics_pending_validation": 13,
+    "feasibility_pilot_ready": true,
+    "pilot_sample_size": 12,
+    "validation_sample_size": 270
+  }
+}

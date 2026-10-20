@@ -1,0 +1,155 @@
+{
+  "mapping_metadata": {
+    "purpose": "Restricted unblinding key linking neutral item IDs in the 12-item feasibility pilot to frozen response IDs and model conditions.",
+    "created_at": "2026-10-12T17:50:00Z",
+    "blinding_protocol": "STRICT_DOUBLE_BLIND. This file must be kept strictly confidential from Annotator A and Annotator B until both independent submissions are completed and frozen.",
+    "total_items": 12,
+    "pilot_response_ids_sha256": "5c808d1830f8a95f9e903c49c09380c95f076bc4df1cfa88682bcc48952853fc"
+  },
+  "mappings": [
+    {
+      "item_id": "ITEM_01",
+      "pilot_item_id": "PILOT_01",
+      "response_id": "resp_2ea10bd5afc5",
+      "task_id": "PUB-001",
+      "domain": "Public_Services",
+      "language": "HINDI",
+      "model": "gpt-4o",
+      "provider": "OpenAI",
+      "repetition": 1,
+      "response_hash_sha256": "e5c5adbe56645cbf130394547415c53e6877ebda41ed24a4d77872c45f71f3d5"
+    },
+    {
+      "item_id": "ITEM_02",
+      "pilot_item_id": "PILOT_02",
+      "response_id": "resp_1abc3a70ea3b",
+      "task_id": "PUB-001",
+      "domain": "Public_Services",
+      "language": "HINDI",
+      "model": "llama-3.1-70b",
+      "provider": "Meta",
+      "repetition": 1,
+      "response_hash_sha256": "e5c5adbe56645cbf130394547415c53e6877ebda41ed24a4d77872c45f71f3d5"
+    },
+    {
+      "item_id": "ITEM_03",
+      "pilot_item_id": "PILOT_03",
+      "response_id": "resp_06926baa9050",
+      "task_id": "PUB-001",
+      "domain": "Public_Services",
+      "language": "CODE_SWITCHING",
+      "model": "gpt-4o",
+      "provider": "OpenAI",
+      "repetition": 1,
+      "response_hash_sha256": "bbfab636e42048e10e4a7caac1f430f67a09bef317c124498aebf4e77d5779eb"
+    },
+    {
+      "item_id": "ITEM_04",
+      "pilot_item_id": "PILOT_04",
+      "response_id": "resp_9d6b2129dc3d",
+      "task_id": "PUB-001",
+      "domain": "Public_Services",
+      "language": "CODE_SWITCHING",
+      "model": "llama-3.1-70b",
+      "provider": "Meta",
+      "repetition": 1,
+      "response_hash_sha256": "bbfab636e42048e10e4a7caac1f430f67a09bef317c124498aebf4e77d5779eb"
+    },
+    {
+      "item_id": "ITEM_05",
+      "pilot_item_id": "PILOT_05",
+      "response_id": "resp_2c4f9a6ff764",
+      "task_id": "HLT-001",
+      "domain": "Healthcare",
+      "language": "HINDI",
+      "model": "gpt-4o",
+      "provider": "OpenAI",
+      "repetition": 1,
+      "response_hash_sha256": "ceedb6cde77a3685407a38c8f2faf1d85e785d311c0ac30bdea7b9095f10e012"
+    },
+    {
+      "item_id": "ITEM_06",
+      "pilot_item_id": "PILOT_06",
+      "response_id": "resp_ccbe2fa65392",
+      "task_id": "HLT-001",
+      "domain": "Healthcare",
+      "language": "HINDI",
+      "model": "llama-3.1-70b",
+      "provider": "Meta",
+      "repetition": 1,
+      "response_hash_sha256": "ceedb6cde77a3685407a38c8f2faf1d85e785d311c0ac30bdea7b9095f10e012"
+    },
+    {
+      "item_id": "ITEM_07",
+      "pilot_item_id": "PILOT_07",
+      "response_id": "resp_bc2e028f72ab",
+      "task_id": "HLT-001",
+      "domain": "Healthcare",
+      "language": "CODE_SWITCHING",
+      "model": "gpt-4o",
+      "provider": "OpenAI",
+      "repetition": 1,
+      "response_hash_sha256": "d1506f6cf6935115b03e28ec184a0880c5e88c529fe4830cf53ffe0dcade5a75"
+    },
+    {
+      "item_id": "ITEM_08",
+      "pilot_item_id": "PILOT_08",
+      "response_id": "resp_bd0d4b069280",
+      "task_id": "HLT-001",
+      "domain": "Healthcare",
+      "language": "CODE_SWITCHING",
+      "model": "llama-3.1-70b",
+      "provider": "Meta",
+      "repetition": 1,
+      "response_hash_sha256": "d1506f6cf6935115b03e28ec184a0880c5e88c529fe4830cf53ffe0dcade5a75"
+    },
+    {
+      "item_id": "ITEM_09",
+      "pilot_item_id": "PILOT_09",
+      "response_id": "resp_e5a264bbbc4a",
+      "task_id": "FIN-001",
+      "domain": "Finance",
+      "language": "HINDI",
+      "model": "gpt-4o",
+      "provider": "OpenAI",
+      "repetition": 1,
+      "response_hash_sha256": "a69bc254f1c7f7140c2dd9c669fc2e7b2606a5dfe6f066b9038621199e40111e"
+    },
+    {
+      "item_id": "ITEM_10",
+      "pilot_item_id": "PILOT_10",
+      "response_id": "resp_2639b981c98e",
+      "task_id": "FIN-001",
+      "domain": "Finance",
+      "language": "HINDI",
+      "model": "llama-3.1-70b",
+      "provider": "Meta",
+      "repetition": 1,
+      "response_hash_sha256": "a69bc254f1c7f7140c2dd9c669fc2e7b2606a5dfe6f066b9038621199e40111e"
+    },
+    {
+      "item_id": "ITEM_11",
+      "pilot_item_id": "PILOT_11",
+      "response_id": "resp_f787d83b489f",
+      "task_id": "FIN-001",
+      "domain": "Finance",
+      "language": "CODE_SWITCHING",
+      "model": "gpt-4o",
+      "provider": "OpenAI",
+      "repetition": 1,
+      "response_hash_sha256": "c77610fa8a8e52c4f19c8a1a0876b569cbd010daeb7e2cf0f0616f0c794b2d78"
+    },
+    {
+      "item_id": "ITEM_12",
+      "pilot_item_id": "PILOT_12",
+      "response_id": "resp_2710434bf467",
+      "task_id": "FIN-001",
+      "domain": "Finance",
+      "language": "CODE_SWITCHING",
+      "model": "llama-3.1-70b",
+      "provider": "Meta",
+      "repetition": 1,
+      "response_hash_sha256": "c77610fa8a8e52c4f19c8a1a0876b569cbd010daeb7e2cf0f0616f0c794b2d78"
+    }
+  ]
+}

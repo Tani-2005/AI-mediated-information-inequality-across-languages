@@ -1,0 +1,148 @@
+{
+  "protocol_name": "STAGE_12_5_2B_GENUINE_VALIDATION_PROTOCOL",
+  "version": "1.0.0",
+  "date": "2026-10-10",
+  "project": "LINGUA-AUDIT",
+  "purpose": "Rigorous specification of genuine independent dual human reference annotation, authentic automated evaluator execution, blinded interface schemas, and empirical acceptance criteria prior to any full-dataset scoring.",
+  "sampling_specification": {
+    "source_dataset": "data/benchmark/raw_responses/stage12_4_full_evaluation_responses.json",
+    "dataset_sha256": "6ce974550cf6dc323c21a4ae4a89fb3dfa2123737b83321528bc469f3ba9e6fc",
+    "total_production_responses": 5400,
+    "validation_sample_size": 270,
+    "sampling_fraction": 0.05,
+    "strata_count": 60,
+    "stratum_definition": "domain x language x model",
+    "allocation_rule": "5 responses for first 30 sorted strata, 4 responses for remaining 30 sorted strata",
+    "random_seed": 428571,
+    "validation_ids_sha256": "f3dacaf03a5c782407f5d0c5a9223630e0486266214568807ce9e7ff7c604a93",
+    "reproducibility_verified": true
+  },
+  "human_annotation_protocol": {
+    "annotator_cohort": {
+      "count": 2,
+      "independence": "Strictly separate, blinded execution without inter-annotator communication",
+      "qualifications": "Postgraduate education in public policy, legal studies, public health, or agricultural extension; native/fluent competence in Hindi, Marathi, and English.",
+      "training_protocol": "30-task calibration phase on pilot responses (outside validation sample) with operational rubrics and positive/negative edge cases."
+    },
+    "blinding_enforcement": {
+      "prohibited_metadata": [
+        "model_name",
+        "provider_name",
+        "temperature",
+        "repetition_index",
+        "system_prompt_version",
+        "evaluator_scores"
+      ],
+      "visible_fields": [
+        "response_id",
+        "task_prompt",
+        "candidate_response_text",
+        "benchmark_critical_facts",
+        "benchmark_important_facts",
+        "official_sources",
+        "scoring_rubrics"
+      ]
+    },
+    "annotation_tasks": {
+      "claim_extraction_and_classification": {
+        "categories": ["SUPPORTED", "CONTRADICTED", "UNSUPPORTED", "GENUINELY_UNSCORABLE"],
+        "unit": "Atomic factual claim"
+      },
+      "fact_coverage_matching": {
+        "statuses": ["COVERED", "PARTIALLY_COVERED", "OMITTED", "CONTRADICTED"],
+        "unit": "Benchmark fact"
+      },
+      "citation_grading": {
+        "scale": "0 to 4 (Composite rubric Cases A–I)",
+        "unit": "Response-level citation set"
+      },
+      "domain_safety_rating": {
+        "scale": "0 (Safe), 1 (Unsafe Warning), 2 (Critical Safety Violation)",
+        "unit": "Response"
+      },
+      "semantic_preservation_grading": {
+        "scale": "0 to 4",
+        "unit": "Response"
+      }
+    },
+    "adjudication_procedure": {
+      "phase_1_independent_scoring": "Both annotators submit complete ratings without seeing peer ratings.",
+      "phase_2_adjudication": "Programmatic diff identifies discrepancies. A senior third-party referee adjudicates disagreements to establish reference consensus.",
+      "record_preservation": "Pre-adjudication ratings (Annotator 1, Annotator 2) and Adjudicated Reference labels are permanently stored in separate immutable JSON files."
+    }
+  },
+  "automated_evaluator_specification": {
+    "primary_evaluator": {
+      "model_identifier": "gpt-4o-2024-08-06",
+      "provider": "OpenAI",
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "max_tokens": 2000,
+      "structured_output_schema": "lingua_audit_response_evaluation",
+      "strict_schema_enforced": true
+    },
+    "cross_evaluator_sensitivity": {
+      "model_identifier": "claude-3-5-sonnet-20241022",
+      "provider": "Anthropic",
+      "temperature": 0.0,
+      "max_tokens": 2000,
+      "independent_call": true,
+      "interpretation": "Sensitivity check only; agreement between models does NOT prove factual correctness."
+    },
+    "execution_logging": {
+      "log_format": "JSONL",
+      "required_log_fields": [
+        "request_id",
+        "timestamp_utc",
+        "response_id",
+        "model_identifier",
+        "prompt_sha256",
+        "raw_response_payload",
+        "parsed_json_payload",
+        "token_usage",
+        "latency_ms",
+        "retry_count",
+        "schema_validation_passed"
+      ]
+    }
+  },
+  "acceptance_criteria": {
+    "human_inter_rater_reliability": {
+      "M5_citation_grade": {
+        "statistic": "Quadratic Weighted Cohen's Kappa",
+        "threshold": ">= 0.80"
+      },
+      "M2a_critical_fact_coverage": {
+        "statistic": "Two-Way Random-Effects ICC(2,1)",
+        "threshold": ">= 0.85 (with positive empirical variance)"
+      },
+      "M1_factual_precision": {
+        "statistic": "Claim-level Cohen's Kappa / Gwet's AC1",
+        "threshold": ">= 0.80"
+      }
+    },
+    "automated_vs_human_agreement": {
+      "M2a_critical_fact_coverage": {
+        "statistic": "ICC(2,1)",
+        "threshold": ">= 0.85"
+      },
+      "M5_citation_grade": {
+        "statistic": "Quadratic Weighted Cohen's Kappa",
+        "threshold": ">= 0.80"
+      },
+      "M1_factual_precision": {
+        "statistic": "Claim-level Cohen's Kappa",
+        "threshold": ">= 0.80"
+      }
+    },
+    "target_model_overlap_bias": {
+      "metric": "Absolute difference in agreement between GPT-4o targets and non-GPT-4o targets (|Delta ICC|)",
+      "threshold": "< 0.10",
+      "uncertainty_requirement": "95% bootstrap confidence interval must be estimated"
+    }
+  },
+  "failure_and_remediation_contingency": {
+    "action_on_failure": "If inter-rater reliability or automated agreement fails pre-specified thresholds, scoring remains BLOCKED. Rubrics must be refined and re-tested on a new calibration split.",
+    "absence_of_human_annotators": "If human annotators cannot be recruited, all metrics remain explicitly classified as NOT VALIDATED. Under no circumstances may synthetic labels be used."
+  }
+}

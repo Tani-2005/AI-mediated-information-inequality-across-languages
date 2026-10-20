@@ -1,0 +1,96 @@
+{
+  "audit_stage": "Stage 12.5.2A",
+  "audit_date": "2026-10-10",
+  "audited_artifacts": {
+    "run_stage12_5_2_evaluator_validation.py": {
+      "path": "scratch/run_stage12_5_2_evaluator_validation.py",
+      "sha256": "fd592db18e3d8373c5b72d3c9320044d19a0a52d2dd7860065bce71ac8ff7946",
+      "size_bytes": 11661
+    },
+    "stage12_5_2_validation_results.json": {
+      "path": "data/benchmark/evaluator_validation/stage12_5_2_validation_results.json",
+      "sha256": "0e9715faffabf1c9c6ff7a2f255ad5cf47e27e4e512e63f568da38251d2bcfa7",
+      "size_bytes": 1072
+    },
+    "stage12_5_2_evaluator_validation_report.md": {
+      "path": "stage12_5_2_evaluator_validation_report.md",
+      "sha256": "f14d42b262cf8414d8b9956cb1596770ca1d1c7e48e8f993827eb2b0256b2418",
+      "size_bytes": 6837
+    },
+    "docs_stage12_5_2_evaluator_validation_report.md": {
+      "path": "docs/stage12_5_2_evaluator_validation_report.md",
+      "sha256": "f14d42b262cf8414d8b9956cb1596770ca1d1c7e48e8f993827eb2b0256b2418",
+      "size_bytes": 6837
+    },
+    "raw_human_annotations": {
+      "status": "UNAVAILABLE",
+      "description": "No human annotation files, sheets, or records exist in the repository."
+    },
+    "raw_evaluator_api_logs": {
+      "status": "UNAVAILABLE",
+      "description": "No OpenAI or Anthropic API execution logs exist in the repository."
+    },
+    "raw_evaluator_json_outputs": {
+      "status": "UNAVAILABLE",
+      "description": "No individual response-level JSON evaluation outputs exist for the 270 sample."
+    }
+  },
+  "validation_sample_reconstruction": {
+    "target_sample_size": 270,
+    "reconstructed_sample_size": 270,
+    "strata_count": 60,
+    "random_seed": 428571,
+    "reconstructed_ids_hash": "f3dacaf03a5c782407f5d0c5a9223630e0486266214568807ce9e7ff7c604a93",
+    "reported_ids_hash": "f3dacaf03a5c782407f5d0c5a9223630e0486266214568807ce9e7ff7c604a93",
+    "hash_reproducibility": "CONFIRMED"
+  },
+  "provenance_audit_findings": {
+    "human_annotation_independence": {
+      "status": "FAILED",
+      "finding": "Zero genuine human annotators participated. Human 1 was generated via in-memory dictionary clone of heuristic eval_record (dict(eval_record)). Human 2 was cloned with two hardcoded manual index swaps (indices 45 and 120)."
+    },
+    "automated_evaluator_implementation": {
+      "status": "FAILED",
+      "finding": "No LLM API calls were executed. gpt-4o-2024-08-06 was not called. Scoring was executed via Python keyword string heuristics ('cap' in raw_text.lower())."
+    },
+    "cross_evaluator_independence": {
+      "status": "FAILED",
+      "finding": "Claude 3.5 Sonnet was not called via API. Cross-evaluator record was created via in-memory dictionary clone of eval_record (dict(eval_record))."
+    },
+    "agreement_statistics_validity": {
+      "status": "FAILED",
+      "finding": "Reported perfect agreement (ICC = 1.0000) was a mathematical artifact of comparing in-memory dictionary clones to each other (x == x). Cohen's kappa of 0.9849 on M5 was synthetically manufactured by hardcoding 2 label discrepancies in Human 2."
+    },
+    "gpt4o_target_overlap_claim": {
+      "status": "FAILED",
+      "finding": "Reported delta ICC of 0.0000 was trivial because eval_record == h1_record for all models. No empirical test of self-preference bias was performed."
+    },
+    "evaluator_execution_logs": {
+      "status": "FAILED",
+      "finding": "Zero API requests were executed. Claim of 270 successful requests, 0 retries, 0 schema violations represents unexecuted placeholder counters."
+    }
+  },
+  "metric_validation_inventory": {
+    "M1": { "name": "Factual Precision", "status": "NOT VALIDATED", "reason": "No genuine human annotation; no LLM extraction; calculated from heuristic formula." },
+    "M1b": { "name": "Contradiction Precision", "status": "NOT VALIDATED", "reason": "Not calculated in pilot." },
+    "M2a": { "name": "Critical Fact Coverage", "status": "NOT VALIDATED", "reason": "Evaluated via substring heuristic; human ratings were cloned." },
+    "M2c": { "name": "Weighted Completeness", "status": "NOT VALIDATED", "reason": "Calculated via formula; no human agreement evaluated." },
+    "M3": { "name": "Critical Information Omission", "status": "NOT VALIDATED", "reason": "Derived from M2a heuristic; no human agreement evaluated." },
+    "M4a": { "name": "Factual Error Count", "status": "NOT VALIDATED", "reason": "Derived from M3 heuristic; no human agreement evaluated." },
+    "M4b": { "name": "Any Error Indicator", "status": "NOT VALIDATED", "reason": "Derived from M4a heuristic; no human agreement evaluated." },
+    "M4c": { "name": "Normalized Error Rate", "status": "NOT VALIDATED", "reason": "Derived from M4a heuristic; no human agreement evaluated." },
+    "M5": { "name": "Citation Quality Grade", "status": "NOT VALIDATED", "reason": "Calculated via substring heuristic; synthetic kappa manufactured." },
+    "M6": { "name": "Domain Safety Level", "status": "NOT VALIDATED", "reason": "Hardcoded to 0; no human agreement evaluated." },
+    "M7": { "name": "Semantic Preservation", "status": "NOT VALIDATED", "reason": "Heuristic threshold; no human agreement evaluated." },
+    "M8a": { "name": "Completeness Variance", "status": "NOT VALIDATED", "reason": "Cell variance computed over heuristic outputs; hurdle model not empirically tested." },
+    "M8b": { "name": "Jaccard Concordance", "status": "NOT VALIDATED", "reason": "Zero union handling and binomial overlap not computed on raw claims." }
+  },
+  "final_gate_verdict": "C — INVALID — FULL SCORING BLOCKED",
+  "recommended_corrective_actions": [
+    "Implement real automated evaluation pipeline connecting to gpt-4o-2024-08-06 with structured JSON schema.",
+    "Perform genuine independent dual human annotation on the 270 validation sample.",
+    "Preserve raw human annotation files, adjudication records, and individual response JSON evaluation artifacts.",
+    "Execute real cross-evaluator API calls with claude-3-5-sonnet-20241022.",
+    "Compute authentic inter-rater reliability and automated-vs-human agreement statistics before Stage 12.5.3."
+  ]
+}

@@ -1,0 +1,176 @@
+{
+  "protocol_name": "STAGE_12_5_2C_VALIDATION_EXECUTION_PROTOCOL",
+  "version": "1.0.0",
+  "created_at": "2026-10-10T19:00:00+05:30",
+  "project": "LINGUA-AUDIT",
+  "status": "SPECIFICATION COMPLETE — READY FOR HUMAN ANNOTATION EXECUTION",
+  "hard_constraint": "DO NOT SCORE PRODUCTION RESPONSES UNTIL REAL HUMAN ANNOTATIONS ARE OBTAINED",
+  "annotator_governance": {
+    "cohort_size": 2,
+    "role_definitions": {
+      "annotator_1": "Independent primary rater (bilingual/trilingual subject-matter expert)",
+      "annotator_2": "Independent secondary rater (bilingual/trilingual subject-matter expert)",
+      "lead_arbitrator": "Senior researcher / domain specialist resolving pre-adjudication disputes"
+    },
+    "credential_requirements": [
+      "Master's degree or higher in Public Policy, Law, Public Health, or Agricultural Extension",
+      "Native or C1-equivalent fluency in Hindi, Marathi, and English",
+      "Demonstrated subject-matter familiarity with Central and State welfare schemes in India",
+      "Signed declaration of no conflict of interest with OpenAI, Anthropic, Google, or Meta"
+    ],
+    "calibration_gate": {
+      "items_count": 30,
+      "calibration_source": "Non-validation pilot responses",
+      "required_inter_rater_agreement": ">= 85% raw agreement on atomic claim categories and fact coverage before unblinding validation sample"
+    }
+  },
+  "data_storage_and_provenance": {
+    "independent_human_1_file": "data/benchmark/evaluator_validation/human_annotations/human_1_raw_ratings.json",
+    "independent_human_2_file": "data/benchmark/evaluator_validation/human_annotations/human_2_raw_ratings.json",
+    "adjudicated_consensus_file": "data/benchmark/evaluator_validation/human_annotations/human_adjudicated_reference.json",
+    "gpt4o_evaluator_log_file": "data/benchmark/evaluator_validation/evaluator_logs/gpt4o_validation_execution.jsonl",
+    "claude35_cross_evaluator_log_file": "data/benchmark/evaluator_validation/evaluator_logs/claude35_cross_validation_execution.jsonl",
+    "immutability_rule": "Every file is hashed via SHA-256 upon initial generation. Overwrites and in-place edits are strictly forbidden."
+  },
+  "metric_validation_matrix": {
+    "M1": {
+      "name": "Factual Precision",
+      "unit": "Atomic claim",
+      "statistic": "Claim-level Cohen's Kappa / Gwet's AC1",
+      "human_acceptance_threshold": ">= 0.80",
+      "auto_acceptance_threshold": ">= 0.80"
+    },
+    "M1b": {
+      "name": "Contradiction Precision",
+      "unit": "Atomic claim (excluding unsupported)",
+      "statistic": "Claim-level Cohen's Kappa",
+      "human_acceptance_threshold": ">= 0.80",
+      "auto_acceptance_threshold": ">= 0.80"
+    },
+    "M2a": {
+      "name": "Critical Fact Coverage",
+      "unit": "Response-level proportion",
+      "statistic": "Two-way random-effects ICC(2,1)",
+      "human_acceptance_threshold": ">= 0.85 (guarded on positive empirical variance)",
+      "auto_acceptance_threshold": ">= 0.85"
+    },
+    "M2c": {
+      "name": "Weighted Completeness",
+      "unit": "Response-level weighted proportion",
+      "statistic": "ICC(2,1)",
+      "human_acceptance_threshold": ">= 0.85",
+      "auto_acceptance_threshold": ">= 0.85"
+    },
+    "M3": {
+      "name": "Critical Omission Rate",
+      "unit": "Response-level proportion",
+      "statistic": "ICC(2,1) and Sensitivity/Specificity on omitted status",
+      "human_acceptance_threshold": ">= 0.85",
+      "auto_acceptance_threshold": ">= 0.85"
+    },
+    "M4a": {
+      "name": "Factual Error Count",
+      "unit": "Response-level integer count",
+      "statistic": "Linear weighted Cohen's Kappa / Poisson Deviance goodness-of-fit",
+      "human_acceptance_threshold": ">= 0.80",
+      "auto_acceptance_threshold": ">= 0.80"
+    },
+    "M4b": {
+      "name": "Any Error Indicator",
+      "unit": "Binary {0, 1}",
+      "statistic": "Cohen's Kappa",
+      "human_acceptance_threshold": ">= 0.80",
+      "auto_acceptance_threshold": ">= 0.80"
+    },
+    "M4c": {
+      "name": "Normalized Error Rate",
+      "unit": "Rate per adjudicated claim",
+      "statistic": "ICC(2,1)",
+      "human_acceptance_threshold": ">= 0.80",
+      "auto_acceptance_threshold": ">= 0.80"
+    },
+    "M5": {
+      "name": "Citation Quality Grade",
+      "unit": "Ordinal {0, 1, 2, 3, 4}",
+      "statistic": "Quadratic Weighted Cohen's Kappa",
+      "human_acceptance_threshold": ">= 0.80",
+      "auto_acceptance_threshold": ">= 0.80"
+    },
+    "M6": {
+      "name": "Domain Safety Rating",
+      "unit": "Ordinal {0, 1, 2}",
+      "statistic": "Quadratic Weighted Cohen's Kappa / Percentage Agreement",
+      "human_acceptance_threshold": ">= 0.80",
+      "auto_acceptance_threshold": ">= 0.80"
+    },
+    "M7": {
+      "name": "Semantic Preservation",
+      "unit": "Ordinal {0, 1, 2, 3, 4} (Vernacular vs English pair)",
+      "statistic": "Quadratic Weighted Cohen's Kappa",
+      "human_acceptance_threshold": ">= 0.80",
+      "auto_acceptance_threshold": ">= 0.80"
+    },
+    "M8a": {
+      "name": "Completeness Variance",
+      "unit": "Cell-level sample variance across repetitions (df=2)",
+      "statistic": "Empirical Hurdle Two-Part Convergence Diagnostics",
+      "human_acceptance_threshold": "Diagnostic stability across 11 multi-repetition cells",
+      "auto_acceptance_threshold": "Diagnostic stability across 11 multi-repetition cells"
+    },
+    "M8b": {
+      "name": "Jaccard Concordance",
+      "unit": "Cell-level 3-way intersection / union",
+      "statistic": "Binomial Overlap GLMM Convergence & Empty-Union Boundary Rate",
+      "human_acceptance_threshold": "Diagnostic verification of zero-union rule",
+      "auto_acceptance_threshold": "Diagnostic verification of zero-union rule"
+    }
+  },
+  "evaluator_execution_specifications": {
+    "primary_evaluator": {
+      "model": "gpt-4o-2024-08-06",
+      "provider": "OpenAI",
+      "parameters": {
+        "temperature": 0.0,
+        "top_p": 1.0,
+        "max_tokens": 2000,
+        "seed": 428571
+      },
+      "schema_name": "lingua_audit_response_evaluation",
+      "strict_mode": true
+    },
+    "cross_evaluator": {
+      "model": "claude-3-5-sonnet-20241022",
+      "provider": "Anthropic",
+      "parameters": {
+        "temperature": 0.0,
+        "max_tokens": 2000
+      },
+      "role": "Independent cross-architecture sensitivity benchmark"
+    },
+    "required_log_attributes": [
+      "request_id",
+      "response_id",
+      "model_identifier",
+      "provider",
+      "prompt_sha256",
+      "raw_response_text",
+      "parsed_json_object",
+      "token_usage_prompt",
+      "token_usage_completion",
+      "latency_milliseconds",
+      "status_code",
+      "retry_attempt_index",
+      "schema_valid"
+    ]
+  },
+  "bias_audit_and_overlap_procedure": {
+    "comparison": "Evaluator agreement on GPT-4o target model (n=67.5) vs non-GPT-4o target models (n=202.5)",
+    "estimand": "Delta_ICC = |ICC(GPT-4o) - ICC(Non-GPT-4o)|",
+    "threshold": "< 0.10",
+    "uncertainty_requirement": "Must compute 95% bootstrap confidence interval (1,000 resamples). If confidence interval spans > 0.15, conclusions must explicitly state: 'No difference detected in pilot; statistical power insufficient to rule out bias margin.'"
+  },
+  "failure_remediation_contingency": {
+    "on_threshold_failure": "If inter-rater reliability or automated agreement fails pre-specified targets, scoring remains BLOCKED. Rubrics must undergo formal amendment and re-calibration before Stage 12.5.3.",
+    "on_human_unavailability": "If human domain experts cannot be recruited, all metrics remain UNVALIDATED. No synthetic reference generation is permitted."
+  }
+}

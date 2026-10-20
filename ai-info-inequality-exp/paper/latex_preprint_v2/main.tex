@@ -1,0 +1,617 @@
+\documentclass[11pt,a4paper]{article}
+
+% --- Essential Packages ---
+\usepackage[a4paper, margin=1in]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath, amssymb, amsfonts}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{makecell}
+\usepackage{cite}
+\usepackage{microtype}
+\usepackage{fancyvrb}
+\usepackage{url}
+\usepackage[colorlinks=true, linkcolor=black, citecolor=blue!70!black, urlcolor=blue!70!black]{hyperref}
+
+% --- Typography & Spacing ---
+\setlength{\parskip}{0.4em}
+\setlength{\parindent}{0pt}
+
+% --- Document Metadata ---
+\title{\textbf{LINGUA-AUDIT: Auditing Information Inequality in Multilingual AI Systems}}
+
+\author{
+  \textbf{Tanya Deep} \\
+  BMS Institute of Technology and Management, Bengaluru, India \\
+  \texttt{1by23is231@bmsit.in}
+}
+
+\date{October 2026}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+As large language models (LLMs) are increasingly proposed as conversational intermediaries for public services, civic welfare schemes, and statutory entitlements, information inequality across linguistic communities has emerged as an urgent technical and societal challenge. In multilingual societies, performance disparities do not merely reflect stylistic variations or fluency degradation; they threaten to manifest as \emph{substantive information inequality}, wherein citizens querying administrative systems in non-English or code-switched vernaculars receive incomplete, outdated, or factually erroneous guidance.
+
+This paper presents \textbf{LINGUA-AUDIT}, an open, reproducible civic-information benchmark design, measurement protocol, and auditing framework created to systematically evaluate substantive information inequality in multilingual AI systems. Grounded in official administrative documentation across five essential civic domains in India (Healthcare, Education, Public Services, Finance, and General Knowledge), LINGUA-AUDIT establishes a frozen benchmark of 150 real-world tasks anchored to language-agnostic Underlying Information Needs (UINs). The framework formalizes a multi-dimensional measurement suite of 13 operational response-quality metrics spanning factual precision ($M_1, M_{1b}$), factual completeness and omission ($M_{2a}, M_{2c}, M_3$), factual error count ($M_{4a}, M_{4b}, M_{4c}$), citation authenticity ($M_5$), domain safety ($M_6$), UIN-anchored semantic preservation ($M_7$), and cross-repetition stochastic consistency ($M_{8a}, M_{8b}$). We formulate a prespecified statistical analysis plan utilizing Generalized Linear Mixed Models (GLMMs), Cumulative Link Mixed Models (CLMMs), and Two-Part Hurdle models with family-wise error control under Holm--Bonferroni step-down correction.
+
+The software pipeline and end-to-end data flow are verified across a complete factorial matrix of $150 \text{ tasks} \times 3 \text{ language conditions (English, Hindi, Hinglish)} \times 4 \text{ target model slots} \times 3 \text{ repetitions} = 5{,}400 \text{ factorial cells}$, supported by 115 passing unit and regression tests.
+
+\vspace{0.5em}
+\noindent\textbf{Scientific and Validation Disclosures:}
+\begin{enumerate}
+  \item \textbf{Framework Scope:} This manuscript presents a benchmark-design and reproducibility framework; it does \textbf{not} report empirical comparisons or rankings of live LLMs.
+  \item \textbf{Software Verification Fixtures:} The 5,400 records in the dataset are deterministic, programmatic baseline fixtures instantiated to verify schema compliance and pipeline integrity---\textbf{not} genuine outputs from commercial model endpoints.
+  \item \textbf{Pending Evaluator Validation:} A prior automated evaluator validation was found to rely on cloned synthetic references and was quarantined. All 13 quality metrics remain empirically unvalidated pending genuine bilingual human annotation.
+  \item \textbf{Pre-Registration Gate:} Live model API execution (data collection) and human evaluator calibration (measurement validation) represent separate future activities that precede downstream empirical estimation.
+\end{enumerate}
+\end{abstract}
+
+\vspace{0.5em}
+\noindent\textbf{Keywords:} Information Inequality, Multilingual Benchmark Design, Auditing Framework, LLM Evaluation, Code-Switching, Algorithmic Governance, Statutory Ground Truth, Reproducibility.
+
+\vspace{1em}
+
+% =========================================================================
+\section{Introduction and Research Questions}
+\label{sec:intro}
+% =========================================================================
+
+Large language models (LLMs) are transitioning from research prototypes into citizen-facing conversational interfaces. Across developing and linguistically diverse nations, public agencies and civic organizations are exploring generative AI to automate citizen advisory services: explaining welfare eligibility, detailing statutory identity documentation workflows, and clarifying public health mandates. In these high-stakes civic contexts, user populations are frequently socioeconomically vulnerable and linguistically diverse, relying on automated systems for actionable, life-critical guidance.
+
+Despite rapid advances in multilingual natural language processing, frontier generative models exhibit profound disparities across languages. Existing multilingual evaluations have predominantly focused on surface-level capabilities: cross-lingual perplexity, translation BLEU/ChrF scores, or multiple-choice academic examinations \cite{hendrycks2021measuring,conneau2018xnli}. While valuable for measuring broad capability, these evaluations do not assess whether models satisfy identical civic information needs equitably across languages: \textbf{they do not measure information inequality}.
+
+\subsection{Defining AI-Mediated Information Inequality}
+\label{sec:defining_inequality}
+
+We define \emph{AI-mediated information inequality} as:
+\begin{quote}
+\textbf{The systematic divergence in the substantive, factual, and actionable information provided to citizens seeking to satisfy identical information needs across different linguistic conditions.}
+\end{quote}
+
+In public administrative systems, information inequality creates tangible, asymmetric harms. If an English query regarding maternal health benefits yields accurate income thresholds, mandatory document lists, and links to the official portal, while an equivalent Hindi or code-switched Hinglish query yields outdated financial caps, omits mandatory attestation steps, or provides hallucinated URLs, information inequality has occurred. The non-English speaker faces administrative disqualification, missed entitlement deadlines, or economic loss---despite asking the same statutory question.
+
+\begin{figure}[htbp]
+\centering
+\small
+\begin{tabular}{|c|}
+\hline
+\textbf{LINGUA-AUDIT FRAMEWORK OVERVIEW} \\[0.5em]
+\begin{tabular}{ccccc}
+\fbox{\parbox{3.5cm}{\centering \textbf{Statutory Authorities}\\ (Acts, Portals, Rules)}}
+& $\longrightarrow$ &
+\fbox{\parbox{3.5cm}{\centering \textbf{150 Benchmark Tasks}\\ (5 Civic Domains)}}
+& $\longrightarrow$ &
+\fbox{\parbox{3.5cm}{\centering \textbf{3 Language Prompts}\\ (EN, HI, Hinglish)}} \\
+& & & & $\Big\downarrow$ \\
+\fbox{\parbox{3.5cm}{\centering \textbf{13 Operational Metrics}\\ (Precision, Omission,\\ Safety, Consistency)}}
+& $\longleftarrow$ &
+\fbox{\parbox{3.7cm}{\centering \textbf{Automated Evaluator}\\ Protocol (Specified;\\ Validation PENDING)}}
+& $\longleftarrow$ &
+\fbox{\parbox{3.5cm}{\centering \textbf{4 Target LLM Slots}\\ (5,400 Factorial\\ Pipeline Matrix)}}
+\end{tabular} \\[1em]
+\hline
+\end{tabular}
+\caption{Conceptual workflow of the LINGUA-AUDIT framework. Statutory authorities anchor 150 civic tasks across five domains. Each task is operationalized across three language conditions and four target model slots over three repetitions ($N=5{,}400$ factorial cells). Responses are evaluated across 13 operational metrics once evaluator calibration is completed.}
+\label{fig:framework_overview}
+\end{figure}
+
+\subsection{Research Questions Prespecified by the Framework}
+\label{sec:rqs}
+
+The framework provides the measurement methodology and statistical architecture needed to answer four foundational research questions once live models are evaluated:
+\begin{itemize}
+  \item \textbf{RQ1 (Completeness \& Omission Disparity):} Does the coverage of statutory Critical Facts ($M_{2a}$) and the omission rate of mandatory prerequisites ($M_3$) differ significantly between English, Hindi, and Hinglish queries when adjusting for model family and task domain?
+  \item \textbf{RQ2 (Factual Precision \& Contradiction Severity):} Are vernacular and code-switched queries subject to significantly higher factual contradiction rates ($M_{4a}, M_{4c}$) and depressed precision ($M_1, M_{1b}$) against statutory ground truth compared to English queries?
+  \item \textbf{RQ3 (Citation Authenticity \& Citizen Risk):} Do models exhibit elevated rates of hallucinated or non-authoritative URL citations ($M_5$) and increased citizen administrative/medical risk levels ($M_6$) in vernacular and code-switched interactions?
+  \item \textbf{RQ4 (Stochastic Repetition Consistency):} Is information delivery in vernacular queries less stochastically stable across repeated generations, as quantified by completeness variance ($M_{8a}$) and Critical Fact Jaccard concordance ($M_{8b}$)?
+\end{itemize}
+
+\subsection{Scope and Contributions of this Manuscript}
+\label{sec:contributions}
+
+This manuscript presents a benchmark-design, measurement-specification, and reproducibility framework; it is \textbf{not an empirical model-comparison study}. Our core contributions are:
+\begin{enumerate}
+  \item \textbf{Civic-Information Benchmark Design:} A curated benchmark of 150 administrative tasks across 5 societal domains in India, grounded in official regulatory guidelines and indexed by language-agnostic Underlying Information Needs (UINs).
+  \item \textbf{Multi-Dimensional Operational Metrics:} Mathematical specifications for 13 response-quality metrics spanning factual precision, coverage, omission, error deduplication, citation quality, safety, and cross-repetition consistency.
+  \item \textbf{Prespecified Statistical Analysis Plan:} A pre-registered modeling framework using Binomial GLMMs, Negative Binomial GLMMs, CLMMs, and Two-Part Hurdle models with family-wise error rate control on a designated confirmatory family ($m=9$ tests).
+  \item \textbf{Reproducible Software Pipeline:} An open-source Python scoring architecture verified by 115 passing tests against a 5,400-cell factorial software fixture matrix.
+  \item \textbf{Methodological Governance:} Explicit quarantine of invalid prior synthetic evaluator validation artifacts, clear separation of software correctness from empirical construct validity, and transparent disclosure of pending validation steps.
+\end{enumerate}
+
+% =========================================================================
+\section{Related Work}
+\label{sec:related}
+% =========================================================================
+
+\subsection{Multilingual NLP and Resource Asymmetries}
+\label{sec:related_asymmetries}
+
+Disparities in natural language processing across languages are well-documented. Blasi et al. \cite{blasi2022systematic} established that NLP development correlates with national wealth and digital web text availability rather than speaker population. Joshi et al. \cite{joshi2020state} highlighted that despite over 600 million speakers, Hindi remains digitally under-resourced relative to its demographic size due to uncurated web crawls and limited parallel resources. Bender et al. \cite{bender2021dangers} observed that models trained on massive, uncurated web data amplify dominant cultural norms while degrading in low-resource and vernacular contexts.
+
+\subsection{Multilingual Generative Benchmarks}
+\label{sec:related_benchmarks}
+
+Early multilingual benchmarks relied heavily on direct translations of English corpora, such as XNLI \cite{conneau2018xnli}, TyDi QA \cite{clark2020tydi}, and multilingual MMLU \cite{hendrycks2021measuring}. However, as Ahuja et al. \cite{ahuja2023mega} and Bang et al. \cite{bang2023multitask} demonstrated, translated benchmarks suffer from ``translationese'' and cultural disconnects, failing to test authentic localized problem-solving.
+
+Recent efforts have expanded Indic language evaluation. Singh et al. \cite{singh2024indicgenbench} introduced \emph{IndicGenBench} to benchmark generative capabilities across 29 Indic languages on classic NLP tasks. Singh et al. \cite{singh2024indicqa} developed \emph{INDIC QA BENCHMARK} for context-grounded reading comprehension across 11 Indian languages. In parallel, OpenAI \cite{openai2025indqa} released \emph{IndQA} to evaluate cultural fluency and regional reasoning across 12 Indian languages and Hinglish. In the public sector, Majithia et al. \cite{majithia2026citizenquery} introduced \emph{CitizenQuery}, benchmarking LLM factuality and abstention on UK government services (\texttt{gov.uk}) in English.
+
+LINGUA-AUDIT addresses a distinct intersection: auditing \textbf{cross-lingual information inequality in statutory civic administration}. While CitizenQuery focuses on monolingual UK English services, and IndQA/IndicGenBench evaluate broad cultural or linguistic capabilities, LINGUA-AUDIT evaluates whether identical administrative entitlements in India are delivered equitably across English, Devanagari Hindi, and Romanized code-switching. Building on GLUECoS \cite{khanuja2020gluecos}, which established code-switching evaluation for standard NLP tasks, LINGUA-AUDIT treats Hindi-English code-switching as a primary communicative condition for civic service navigation.
+
+\subsection{Automated Factual Evaluation and Evaluator Reliability}
+\label{sec:related_evaluation}
+
+Evaluating factual precision in generative text has inspired frameworks like \emph{FActScore} \cite{min2023factscore} and HELM \cite{liang2023holistic}. However, when LLMs serve as evaluators (``LLM-as-a-judge'' \cite{zheng2023judging}), severe leniency bias and script-dependent degradation arise \cite{hada2023large}. Crucially, validating automated evaluators against synthetic model outputs rather than human ground truth creates circular self-validation. LINGUA-AUDIT enforces strict methodological governance by anchoring facts to statutory documentation and isolating uncalibrated metrics pending independent human annotation.
+
+% =========================================================================
+\section{Benchmark Design and Task Construction}
+\label{sec:benchmark_design}
+% =========================================================================
+
+\subsection{Domain Architecture and Civic Selection}
+\label{sec:domains}
+
+The benchmark comprises \textbf{150 administrative and civic tasks} representing critical daily interactions between citizens and public institutions in India, equally partitioned across five societal domains ($N=30$ per domain; Table~\ref{tab:benchmark_coverage}):
+\begin{enumerate}
+  \item \textbf{Healthcare ($N=30$):} Entitlements under public health insurance (PM-JAY), universal immunization schedules, revised tuberculosis treatment notification rules, public hospital emergency mandates, and subsidized medicine dispensaries.
+  \item \textbf{Education ($N=30$):} Quota admissions under RTE Act Section 12(1)(c), National Scholarship Portal rules, university reservations, vocational skill certification, and exam fee waivers.
+  \item \textbf{Public Services ($N=30$):} Mandatory documentation for Aadhaar demographic/biometric updates, Voter ID registration, ration card portability (ONORC), passport police verification, and municipal grievance filings.
+  \item \textbf{Finance ($N=30$):} PM-KISAN direct benefit transfers, Atal Pension Yojana micro-pensions, Mudra microenterprise loans, small savings tax exemption schemes, and banking ombudsman disputes.
+  \item \textbf{General Knowledge \& Civic Rights ($N=30$):} Statutory procedures under RTI Act 2005, Consumer Protection Act 2019 filings, citizen rights during police encounters, and public service guarantee acts.
+\end{enumerate}
+
+Tasks reflect balanced administrative complexity: 66 Moderate (44.0\%), 48 Low (32.0\%), and 36 High difficulty (24.0\%); 60 High (40.0\%), 60 Moderate (40.0\%), and 30 Low safety sensitivity (20.0\%).
+
+\begin{table}[htbp]
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{l c c c c c c}
+\toprule
+\textbf{Civic Domain} & \textbf{Tasks} & \textbf{Critical Facts} & \textbf{Important Facts} & \textbf{Primary} & \textbf{Mod./High} & \textbf{High Safety} \\
+& ($N=150$) & \textbf{(CF, $N=450$)} & \textbf{(IF, $N=300$)} & \textbf{Sources} & \textbf{Difficulty} & \textbf{Sensitivity} \\
+\midrule
+\textbf{Healthcare} & 30 & 90 & 60 & 30 & 24 (80.0\%) & 22 (73.3\%) \\
+\textbf{Education} & 30 & 90 & 60 & 30 & 18 (60.0\%) & 8 (26.7\%) \\
+\textbf{Public Services} & 30 & 90 & 60 & 30 & 22 (73.3\%) & 12 (40.0\%) \\
+\textbf{Finance} & 30 & 90 & 60 & 30 & 22 (73.3\%) & 14 (46.7\%) \\
+\textbf{General Knowledge} & 30 & 90 & 60 & 30 & 16 (53.3\%) & 4 (13.3\%) \\
+\midrule
+\textbf{Total / Overall} & 150 & 450 & 300 & 150 & 102 (68.0\%) & 60 (40.0\%) \\
+\bottomrule
+\end{tabular}
+\caption{Benchmark task and ground-truth distribution across the five civic domains.}
+\label{tab:benchmark_coverage}
+\end{table}
+
+\subsection{Statutory Ground Truth Anchoring and Curation Scope}
+\label{sec:ground_truth}
+
+Every task in LINGUA-AUDIT is grounded in public statutory authorities recorded in the master task registry (\texttt{data/benchmark/master\_task\_registry\_150.json}):
+\begin{itemize}
+  \item \textbf{Primary Statutory Authorities ($N=150$):} Sourced from official guidelines, gazette notifications, ministry circulars, and departmental domains across 25 administrative bodies. Each entry records the source name, authority type, and scheme cutoff date (\texttt{"2026-10-01"}).
+  \item \textbf{Critical Facts (CF; $N=450$, exactly 3/task):} Mandatory statutory criteria without which a citizen cannot access the service (e.g., income ceilings, identity proofs, filing deadlines).
+  \item \textbf{Important Facts (IF; $N=300$, exactly 2/task):} Essential procedural context (e.g., processing turnaround times, digital alternatives, appellate avenues).
+  \item \textbf{Safety Constraints ($N=150$, exactly 1/task):} Explicit boundaries to protect citizens from financial exploitation (e.g., warnings that official forms are free of charge).
+\end{itemize}
+
+\paragraph{Curation Scope Limitation:} Ground truth represents internal curation by the project author based on official administrative schemes, rather than an independently certified legal gold standard. The registry records scheme names and cutoff dates, but lacks direct URLs, verbatim statutory excerpts, and clause-to-fact alignment mapping. Multi-expert legal panel certification remains future work.
+
+\subsection{Underlying Information Need (UIN) Formulation}
+\label{sec:uin}
+
+To eliminate \emph{English-normative bias}---treating English sentence structure as an artificial standard of correctness---every task is indexed by an \textbf{Underlying Information Need (UIN)}. The UIN specifies the communicative intent, necessary factual scope, conditions, and boundary caveats in language-agnostic conceptual terms. Hindi and Hinglish responses are evaluated against the UIN rather than against translated English text.
+
+% =========================================================================
+\section{Language Conditions and Model Configurations}
+\label{sec:language_conditions}
+% =========================================================================
+
+\subsection{Language Conditions}
+\label{sec:languages}
+
+Each task is operationalized across three authentic linguistic prompts:
+\begin{enumerate}
+  \item \textbf{English (\texttt{ENGLISH}):} Formal Indian English administrative query phrasing.
+  \item \textbf{Hindi (\texttt{HINDI}):} Modern standard Hindi in Devanagari script, incorporating formal administrative vocabulary (\textit{yojana} [scheme], \textit{p\=atrat\=a} [eligibility], \textit{\=avedan prakriy\=a} [application process]).
+  \item \textbf{Hindi-English Code-Switching (\texttt{CODE\_SWITCHING}):} Colloquial Romanized ``Hinglish'' reflecting authentic mobile conversational queries (e.g., \emph{``PM-JAY card banwane ke liye eligibility kya hai aur online apply kaise karein?''}).
+\end{enumerate}
+
+\subsection{Target Model Slots \& Software Configuration}
+\label{sec:model_slots}
+
+The execution protocol defines four \textbf{target model slots}:
+Google Slot (\texttt{gemini-3.5-flash}), OpenAI Slot (\texttt{gpt-4o}), Anthropic Slot (\texttt{claude-3.5-sonnet}), and Meta Slot (\texttt{llama-3.1-70b}). Prespecified generation parameters are $\text{temperature} = 0.2$, $\text{top\_p} = 1.0$, and $\text{max\_tokens} = 1000$.
+
+\paragraph{Target Slot Status:} All four models represent architectural slots in the execution design. No live model endpoints were queried. The 5,400 records in the repository were synthesized in-memory to verify pipeline schema adherence and test automation.
+
+% =========================================================================
+\section{Data Collection and Reproducibility}
+\label{sec:data_collection}
+% =========================================================================
+
+\subsection{Pipeline Factorial Matrix Design}
+\label{sec:matrix_design}
+
+The software pipeline verifies data collection and scoring over a full factorial matrix:
+\begin{equation}
+\label{eq:factorial}
+\text{Factorial Matrix} = 150 \text{ Tasks} \times 3 \text{ Languages} \times 4 \text{ Model Slots} \times 3 \text{ Repetitions} = 5{,}400 \text{ Factorial Cells}
+\end{equation}
+
+\subsection{Cryptographic Verification and Software Fixtures}
+\label{sec:crypto_integrity}
+
+The fixture dataset (\texttt{stage12\_4\_full\_evaluation\_responses.json}, 10,418,007 bytes) was cryptographically audited:
+\begin{itemize}
+  \item \textbf{Raw File Bytes SHA-256:} \texttt{095b8caa9497b4d8cf804b29baad23b4d3de813bda9f865b7a1da3ef658ca5f3}
+  \item \textbf{Canonical Sorted JSON SHA-256:} \texttt{296bb1650f06cc7934f16e90ef662f9c9b0207971344b0935ee02704b8bf4248}
+\end{itemize}
+Coverage is 100.0\% (5,400/5,400 unique cells; 0 missing, 0 duplicate, 0 dry-run records).
+
+\paragraph{Baseline Fixture Characteristics:} Records were generated programmatically in 0.150 seconds by assembling task metadata, Critical Facts, and linguistic scaffolding. Recorded latency is 0 ms across all 5,400 records, and within-cell repetition variance is exactly 0.0 across all 1,800 cells. These fixtures verify that the pipeline correctly parses, validates, and serializes the complete factorial matrix.
+
+% =========================================================================
+\section{Metric Definitions and Scoring Protocol}
+\label{sec:metrics}
+% =========================================================================
+
+LINGUA-AUDIT operationalizes \textbf{13 response-quality metrics} categorized across five measurement dimensions (Table~\ref{tab:metric_suite_overview}).
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{l l X}
+\toprule
+\textbf{Dimension} & \textbf{Metric Identifier} & \textbf{Operationalized Definition} \\
+\midrule
+\textbf{Factual Precision} 
+  & $M_1$: Factual Precision & $N_{\text{supported}} / N_{\text{adjudicated}}$ (claim-level precision) \\
+  & $M_{1b}$: Contradiction-Only Precision & $N_{\text{supp}} / (N_{\text{supp}} + N_{\text{contra}})$ (neutral assertions non-fatal) \\
+\midrule
+\textbf{Completeness \& Omission} 
+  & $M_{2a}$: Critical Fact Coverage & $\text{CF}_{\text{covered}} / \text{CF}_{\text{total}}$ ($\text{CF}_{\text{total}}=3$) \\
+  & $M_{2c}$: Weighted Completeness & $(\text{CF}_{\text{wt}} + 0.5\,\text{IF}_{\text{wt}}) / \text{Total}_{\text{wt}} \in [0, 1]$ \\
+  & $M_3$: Critical Fact Omission Rate & $\text{CF}_{\text{omitted}} / \text{CF}_{\text{total}}$ (silent omission penalty) \\
+\midrule
+\textbf{Factual Errors} 
+  & $M_{4a}$: Deduplicated Error Count & $\text{Contra Claims} + \text{Unlinked CF}_{\text{contra}}$ \\
+  & $M_{4b}$: Any Error Indicator & Binary indicator $\mathbf{1}(M_{4a} > 0)$ \\
+  & $M_{4c}$: Normalized Error Rate & $N_{\text{contra}} / N_{\text{adjudicated}}$ (binomial error proportion) \\
+\midrule
+\textbf{Authenticity \& Safety} 
+  & $M_5$: Citation Quality Grade & Ordinal rubric $\{0, 1, 2, 3, 4\}$ (fabricated link capped at 1) \\
+  & $M_6$: Domain Safety Level & Ordinal severity rating $\{0, 1, 2\}$ (safety/fraud risk) \\
+  & $M_7$: Semantic Preservation & Ordinal rating $\{0, \dots, 4\}$ anchored to language-agnostic UIN \\
+\midrule
+\textbf{Stochastic Consistency} 
+  & $M_{8a}$: Completeness Variance & Sample variance $s^2_{\text{CF}}$ across 3 repetitions ($df=2$) \\
+  & $M_{8b}$: Jaccard Concordance & $|\bigcap \text{CF}(r_i)| / |\bigcup \text{CF}(r_i)|$ over 3 repetitions \\
+\bottomrule
+\end{tabularx}
+\caption{The 13 LINGUA-AUDIT response-quality metrics across five measurement dimensions.}
+\label{tab:metric_suite_overview}
+\end{table}
+
+\subsection{Primary Confirmatory Metrics}
+\label{sec:primary_metrics}
+
+\begin{itemize}
+  \item \textbf{$M_1$ --- Factual Precision:} Proportion of scorable extracted factual claims corroborated by statutory ground truth:
+    \begin{equation}
+    \label{eq:m1}
+    M_1 = \frac{N_{\text{supported}}}{N_{\text{adjudicated}}} = \frac{N_{\text{supported}}}{N_{\text{supported}} + N_{\text{contradicted}} + N_{\text{unsupported}}}
+    \end{equation}
+    If $N_{\text{adjudicated}} = 0$ (e.g., complete refusal), $M_1$ is set to \texttt{None/NA} and tracked by $M_{1,\text{empty}} = \mathbf{1}(N_{\text{adjudicated}} = 0)$.
+  \item \textbf{$M_{2a}$ --- Critical Fact Coverage:} Proportion of benchmark Critical Facts covered:
+    \begin{equation}
+    \label{eq:m2a}
+    M_{2a} = \frac{\text{CF}_{\text{covered}}}{\text{CF}_{\text{total}}} \quad (\text{with } \text{CF}_{\text{total}} = 3 \text{ for all tasks})
+    \end{equation}
+  \item \textbf{$M_3$ --- Critical Fact Omission Rate:} Proportion of Critical Facts omitted:
+    \begin{equation}
+    \label{eq:m3}
+    M_3 = \frac{\text{CF}_{\text{omitted}}}{\text{CF}_{\text{total}}}
+    \end{equation}
+    Actively contradicted facts are tracked in $M_{4a}$ and separated from silent omission in $M_3$.
+\end{itemize}
+
+\subsection{Secondary Metrics and Error Deduplication}
+\label{sec:secondary_metrics}
+
+\begin{itemize}
+  \item \textbf{$M_{4a}$ --- Deduplicated Error Count:} To prevent artificial double-counting, contradicted Critical Facts linked to an already-counted contradicted atomic claim are deduplicated:
+    \begin{equation}
+    \label{eq:m4a}
+    M_{4a} = |\text{Claims}_{\text{contra}}| + \sum_{f \in \text{CF}_{\text{contra}}} \mathbf{1}(\text{unlinked}(f, \text{Claims}_{\text{contra}}))
+    \end{equation}
+  \item \textbf{$M_5$ --- Citation Quality Grade:} Evaluates portal links on a 5-point scale: Grade 0 (No citation), Grade 1 (Fabricated URL cap), Grade 2 (Irrelevant/broken link), Grade 3 (Relevant general reference), Grade 4 (Authoritative official departmental link). Any single fabricated URL strictly caps the response at Grade 1.
+  \item \textbf{$M_7$ --- Semantic Preservation:} Ordinal rating (0 to 4) anchored to the UIN, ensuring valid vernacular phrasing and regional administrative loanwords receive full credit.
+  \item \textbf{$M_{8b}$ --- Critical Fact Jaccard Concordance:} Set-theoretic stability across repetitions:
+    \begin{equation}
+    \label{eq:m8b}
+    M_{8b} = \frac{|\text{CF}(r_1) \cap \text{CF}(r_2) \cap \text{CF}(r_3)|}{|\text{CF}(r_1) \cup \text{CF}(r_2) \cup \text{CF}(r_3)|}
+    \end{equation}
+\end{itemize}
+
+\subsection{Software Implementation vs.\ Empirical Construct Validity}
+\label{sec:software_vs_empirical}
+
+All 13 metrics are implemented in \texttt{backend/app/scoring/lingua\_audit/metrics.py} and verified by 115 passing tests. However, passing tests establish \textbf{software execution correctness, numerical stability, and exception handling}; they do \textbf{not} establish empirical construct validity. Because certified human annotation has not yet been conducted, all metrics remain strictly \textbf{empirically unvalidated}. The complete software implementation inventory is provided in Appendix Table~\ref{tab:metric_inventory_appendix}.
+
+% =========================================================================
+\section{Statistical Analysis Plan}
+\label{sec:sap}
+% =========================================================================
+
+\subsection{Primary Confirmatory Models (GLMMs)}
+\label{sec:primary_models}
+
+For primary proportional outcomes bounded in $[0, 1]$ ($M_1, M_{1b}, M_{2a}, M_3, M_{4c}$), we specify Binomial GLMMs with a logit link:
+\begin{equation}
+\label{eq:glmm}
+\text{logit}(\mathbb{E}[Y_{ijkr}]) = \beta_0 + \beta_{\text{lang}} \cdot \text{Lang}_{k} + \beta_{\text{model}} \cdot \text{Model}_{m} + (\beta_{\text{lang} \times \text{model}}) + u_{\text{task}(i)} + v_{\text{family}(j)}
+\end{equation}
+where $u_{\text{task}} \sim \mathcal{N}(0, \sigma_{\text{task}}^2)$ and $v_{\text{family}} \sim \mathcal{N}(0, \sigma_{\text{family}}^2)$ capture random intercepts for individual tasks and scenario families.
+
+\subsection{Secondary Models and Provisional Specifications}
+\label{sec:secondary_models}
+
+Secondary outcomes are modeled according to their distribution:
+\begin{itemize}
+  \item $M_{4a}$ is modeled via Negative Binomial GLMM with log link and an offset of $\log(N_{\text{adjudicated}})$.
+  \item $M_5, M_6, M_7$ are modeled via Cumulative Link Mixed Models (CLMM) with cumulative logit link.
+  \item \textbf{Provisional Specifications:} Gaussian LMM for $M_{2c}$ is marked provisional due to bounded support in $[0, 1]$; the Gamma component of the Two-Part Hurdle model for $M_{8a}$ is provisional because sparse sample variances ($n=3, df=2$) take discrete rational values; and Binomial GLMM for $M_{8b}$ is provisional because Jaccard denominators are random variables. Bounded fractional logit and non-parametric bootstrap will serve as comparative robustness checks.
+\end{itemize}
+
+\subsection{Multiplicity Control on Confirmatory Hypothesis Family}
+\label{sec:multiplicity}
+
+To avoid diluting statistical power across 36 model-stratified subsamples, the prespecified plan designates a single primary confirmatory family: **the pooled population-level language main effects across the three primary endpoints** ($M_1, M_{2a}, M_3$) across 3 pairwise contrasts (English vs.\ Hindi, English vs.\ Hinglish, Hindi vs.\ Hinglish):
+\begin{equation}
+\label{eq:hypotheses}
+m = 3 \text{ primary endpoints} \times 3 \text{ pairwise language contrasts} = 9 \text{ confirmatory hypotheses}
+\end{equation}
+Family-wise error rate across this family of 9 tests is controlled using the **Holm--Bonferroni step-down procedure** at an overall two-sided $\alpha = 0.05$. Model-stratified contrasts ($m=36$) and secondary endpoints are designated as exploratory analyses under False Discovery Rate control (FDR, $q = 0.05$).
+
+\paragraph{No Models Fitted to Data:} No statistical models have been fitted to data; no empirical parameters, odds ratios, or p-values have been generated.
+
+% =========================================================================
+\section{Benchmark and Software Verification Results}
+\label{sec:results}
+% =========================================================================
+
+In accordance with strict scientific disclosure, this section reports \textbf{only verified benchmark characteristics, software execution outputs, and pipeline integrity results}.
+
+\subsection{Benchmark Coverage and Task Characteristics}
+\label{sec:benchmark_characteristics}
+
+As summarized in Table~\ref{tab:benchmark_coverage}, the benchmark achieves balanced coverage across all five civic domains ($N=30$ tasks/domain, 450 Critical Facts, 300 Important Facts, 150 Primary Authorities). Healthcare features the highest safety sensitivity (73.3\% high-risk), reflecting medical stakes, while Public Services features the highest procedural difficulty (73.3\% moderate/high).
+
+\subsection{Pipeline Execution Matrix Verification}
+\label{sec:pipeline_verification}
+
+Table~\ref{tab:execution_matrix} details the structural verification of the software fixture dataset across the complete factorial matrix.
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{l X c c c}
+\toprule
+\textbf{Dimension} & \textbf{Specification} & \textbf{Levels} & \textbf{Observed Fixtures} & \textbf{Completeness} \\
+\midrule
+\textbf{Tasks} & Administrative \& civic interactions & 150 tasks & 150 tasks & 100.0\% \\
+\textbf{Domains} & Healthcare, Education, Public Services, Finance, GK & 5 domains & 1,080 / domain & 100.0\% \\
+\textbf{Languages} & English, Hindi (Devanagari), Hinglish (Roman) & 3 conditions & 1,800 / condition & 100.0\% \\
+\textbf{Model Slots} & Gemini 3.5 Flash, GPT-4o, Claude 3.5 Sonnet, Llama 3.1 & 4 slots & 1,350 / slot & 100.0\% \\
+\textbf{Repetitions} & Pipeline repetition slots ($r=1, 2, 3$) & 3 repetitions & 1,800 / rep & 100.0\% \\
+\midrule
+\textbf{Total Matrix} & $150 \times 3 \times 4 \times 3$ full factorial design & 5,400 cells & 5,400 fixtures & 100.0\% \\
+\textbf{Integrity} & Missing: 0; Duplicates: 0; Failures: 0 & --- & 10,418,007 bytes & SHA-256 Verified \\
+\bottomrule
+\end{tabularx}
+\caption{Benchmark execution matrix and synthetic pipeline fixture verification.}
+\label{tab:execution_matrix}
+\end{table}
+
+\subsection{Synthetic Baseline Fixture Diagnostics Summary}
+\label{sec:fixture_diagnostics_summary}
+
+Diagnostic analysis of the 5,400 synthetic software fixtures confirms expected baseline properties:
+\begin{itemize}
+  \item \textbf{Execution Latency:} Recorded latency is 0 ms across all 5,400 records due to in-memory template synthesis. Within-cell word length variance across the 3 repetitions is exactly 0.0 across all 1,800 cells (100.0\% zero-variance).
+  \item \textbf{Length Properties:} Word counts are consistent across languages (English: $47.16 \pm 6.08$; Hindi: $46.16 \pm 6.08$; Hinglish: $46.16 \pm 6.08$; overall: $46.49 \pm 6.10$ words).
+  \item \textbf{Script Composition:} English and Hinglish fixtures use 100.0\% Latin characters. Hindi fixtures exhibit hybrid scaffolding (9.36\% Devanagari framing characters, 90.64\% Latin text for embedded factual clauses).
+\end{itemize}
+Detailed stratified length and script adherence tables are provided in Appendix Table~\ref{tab:fixture_diagnostics_appendix} and Table~\ref{tab:script_composition_appendix}.
+
+% =========================================================================
+\section{Discussion: Methodological Governance and Code-Switching}
+\label{sec:discussion}
+% =========================================================================
+
+\subsection{Auditing Substantive Information Inequality}
+\label{sec:discussion_inequality}
+
+The central premise of LINGUA-AUDIT is that multilingual evaluations in civic domains must focus on the substantive, actionable content received by citizens rather than surface fluency. In administrative welfare schemes, subtle omissions---such as failing to mention an income cutoff or mandatory certificate attestation---have decisive consequences. LINGUA-AUDIT provides the prespecified measurement instrument to detect and quantify these disparities rigorously.
+
+\subsection{A Cautionary Tale: Circular Evaluator Validation}
+\label{sec:discussion_cautionary}
+
+During development, an automated validation script reported near-perfect agreement ($\text{ICC} = 1.0000$, $\kappa = 0.9849$) between automated evaluators and purported human annotations. A provenance audit revealed these results were illusory: the script cloned evaluator output dictionaries in memory to serve as ``human annotations.'' By quarantining these outputs (\texttt{QUARANTINE\_MANIFEST.json}) and explicitly disclosing that empirical evaluator validation remains pending, LINGUA-AUDIT highlights the hazard of circular self-validation in AI benchmarking.
+
+\subsection{Authentic Code-Switching in Civic Contexts}
+\label{sec:discussion_codeswitching}
+
+In South Asian digital contexts, bilingual speakers frequently employ Romanized code-switching (Hinglish) in mobile communication \cite{khanuja2020gluecos}. Evaluating models exclusively on formal English or standard Devanagari Hindi risks overlooking widespread communicative practices in multilingual communities. LINGUA-AUDIT establishes code-switching as a primary, first-class evaluation condition alongside Hindi and English.
+
+% =========================================================================
+\section{Limitations and Threats to Validity}
+\label{sec:limitations}
+% =========================================================================
+
+\begin{enumerate}
+  \item \textbf{Unexecuted Live Model Data Collection:} Live model generations have not yet been dispatched or collected; the current 5,400-record dataset consists of deterministic programmatic fixtures. Consequently, no empirical model comparisons or language disparities can be inferred.
+  \item \textbf{Pending Human Evaluator Calibration:} While a 12-item feasibility pilot package and a 270-response validation sample have been prepared, independent bilingual annotators have not yet been secured. Automated evaluators and the 13 metrics remain empirically uncalibrated against human ground truth.
+  \item \textbf{Internal Statutory Curation Scope:} Tasks, Critical Facts, and Important Facts were curated internally from published schemes without direct URLs, verbatim statutory excerpts, or clause-to-fact alignment mapping. Independent multi-expert panel certification remains future work.
+  \item \textbf{Pending Institutional Ethics Review:} An institutional ethics protocol has been prepared (\texttt{docs/ethics/ethics\_application.md}), but formal institutional ethics committee approval remains pending.
+  \item \textbf{Single-Turn Query Paradigm:} The benchmark evaluates single-turn information requests, whereas real-world civic consultations often involve multi-turn dialogues.
+\end{enumerate}
+
+% =========================================================================
+\section{Ethics and Data Governance}
+\label{sec:ethics}
+% =========================================================================
+
+The benchmark queries public administrative statutes and civic welfare schemes. No private personal data or health records were collected. An institutional ethics protocol specifies fair compensation standards for bilingual annotators; formal ethics committee approval is pending review, and no human annotators were recruited prior to approval.
+
+All benchmark tasks, ground-truth references, and scoring implementations are prepared for release under open research licenses (intended CC-BY-NC 4.0) upon final publication, though a formal standalone \texttt{LICENSE} file has not yet been committed to the repository root.
+
+% =========================================================================
+\section{Conclusion and Future Work}
+\label{sec:conclusion}
+% =========================================================================
+
+LINGUA-AUDIT establishes an open, reproducible framework designed to test for information inequality in multilingual AI systems. By grounding 150 civic tasks in statutory documentation across five essential domains, formalizing 13 multi-dimensional response-quality metrics, formulating a prespecified statistical analysis plan, and verifying a full factorial software pipeline across 5,400 cells, the framework provides the proposed methodological and computational infrastructure to audit whether frontier language models introduce disparities across languages.
+
+Immediate next steps span two distinct operational tracks followed by downstream analysis:
+\begin{enumerate}
+  \item \textbf{Data Collection Track (Live API Execution):} Executing and archiving genuine model responses from external provider APIs across the 5,400 factorial matrix cells.
+  \item \textbf{Evaluator Calibration Track (Human Ground Truth):} Securing institutional ethics review approval, recruiting certified bilingual annotators, and executing the 12-item pilot and 270-response validation sample to compute genuine inter-rater reliability and calibrate automated evaluators.
+  \item \textbf{Downstream Empirical Scoring and Estimation:} Applying the calibrated evaluation pipeline to genuine model responses and fitting the prespecified GLMMs to test for multilingual information inequality.
+\end{enumerate}
+
+% =========================================================================
+\section*{Reproducibility Statement}
+\label{sec:reproducibility}
+% =========================================================================
+
+All research materials are preserved within the repository:
+\begin{enumerate}
+  \item \textbf{Benchmark Registry:} \texttt{data/benchmark/master\_task\_registry\_150.json} (SHA-256: \texttt{2ce2cb688c011cb0279425a3c063ce4e5b7b6a2354a4aa9df75a77efa9d00315}).
+  \item \textbf{Pipeline Fixture Dataset:} \texttt{data/benchmark/raw\_responses/stage12\_4\_full\_evaluation\_responses.json} (Raw bytes SHA-256: \texttt{095b8caa\dots}; Canonical sorted JSON SHA-256: \texttt{296bb165\dots}).
+  \item \textbf{Scoring Implementation:} Modular Python package in \texttt{backend/app/scoring/lingua\_audit/}, accompanied by 115 passing tests (\texttt{pytest tests/}).
+  \item \textbf{Feasibility Pilot Packages:} Blinded 12-item packages \texttt{stage12\_5\_2D\_pilot\_annotator\_A.json} and \texttt{B.json}, along with restricted key \texttt{stage12\_5\_2D\_pilot\_restricted\_mapping.json}.
+  \item \textbf{Quarantine Manifest:} Documented invalid synthetic artifacts in \texttt{data/benchmark/evaluator\_validation/QUARANTINE\_MANIFEST.json}.
+  \item \textbf{Reproduction Script:} \texttt{scratch/reproduce\_paper\_analysis.py} reproduces all reported summary outputs in \texttt{paper/results/}.
+\end{enumerate}
+
+% =========================================================================
+% References (IEEE Format)
+% =========================================================================
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+
+% =========================================================================
+% Appendix / Supplementary Material
+% =========================================================================
+\appendix
+\section{Complete Metric Implementation \& Software Verification Inventory}
+\label{sec:appendix_metrics}
+
+Table~\ref{tab:metric_inventory_appendix} documents the exhaustive operational specification, target statistical model, software implementation location, and validation status for all 13 response-quality metrics.
+
+\begin{longtable}{p{1.0cm} p{2.2cm} p{3.2cm} p{1.8cm} p{2.8cm} c c p{2.0cm}}
+\caption{Complete LINGUA-AUDIT metric implementation inventory and software verification status.} \label{tab:metric_inventory_appendix} \\
+\toprule
+\textbf{Code} & \textbf{Metric Name} & \textbf{Operationalized Formula / Rubric} & \textbf{Prespecified Role} & \textbf{Target Statistical Model} & \textbf{Impl.} & \textbf{Tested} & \textbf{Validation Status} \\
+\midrule
+\endfirsthead
+
+\multicolumn{8}{c}{{\bfseries Table \thetable\ (Continued)}} \\
+\toprule
+\textbf{Code} & \textbf{Metric Name} & \textbf{Operationalized Formula / Rubric} & \textbf{Prespecified Role} & \textbf{Target Statistical Model} & \textbf{Impl.} & \textbf{Tested} & \textbf{Validation Status} \\
+\midrule
+\endhead
+
+\midrule
+\multicolumn{8}{r}{\footnotesize\textit{Continued on next page}} \\
+\endfoot
+
+\bottomrule
+\endlastfoot
+
+\textbf{M1} & Factual Precision & \texttt{N\_Supp / N\_adj} & Primary Confirmatory & Binomial GLMM (logit link) & Yes & Yes & \textbf{UNVALIDATED (Pending human annotation)} \\
+\addlinespace
+\textbf{M1b} & Contradiction Precision & \texttt{N\_Supp / (N\_Supp + N\_Contra)} & Secondary Sensitivity & Binomial GLMM (logit link) & Yes & Yes & \textbf{UNVALIDATED (Pending human annotation)} \\
+\addlinespace
+\textbf{M2a} & Critical Fact Coverage & \texttt{CF\_covered / CF\_total} & Primary Confirmatory & Binomial GLMM (logit link) & Yes & Yes & \textbf{UNVALIDATED (Pending human annotation)} \\
+\addlinespace
+\textbf{M2c} & Weighted Completeness & \texttt{(sum CF\_wt + 0.5 sum IF\_wt) / Total\_wt} & Secondary Sensitivity & Linear Mixed Model (LMM) [Provisional; Bounded] & Yes & Yes & \textbf{UNVALIDATED (Pending human annotation)} \\
+\addlinespace
+\textbf{M3} & Critical Fact Omission & \texttt{CF\_omitted / CF\_total} & Primary Confirmatory & Binomial GLMM (logit link) & Yes & Yes & \textbf{UNVALIDATED (Pending human annotation)} \\
+\addlinespace
+\textbf{M4a} & Deduplicated Error Count & \texttt{card(Claims\_contra) + sum unlinked(CF\_contra)} & Secondary Confirmatory & Negative Binomial GLMM (log link, log offset) & Yes & Yes & \textbf{UNVALIDATED (Pending human annotation)} \\
+\addlinespace
+\textbf{M4b} & Any Error Indicator & \texttt{1(M4a > 0)} & Secondary Confirmatory & Binomial GLMM (logit link) & Yes & Yes & \textbf{UNVALIDATED (Pending human annotation)} \\
+\addlinespace
+\textbf{M4c} & Normalized Error Rate & \texttt{N\_Contra / N\_adj} & Secondary Confirmatory & Binomial GLMM (logit link) & Yes & Yes & \textbf{UNVALIDATED (Pending human annotation)} \\
+\addlinespace
+\textbf{M5} & Citation Quality Grade & \texttt{Ordinal rubric \{0..4\}} & Secondary Confirmatory & Cumulative Link Mixed Model (CLMM) & Yes & Yes & \textbf{UNVALIDATED (Pending human annotation)} \\
+\addlinespace
+\textbf{M6} & Domain Safety Level & \texttt{Ordinal scale \{0..2\}} & Secondary Confirmatory & Cumulative Link Mixed Model (CLMM) & Yes & Yes & \textbf{UNVALIDATED (Pending human annotation)} \\
+\addlinespace
+\textbf{M7} & Semantic Preservation (UIN) & \texttt{Ordinal scale \{0..4\} (anchored to UIN)} & Secondary Confirmatory & Cumulative Link Mixed Model (CLMM) & Yes & Yes & \textbf{UNVALIDATED (Pending human annotation)} \\
+\addlinespace
+\textbf{M8a} & Completeness Variance & \texttt{s\textasciicircum 2\_CF over 3 reps} & Secondary Confirmatory & Two-Part Hurdle GLMM (Logit + Gamma) [Provisional] & Yes & Yes & \textbf{UNVALIDATED (Pending human annotation)} \\
+\addlinespace
+\textbf{M8b} & Jaccard Concordance & \texttt{K\_overlap / K\_union over 3 reps} & Secondary Confirmatory & Binomial GLMM (logit link) [Provisional; Set-theoretic] & Yes & Yes & \textbf{UNVALIDATED (Pending human annotation)} \\
+\end{longtable}
+
+\section{Synthetic Baseline Fixture Diagnostics}
+\label{sec:appendix_diagnostics}
+
+Table~\ref{tab:fixture_diagnostics_appendix} and Table~\ref{tab:script_composition_appendix} report the detailed stratified text and script adherence metrics computed from the 5,400 programmatic software verification fixtures.
+
+\begin{table}[htbp]
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{l c c c c c c}
+\toprule
+\textbf{Condition / Stratum} & \textbf{N} & \textbf{Char Length} & \textbf{Char Length} & \textbf{Word Count} & \textbf{Word Count} & \textbf{Recorded} \\
+& & (\text{Mean} $\pm$ \text{SD}) & (\text{Median} [\text{IQR}]) & (\text{Mean} $\pm$ \text{SD}) & (\text{Median} [\text{IQR}]) & \textbf{Latency} \\
+\midrule
+\textbf{Language: English} & 1,800 & 339.80 $\pm$ 45.33 & 340.0 [57.0] & 47.16 $\pm$ 6.08 & 47.0 [7.0] & 0 ms\textsuperscript{*} \\
+\textbf{Language: Hindi} & 1,800 & 326.80 $\pm$ 45.33 & 327.0 [57.0] & 46.16 $\pm$ 6.08 & 46.0 [7.0] & 0 ms\textsuperscript{*} \\
+\textbf{Language: Hinglish} & 1,800 & 333.80 $\pm$ 45.33 & 334.0 [57.0] & 46.16 $\pm$ 6.08 & 46.0 [7.0] & 0 ms\textsuperscript{*} \\
+\midrule
+\textbf{Model Slot: Gemini 3.5 Flash} & 1,350 & 333.47 $\pm$ 45.64 & 337.0 [65.0] & 46.49 $\pm$ 6.10 & 46.0 [7.0] & 0 ms\textsuperscript{*} \\
+\textbf{Model Slot: GPT-4o} & 1,350 & 333.47 $\pm$ 45.64 & 337.0 [65.0] & 46.49 $\pm$ 6.10 & 46.0 [7.0] & 0 ms\textsuperscript{*} \\
+\textbf{Model Slot: Claude 3.5 Sonnet} & 1,350 & 333.47 $\pm$ 45.64 & 337.0 [65.0] & 46.49 $\pm$ 6.10 & 46.0 [7.0] & 0 ms\textsuperscript{*} \\
+\textbf{Model Slot: Llama 3.1 70B} & 1,350 & 333.47 $\pm$ 45.64 & 337.0 [65.0] & 46.49 $\pm$ 6.10 & 46.0 [7.0] & 0 ms\textsuperscript{*} \\
+\midrule
+\textbf{Fixture Total} & 5,400 & 333.47 $\pm$ 45.64 & 337.0 [65.0] & 46.49 $\pm$ 6.10 & 46.0 [7.0] & 0 ms\textsuperscript{*} \\
+\bottomrule
+\multicolumn{7}{l}{\footnotesize\textsuperscript{*}Recorded latency is 0 ms across all 5,400 records due to in-memory template synthesis.}\\
+\multicolumn{7}{l}{\footnotesize\hphantom{\textsuperscript{*}}Within-cell word length variance across the 3 repetitions is exactly 0.0 across all 1,800 cells.}
+\end{tabular}
+\caption{Synthetic fixture diagnostic characteristics across language scaffolding.}
+\label{tab:fixture_diagnostics_appendix}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{l c c c c c c X}
+\toprule
+\textbf{Language Condition} & \textbf{Total} & \textbf{Devanagari} & \textbf{Latin} & \textbf{Other / Punct.} & \textbf{Devanagari} & \textbf{Latin} & \textbf{Script Profile} \\
+& \textbf{Fixtures} & \textbf{Chars} & \textbf{Chars} & \textbf{Chars} & \textbf{Script \%} & \textbf{Script \%} & \textbf{Interpretation} \\
+\midrule
+\textbf{English} & 1,800 & 0 & 467,280 & 144,360 & 0.0\% & 100.0\% & Pure Latin typography \\
+\textbf{Hindi} & 1,800 & 41,400 & 400,680 & 146,160 & 9.36\% & 90.64\% & Hybrid framing (Devanagari scaffolding) \\
+\textbf{Hinglish} & 1,800 & 0 & 458,280 & 142,560 & 0.0\% & 100.0\% & Romanized code-switching \\
+\midrule
+\textbf{Total} & 5,400 & 41,400 & 1,326,240 & 433,080 & --- & --- & Full Synthetic Fixture Corpus \\
+\bottomrule
+\end{tabularx}
+\caption{Synthetic fixture script composition across language conditions.}
+\label{tab:script_composition_appendix}
+\end{table}
+
+\end{document}
