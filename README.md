@@ -1,5 +1,6 @@
 # LINGUA-AUDIT: Auditing Information Inequality in Multilingual AI Systems
 
+[![DOI: 10.21203/rs.3.rs-11396617/v1](https://img.shields.io/badge/DOI-10.21203%2Frs.3.rs--11396617%2Fv1-blue.svg)](https://doi.org/10.21203/rs.3.rs-11396617/v1)
 [![Status: Frozen Benchmark & Protocol](https://img.shields.io/badge/Status-Frozen_Benchmark_%26_Protocol-blue.svg)](#)
 [![Tests: 115 Passed](https://img.shields.io/badge/Tests-115_Passed-brightgreen.svg)](#)
 [![License: CC-BY-NC 4.0](https://img.shields.io/badge/License-CC--BY--NC_4.0-lightgrey.svg)](#)
@@ -15,7 +16,8 @@
 - **Author:** Tanya Deep
 - **Affiliation:** BMS Institute of Technology and Management, Bengaluru, India
 - **Institutional Contact:** [`1by23is231@bmsit.in`](mailto:1by23is231@bmsit.in)
-- **Status:** Preregistered Benchmark Design & Software Framework (Frozen Pre-Validation State — October 2026)
+- **Preprint DOI:** [`10.21203/rs.3.rs-11396617/v1`](https://doi.org/10.21203/rs.3.rs-11396617/v1) (Research Square)
+- **Status:** Preregistered Benchmark Design, Measurement Protocol & Auditing Suite (Frozen Pre-Validation State — October 2026)
 
 ---
 
@@ -25,6 +27,7 @@ The complete, publication-ready preprint and portfolio documentation are availab
 
 | Document | Format | Description |
 | :--- | :---: | :--- |
+| [**Research Square Preprint**](https://doi.org/10.21203/rs.3.rs-11396617/v1) | DOI | Registered academic preprint on Research Square: `doi:10.21203/rs.3.rs-11396617/v1`. |
 | [**Final Manuscript (Word)**](./ai-info-inequality-exp/paper/final/LINGUA_AUDIT_final.docx) | `.docx` | 14-page publication-quality Word deliverable (editable OpenXML, booktabs tables, display equations, IEEE citations). |
 | [**Final Manuscript (PDF)**](./ai-info-inequality-exp/paper/final/LINGUA_AUDIT_final.pdf) | `.pdf` | Verification PDF exported via Microsoft Word COM automation. |
 | [**Project Summary Dossier**](./ai-info-inequality-exp/paper/final/PROJECT_SUMMARY.md) | `.md` | Comprehensive research summary, nearest-neighbour analysis, and master's portfolio statement. |
@@ -40,11 +43,11 @@ As large language models (LLMs) are deployed as conversational intermediaries fo
 
 Existing multilingual evaluations predominantly assess surface-level capabilities: cross-lingual perplexity, translation BLEU/ChrF scores, or multiple-choice examinations translated from Western academic curricula (e.g., multilingual MMLU). While valuable for broad capability measurement, **they do not measure information inequality**.
 
-**LINGUA-AUDIT** establishes an open, reproducible civic-information benchmark design, measurement protocol, and auditing framework to systematically audit whether generative AI systems satisfy identical civic information needs equitably across languages.
+**LINGUA-AUDIT** establishes an open, reproducible civic-information benchmark, measurement protocol, and statistical auditing suite to systematically evaluate whether generative AI systems satisfy identical civic information needs equitably across languages.
 
 ```
 +-----------------------------------------------------------------------------------------+
-|                                LINGUA-AUDIT FRAMEWORK OVERVIEW                          |
+|                         LINGUA-AUDIT AUDITING PIPELINE OVERVIEW                         |
 |                                                                                         |
 |   +-----------------------+     +------------------------+     +--------------------+   |
 |   | Statutory Authorities | --> |  150 Benchmark Tasks   | --> | 3 Language Prompts |   |
@@ -89,13 +92,13 @@ Existing multilingual evaluations predominantly assess surface-level capabilitie
 
 | Benchmark | Focus | Overlap with LINGUA-AUDIT | Defensible Distinction of LINGUA-AUDIT |
 | :--- | :--- | :--- | :--- |
-| **CitizenQuery-UK**<br>*(Majithia et al., 2026)* | Evaluates LLM factuality and abstention on 22,000+ UK citizen queries mapped to `gov.uk`. | Focuses on public administration, welfare schemes, and official government data. | CitizenQuery is monolingual (UK English). LINGUA-AUDIT evaluates multilingual disparities across English, Hindi, and Romanized Hinglish code-switching with a prespecified GLMM statistical framework. |
+| **CitizenQuery-UK**<br>*(Majithia et al., 2026)* | Evaluates LLM factuality and abstention on 22,000+ UK citizen queries mapped to `gov.uk`. | Focuses on public administration, welfare schemes, and official government data. | CitizenQuery is monolingual (UK English). LINGUA-AUDIT evaluates multilingual disparities across English, Hindi, and Romanized Hinglish code-switching with a prespecified GLMM statistical design. |
 | **IndQA**<br>*(OpenAI, 2025)* | Evaluates cultural fluency across 12 Indian languages and Hinglish (2,278 prompts). | Tests regional Indian languages and Hinglish with expert rubrics. | IndQA focuses on cultural, historical, and lifestyle reasoning. LINGUA-AUDIT focuses on statutory administrative welfare entitlements with an open-source GLMM statistical plan. |
 | **IndicGenBench**<br>*(Singh et al., ACL 2024)* | Evaluates generation across 29 Indic languages on translation, summarization, and QA. | Evaluates LLM capabilities on Indic languages. | IndicGenBench evaluates broad cross-lingual NLP using parallel corpora. LINGUA-AUDIT evaluates civic entitlement guidance, administrative omission, and Hinglish code-switching. |
 | **FActScore**<br>*(Min et al., EMNLP 2023)* | Decomposes text into atomic claims evaluated against Wikipedia. | Atomic factuality decomposition ($M_1$). | FActScore evaluates entity precision in English biographies. LINGUA-AUDIT extends this to statutory civic schemes, administrative omission ($M_3$), and citation authenticity ($M_5$). |
 
 > **One-Sentence Research Gap:**  
-> *“CitizenQuery established an automated evaluation framework for citizen queries against authoritative government portals in monolingual English; LINGUA-AUDIT contributes a civic-information benchmark design and statistical mixed-effects protocol specifically structured to audit substantive information disparities across English, Devanagari Hindi, and Romanized Hinglish code-switching in Indian statutory welfare administration.”*
+> *“CitizenQuery established an automated evaluation protocol for citizen queries against authoritative government portals in monolingual English; LINGUA-AUDIT contributes a civic-information benchmark design and statistical mixed-effects protocol specifically structured to audit substantive information disparities across English, Devanagari Hindi, and Romanized Hinglish code-switching in Indian statutory welfare administration.”*
 
 ---
 
@@ -103,7 +106,7 @@ Existing multilingual evaluations predominantly assess surface-level capabilitie
 
 To maintain strict scientific transparency, the operational status of LINGUA-AUDIT is explicitly disclosed:
 
-1. **Framework Scope:** This repository presents a benchmark-design and reproducibility framework; it does **not** report an empirical comparison or ranking of commercial LLMs.
+1. **Study Scope:** This repository presents a civic benchmark design, measurement specification, and reproducible evaluation suite; it does **not** report an empirical comparison or ranking of commercial LLMs.
 2. **Software Verification Fixtures:** The 5,400 records in the dataset are deterministic, programmatic baseline fixtures instantiated in-memory (latency 0 ms, 100% zero within-cell variance across repetitions) to verify schema adherence, data ingestion, and pipeline integrity—**not** live model API outputs.
 3. **Pending Evaluator Validation:** While a 12-item blinded feasibility pilot package and a 270-response representative sample have been prepared, independent bilingual human annotators have not yet been scored. Consequently, all 13 response-quality metrics remain **empirically unvalidated**.
 4. **Target Model Slots:** The four named models (`gemini-3.5-flash`, `gpt-4o`, `claude-3.5-sonnet`, `llama-3.1-70b`) represent architectural target slots in the execution protocol; no external commercial endpoints were queried.
@@ -179,13 +182,15 @@ cd ai-info-inequality-exp
 If you reference the LINGUA-AUDIT benchmark design, measurement specifications, or auditing protocol in your research, please cite:
 
 ```bibtex
-@misc{deep2026linguaaudit,
+@article{deep2026linguaaudit,
   author       = {Tanya Deep},
   title        = {{LINGUA-AUDIT: Auditing Information Inequality in Multilingual AI Systems}},
+  journal      = {Research Square},
   year         = {2026},
   month        = {October},
-  note         = {Preprint manuscript, BMS Institute of Technology and Management, Bengaluru, India},
-  howpublished = {Available at \url{https://github.com/Tani-2005/AI-mediated-information-inequality-across-languages}}
+  doi          = {10.21203/rs.3.rs-11396617/v1},
+  url          = {https://doi.org/10.21203/rs.3.rs-11396617/v1},
+  note         = {Preprint manuscript, BMS Institute of Technology and Management, Bengaluru, India}
 }
 ```
 
@@ -193,4 +198,4 @@ If you reference the LINGUA-AUDIT benchmark design, measurement specifications, 
 
 ## 📄 License
 
-This research framework and benchmark repository are intended for open scientific release under the **Creative Commons Attribution-NonCommercial 4.0 International License (CC-BY-NC 4.0)** upon final publication.
+This research benchmark, measurement protocol, and software codebase are intended for open scientific release under the **Creative Commons Attribution-NonCommercial 4.0 International License (CC-BY-NC 4.0)** upon final publication.

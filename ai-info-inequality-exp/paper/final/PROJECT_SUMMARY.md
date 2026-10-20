@@ -4,8 +4,10 @@
 **Author:** Tanya Deep  
 **Affiliation:** BMS Institute of Technology and Management, Bengaluru, India  
 **Institutional Contact:** `1by23is231@bmsit.in`  
+**Preprint DOI:** [`10.21203/rs.3.rs-11396617/v1`](https://doi.org/10.21203/rs.3.rs-11396617/v1) (Research Square)  
 **Current Status:** Preregistered Benchmark Design, Measurement Specification, and Software Auditing Protocol (Frozen Pre-Validation State)  
 **Authoritative Final Deliverables:**  
+- Registered Preprint: [`doi:10.21203/rs.3.rs-11396617/v1`](https://doi.org/10.21203/rs.3.rs-11396617/v1) (Research Square)  
 - Final Word Manuscript: [`paper/final/LINGUA_AUDIT_final.docx`](./LINGUA_AUDIT_final.docx)  
 - Final Verification PDF: [`paper/final/LINGUA_AUDIT_final.pdf`](./LINGUA_AUDIT_final.pdf)  
 - Complete Master Task Registry: [`data/benchmark/master_task_registry_150.json`](../../data/benchmark/master_task_registry_150.json)  
@@ -20,7 +22,7 @@ As generative artificial intelligence (AI) systems and large language models (LL
 
 Existing multilingual NLP evaluations predominantly assess surface-level linguistic fluency, cross-lingual perplexity, translation BLEU/ChrF scores, or multiple-choice examinations translated from Western academic curricula (e.g., multilingual MMLU). While informative for measuring general model capability, these benchmarks do not assess whether language models satisfy identical, life-critical civic information needs equitably across languages. If an AI assistant provides accurate statutory income caps, required identity proofs, and official portal URLs in English, but omits mandatory administrative prerequisites, provides hallucinated links, or states outdated financial thresholds in Hindi or Hinglish, citizens suffer severe asymmetric harms: administrative disqualification, missed entitlement deadlines, or economic exploitation.
 
-The core motivation of **LINGUA-AUDIT** is to establish the benchmark design, multi-dimensional measurement specifications, and statistical testing framework required to systematically audit AI-mediated information inequality in statutory civic contexts.
+The core motivation of **LINGUA-AUDIT** is to establish the benchmark design, multi-dimensional measurement specifications, and statistical testing protocol required to systematically audit AI-mediated information inequality in statutory civic contexts.
 
 ---
 
